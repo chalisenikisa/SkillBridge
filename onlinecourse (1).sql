@@ -211,7 +211,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`StudentRegno`, `studentPhoto`, `password`, `studentName`, `pincode`, `session`, `department`, `semester`, `cgpa`, `creationdate`, `updationDate`) VALUES
-('15643788', NULL, 'delete@123', 'Rabina Nepal', '245643', NULL, NULL, NULL, 3.20, '2025-04-21 11:31:50', NULL);
+('15643788', NULL, 'pic@123', 'Rabina Nepal', '245643', NULL, NULL, NULL, 3.20, '2025-04-21 11:31:50', NULL);
 
 -- --------------------------------------------------------
 
