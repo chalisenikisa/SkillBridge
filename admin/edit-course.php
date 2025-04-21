@@ -7,7 +7,7 @@ header('location:index.php');
 }
 else{
 $id=intval($_GET['id']);
-date_default_timezone_set('Asia/Kolkata');// change according timezone
+date_default_timezone_set('Asia/Kathmandu');// change according timezone
 $currentTime = date( 'd-m-Y h:i:s A', time () );
 if(isset($_POST['submit']))
 {

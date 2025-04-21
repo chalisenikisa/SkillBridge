@@ -20,10 +20,10 @@ echo '<script>window.location.href=manage-students.php</script>';
 //Code for Password Rest
      if(isset($_GET['pass']))
       {
-        $password="Test@123";
+        $password="Name@123";
         $newpass=md5($password);
               mysqli_query($con,"update students set password='$newpass' where StudentRegno = '".$_GET['id']."'");
-              echo '<script>alert("Password Reset. New Password is Test@123")</script>';
+              echo '<script>alert("Password Reset. New Password is Name@123")</script>';
 echo '<script>window.location.href=manage-students.php</script>';
       } 
 ?>
