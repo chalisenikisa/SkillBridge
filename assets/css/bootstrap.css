@@ -66,7 +66,7 @@ h1 {
 }
 mark {
   color: #000;
-  background: #ff0;
+  background: rgb(97, 25, 61);
 }
 small {
   font-size: 80%;
@@ -188,7 +188,7 @@ td,
 th {
   padding: 0;
 }
-/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+
 @media print {
   *,
   *:before,
@@ -1089,12 +1089,12 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #337ab7;
+  color: #1f99a1;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #23527c;
+  color: #0a4d31;
   text-decoration: underline;
 }
 a:focus {
@@ -1327,22 +1327,22 @@ mark,
   color: #777;
 }
 .text-primary {
-  color: #337ab7;
+  color: #1f8b9e;
 }
 a.text-primary:hover {
-  color: #286090;
+  color: #177e53;
 }
 .text-success {
-  color: #3c763d;
+  color: #6b791d;
 }
 a.text-success:hover {
-  color: #2b542c;
+  color: #7e5a18;
 }
 .text-info {
-  color: #31708f;
+  color: #6e261d;
 }
 a.text-info:hover {
-  color: #245269;
+  color: #1a506b;
 }
 .text-warning {
   color: #8a6d3b;
@@ -1351,17 +1351,17 @@ a.text-warning:hover {
   color: #66512c;
 }
 .text-danger {
-  color: #a94442;
+  color: #752345;
 }
 a.text-danger:hover {
-  color: #843534;
+  color: #861f67;
 }
 .bg-primary {
   color: #fff;
-  background-color: #337ab7;
+  background-color: #b66b8a;
 }
 a.bg-primary:hover {
-  background-color: #286090;
+  background-color: #85db79;
 }
 .bg-success {
   background-color: #dff0d8;
@@ -1516,7 +1516,7 @@ samp {
 code {
   padding: 2px 4px;
   font-size: 90%;
-  color: #c7254e;
+  color: #e97894;
   background-color: #f9f2f4;
   border-radius: 4px;
 }

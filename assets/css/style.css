@@ -22,9 +22,9 @@ body {
 .page-head-line {
     font-weight: 900;
     padding-bottom: 20px;
-    border-bottom: 2px solid #c9102b;
+    border-bottom: 2px solid #829709;
     text-transform: uppercase;
-    color: #7c1b2a;
+    color: #2a2b75;
     font-size: 20px;
     margin-bottom: 40px;
 }
@@ -51,7 +51,7 @@ margin-bottom: 20px;
 color: #fff;
 text-align: center;
 cursor:pointer;
-background-color:#c73d51;
+background-color:#a02f97;
 -webkit-border-radius:50%;
     -moz-border-radius:50%;
 }
@@ -59,7 +59,7 @@ background-color:#c73d51;
    HEADER SECTION STYLES
  ============================================================ */
 header {
-    background-color: #c94e61;
+    background-color: #226a8b;
     color: #fff;
     padding: 10px;
     text-align: right;
@@ -90,7 +90,7 @@ header {
     -moz-border-radius: 50%;
     height: 60px;
     width: 60px;
-    background-color: #9b4552;
+    background-color: #7e3264;
     color: #fff;
 }
 
@@ -109,7 +109,7 @@ header {
 
     .user-settings-wrapper .nav > li > a:hover,.user-settings-wrapper .nav > li > a:focus {
         text-decoration: none;
-        background-color: #9e4545!important;
+        background-color: #2999a1!important;
     }
 
     .user-settings-wrapper img {
@@ -150,24 +150,24 @@ header {
 }
 
 .menu-top-active {
-    background-color: #C36464;
+    background-color: #33aa79;
 }
 
 .menu-section .nav > li > a:hover,.menu-section .nav > li > a:focus {
-    background-color: #F0677C!important;
+    background-color: #be8124!important;
 }
 
 .menu-section .dropdown-menu > li > a:hover,.menu-section .dropdown-menu > li > a:focus {
-    background-color: #F0677C!important;
+    background-color: #c4394e!important;
 }
 
 .navbar-inverse {
-    background-color: #C36464;
+    background-color: #af2f45;
     border-color: transparent;
 }
 
 .navbar-toggle {
-    background-color: #c45767;
+    background-color: #7a4bb8;
     border: 1px solid #fff;
 }
 
@@ -179,7 +179,7 @@ footer {
     padding: 10px;
     color: #fff;
     font-size: 12px;
-    background-color: #C36464;
+    background-color: #739744;
 }
 
     footer a, footer a:hover {
@@ -194,19 +194,19 @@ footer {
 /* DASHBOARD ICONS */
 
 .bk-clr-one {
-    background-color: #918f27;
+    background-color: #279153;
 }
 
 .bk-clr-two {
-    background-color: #df4343;
+    background-color: #ec81d5;
 }
 
 .bk-clr-three {
-    background-color: #14725e;
+    background-color: #143d72;
 }
 
 .bk-clr-four {
-    background-color: #813383;
+    background-color: #ec8f38;
 }
 
 .dashboard-div-icon {
@@ -277,17 +277,17 @@ footer {
     }
 
 .btn-facebook {
-    background-color: #3458a5;
+    background-color: #376810;
 }
 
 .btn-twitter {
-    background-color: #00aced;
+    background-color: #e6cd62;
 }
 
 .btn-linkedin {
-    background-color: #114a64;
+    background-color: #5e2d53;
 }
 
 .btn-google {
-    background-color: #8d2510;
+    background-color: #e2492b;
 }
