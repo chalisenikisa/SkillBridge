@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2024 at 07:58 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Apr 21, 2025 at 01:44 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,7 +40,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `username`, `password`, `creationDate`, `updationDate`) VALUES
-(1, 'admin', 'f925916e2754e5e03f75dd58a5733251', '2024-03-10 16:21:18', '2024-04-25 05:46:53');
+(2, 'name123', 'name@123', '2025-04-21 10:53:57', NULL),
+(3, 'name123', 'name@123', '2025-04-21 10:54:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -63,8 +64,8 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`id`, `courseCode`, `courseName`, `courseUnit`, `noofSeats`, `creationDate`, `updationDate`) VALUES
-(1, 'PHP01', 'PHP', '5', 10, '2024-02-10 17:23:28', NULL),
-(2, 'C001', 'C++', '12', 25, '2024-02-11 00:52:46', '11-02-2022 06:23:06 AM');
+(3, 'CACS251', 'Operating System', '5', 10, '2025-04-21 10:57:20', NULL),
+(4, 'CACS251', 'Operating System', '5', 10, '2025-04-21 10:57:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -89,8 +90,8 @@ CREATE TABLE `courseenrolls` (
 --
 
 INSERT INTO `courseenrolls` (`id`, `studentRegno`, `pincode`, `session`, `department`, `level`, `semester`, `course`, `enrollDate`) VALUES
-(1, '10806121', '822894', 1, 1, 2, 3, 1, '2024-02-11 00:59:33'),
-(2, '10806121', '822894', 1, 1, 1, 2, 2, '2024-02-11 01:01:07');
+(3, '15643788', '245643', 1, 1, 2, 3, 1, '2025-04-21 11:18:43'),
+(4, '15643788', '245643', 1, 1, 2, 3, 1, '2025-04-21 11:18:50');
 
 -- --------------------------------------------------------
 
@@ -109,8 +110,9 @@ CREATE TABLE `department` (
 --
 
 INSERT INTO `department` (`id`, `department`, `creationDate`) VALUES
-(1, 'IT', '2024-02-10 17:23:04'),
-(2, 'HR', '2024-02-10 17:23:09');
+(1, 'BCA', '2025-04-21 11:20:25'),
+(4, 'BCA', '2025-04-21 11:21:13'),
+(5, 'BCA', '2025-04-21 11:21:18');
 
 -- --------------------------------------------------------
 
@@ -129,9 +131,8 @@ CREATE TABLE `level` (
 --
 
 INSERT INTO `level` (`id`, `level`, `creationDate`) VALUES
-(1, '1', '2024-02-11 00:59:02'),
-(2, '2', '2024-02-11 00:59:02'),
-(3, '3', '2024-02-11 00:59:09');
+(4, '2', '2025-04-21 11:21:54'),
+(5, '2', '2025-04-21 11:21:57');
 
 -- --------------------------------------------------------
 
@@ -151,8 +152,8 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`id`, `newstitle`, `newsDescription`, `postingDate`) VALUES
-(2, 'Test News', 'This is for testing. This is for testing.This is for testing.This is for testing.This is for testing.This is for testing.This is for testing.This is for testing.This is for testing.This is for testing.', '2024-02-10 17:36:50'),
-(3, 'New Course Started C#', 'This is sample text for testing.', '2024-02-11 00:54:38');
+(4, 'News Test', 'New Course Started C#.This is sample text for testing.', '2025-04-21 11:23:49'),
+(5, 'News Test', 'This is for  news testing.', '2025-04-21 11:23:53');
 
 -- --------------------------------------------------------
 
@@ -172,9 +173,8 @@ CREATE TABLE `semester` (
 --
 
 INSERT INTO `semester` (`id`, `semester`, `creationDate`, `updationDate`) VALUES
-(1, '1', '2024-02-10 17:22:49', NULL),
-(2, '2', '2024-02-10 17:22:55', NULL),
-(3, '3', '2024-02-11 00:51:43', NULL);
+(5, '1', '2025-04-21 11:26:44', NULL),
+(6, '1', '2025-04-21 11:26:49', NULL);
 
 -- --------------------------------------------------------
 
@@ -193,7 +193,8 @@ CREATE TABLE `session` (
 --
 
 INSERT INTO `session` (`id`, `session`, `creationDate`) VALUES
-(1, '2024', '2024-02-10 17:10:59');
+(3, '2025', '2025-04-21 11:27:25'),
+(4, '2025', '2025-04-21 11:27:28');
 
 -- --------------------------------------------------------
 
@@ -220,7 +221,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`StudentRegno`, `studentPhoto`, `password`, `studentName`, `pincode`, `session`, `department`, `semester`, `cgpa`, `creationdate`, `updationDate`) VALUES
-('10806121', '', 'f925916e2754e5e03f75dd58a5733251', 'Anuj kumar', '822894', NULL, NULL, NULL, 7.10, '2024-02-11 00:53:31', NULL);
+('15643788', NULL, 'delete@123', 'Rabina Nepal', '245643', NULL, NULL, NULL, 3.20, '2025-04-21 11:31:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -242,9 +243,8 @@ CREATE TABLE `userlog` (
 --
 
 INSERT INTO `userlog` (`id`, `studentRegno`, `userip`, `loginTime`, `logout`, `status`) VALUES
-(1, '10806121', 0x3a3a3100000000000000000000000000, '2024-02-11 00:55:07', NULL, 1),
-(2, '10806121', 0x3a3a3100000000000000000000000000, '2024-02-11 00:57:00', NULL, 1),
-(3, '10806121', 0x3a3a3100000000000000000000000000, '2024-02-11 00:57:22', '11-02-2024 06:31:26 AM', 1);
+(4, '15643788', NULL, '2025-04-21 11:35:23', NULL, 2),
+(5, '15643788', NULL, '2025-04-21 11:35:28', NULL, 2);
 
 --
 -- Indexes for dumped tables
@@ -318,55 +318,55 @@ ALTER TABLE `userlog`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `courseenrolls`
 --
 ALTER TABLE `courseenrolls`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `level`
 --
 ALTER TABLE `level`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `semester`
 --
 ALTER TABLE `semester`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `session`
 --
 ALTER TABLE `session`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `userlog`
 --
 ALTER TABLE `userlog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
