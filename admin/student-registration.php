@@ -12,7 +12,7 @@ if(isset($_POST['submit']))
 $studentname=$_POST['studentname'];
 $studentregno=$_POST['studentregno'];
 $password=md5($_POST['password']);
-$pincode = rand(100000,999999);
+$pincode = rand(245643);
 $ret=mysqli_query($con,"insert into students(studentName,StudentRegno,password,pincode) values('$studentname','$studentregno','$password','$pincode')");
 if($ret)
 {
