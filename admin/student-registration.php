@@ -11,7 +11,7 @@ if(isset($_POST['submit']))
 {
 $studentname=$_POST['studentname'];
 $studentregno=$_POST['studentregno'];
-$password=md5($_POST['password']);
+$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 $pincode = rand(245643);
 $ret=mysqli_query($con,"insert into students(studentName,StudentRegno,password,pincode) values('$studentname','$studentregno','$password','$pincode')");
 if($ret)
