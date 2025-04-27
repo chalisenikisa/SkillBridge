@@ -87,7 +87,7 @@ header {
     -moz-border-radius: 50%;
     height: 60px;
     width: 60px;
-    background-color: #7e3264;
+    background-color: #151b3b;
     color: #fff;
 }
 
@@ -159,12 +159,12 @@ header {
 }
 
 .navbar-inverse {
-    background-color: #af2f45;
+    background-color: #6b250f;
     border-color: transparent;
 }
 
 .navbar-toggle {
-    background-color: #7a4bb8;
+    background-color: #3d1d0b;
     border: 1px solid #fff;
 }
 
