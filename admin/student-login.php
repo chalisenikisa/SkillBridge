@@ -1,34 +1,38 @@
 <?php
 session_start();
-include('includes/config.php'); // Database connection
+include('includes/config.php'); // your database connection file
 
-if (isset($_POST['login'])) {  // Check if login form is submitted
-    $regno = $_POST['regno'];
-    $password = $_POST['password'];
+if (isset($_POST['login'])) {  // when user submits login form
 
-    // Fetch student data from database
+    $regno = $_POST['regno'];  // Student registration number entered
+    $enteredPassword = $_POST['password'];  // Password entered
+
+    // Fetch student from database based on reg no
     $query = mysqli_query($con, "SELECT * FROM students WHERE StudentRegno='$regno'");
     $row = mysqli_fetch_array($query);
 
     if ($row) {
-        //  Correct place to use password_verify
-        if (password_verify($password, $row['password'])) {
-            // Password correct — login successful
+        $storedHash = $row['password'];  // Hashed password stored in DB
+
+        // NOW, here is your code
+        if (password_verify($enteredPassword, $storedHash)) {
+            // Password correct
             $_SESSION['slogin'] = $regno;
             $_SESSION['student_id'] = $row['id'];
 
-            header("Location: student-index.php"); // Redirect to dashboard
+            header("Location: index.php"); // redirect to dashboard
             exit();
         } else {
-            // Password wrong
+            // Password incorrect
             echo "<script>alert('Invalid Password!');</script>";
         }
     } else {
-        // Registration number not found
+        // Student registration number not found
         echo "<script>alert('Student Registration Number not found!');</script>";
     }
 }
 ?>
+
 
 <form method="POST" action="">
     <div class="form-group">
