@@ -1,29 +1,37 @@
 <?php
 session_start();
 include('includes/config.php');
-if(strlen($_SESSION['alogin'])==0)
-    {   
-header('location:index.php');
-}
-else{
 
-if(isset($_POST['submit']))
-{
-$studentname=$_POST['studentname'];
-$studentregno=$_POST['studentregno'];
-$password = password_hash()($_POST['password'], PASSWORD_DEFAULT);
-$pincode = rand(245643);
-$ret=mysqli_query($con,"insert into students(studentName,StudentRegno,password,pincode) values('$studentname','$studentregno','$password','$pincode')");
-if($ret)
-{
-echo '<script>alert("Student Registered Successfully. Pincode is "+"'.$pincode.'")</script>';
-echo '<script>window.location.href=manage-students.php</script>';
-}else{
-echo '<script>alert("Something went wrong. Please try again.")</script>';
-echo '<script>window.location.href=manage-students.php</script>';
+if(strlen($_SESSION['alogin'])==0)
+{   
+    header('location:index.php');
 }
-}
+else
+{
+    //  Put this corrected code here
+    if(isset($_POST['submit']))
+    {
+        $studentname = $_POST['studentname'];
+        $studentregno = $_POST['studentregno'];
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);  // hash password properly
+        $pincode = rand(100000, 999999); // 6-digit random pincode
+
+        $ret = mysqli_query($con, "INSERT INTO students(studentName, StudentRegno, password, pincode) 
+            VALUES('$studentname', '$studentregno', '$password', '$pincode')");
+
+        if($ret)
+        {
+            echo '<script>alert("Student Registered Successfully. Pincode is ' . $pincode . '")</script>';
+            echo '<script>window.location.href="manage-students.php"</script>';
+        }
+        else
+        {
+            echo '<script>alert("Something went wrong. Please try again.")</script>';
+            echo '<script>window.location.href="manage-students.php"</script>';
+        }
+    }
 ?>
+
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
