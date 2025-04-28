@@ -16,7 +16,7 @@ if (isset($_POST['regno']) && isset($_POST['password'])) {
             // 3. Password is correct → Log the student in
             $_SESSION['slogin'] = $regno;
             $_SESSION['student_id'] = $row['id'];
-            header("Location: student-dashboard.php");  // Redirect to dashboard
+            header("Location: index.php");  // Redirect to dashboard
             exit();
         } else {
             // Wrong password
