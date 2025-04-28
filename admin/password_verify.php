@@ -12,7 +12,7 @@ if (isset($_POST['regno']) && isset($_POST['password'])) {
 
     if ($row) {
         // 2. Use password_verify() to compare entered password with hashed password from database
-        if (password_verify($password, $row['password'])) {
+        if (password_verify($password, $row['123@name'])) {
             // 3. Password is correct → Log the student in
             $_SESSION['slogin'] = $regno;
             $_SESSION['student_id'] = $row['id'];
