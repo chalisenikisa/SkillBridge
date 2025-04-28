@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2025 at 03:57 PM
+-- Generation Time: Apr 28, 2025 at 04:08 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -91,8 +91,8 @@ CREATE TABLE `courseenrolls` (
 --
 
 INSERT INTO `courseenrolls` (`id`, `studentRegno`, `pincode`, `session`, `department`, `level`, `semester`, `course`, `enrollDate`) VALUES
-(3, '15643785', '245642', 1, 1, 2, 3, 1, '2025-04-21 11:18:43'),
-(4, '15643785', '245642', 1, 1, 2, 3, 1, '2025-04-21 11:18:50');
+(3, '43532', '245642', 1, 1, 2, 3, 1, '2025-04-21 11:18:43'),
+(4, '43532', '245642', 1, 1, 2, 3, 1, '2025-04-21 11:18:50');
 
 -- --------------------------------------------------------
 
@@ -243,8 +243,8 @@ CREATE TABLE `userlog` (
 --
 
 INSERT INTO `userlog` (`id`, `studentRegno`, `userip`, `loginTime`, `logout`, `status`) VALUES
-(4, '15643785', NULL, '2025-04-21 11:35:23', NULL, 2),
-(5, '15643785', NULL, '2025-04-21 11:35:28', NULL, 2);
+(4, '43532', NULL, '2025-04-21 11:35:23', NULL, 2),
+(5, '43532', NULL, '2025-04-21 11:35:28', NULL, 2);
 
 --
 -- Indexes for dumped tables
