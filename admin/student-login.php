@@ -1,8 +1,8 @@
 <?php
 session_start();
-include('includes/config.php');
+include('includes/config.php'); // Connect to database
 
-if (isset($_POST['login'])) {
+if (isset($_POST['login'])) {  // When student presses "Login" button
     $regno = $_POST['regno'];
     $password = $_POST['password'];
 
@@ -13,7 +13,7 @@ if (isset($_POST['login'])) {
         if (password_verify($password, $row['password'])) {
             $_SESSION['slogin'] = $regno;
             $_SESSION['student_id'] = $row['id'];
-            header("Location: student-dashboard.php");
+            header("Location: index.php");
             exit();
         } else {
             echo "<script>alert('Invalid Password!');</script>";
@@ -23,56 +23,26 @@ if (isset($_POST['login'])) {
     }
 }
 ?>
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Student Login</title>
-
-    <!-- Bootstrap CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .login-form {
-            width: 400px;
-            margin: 80px auto;
-            padding: 30px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px 0px #0000001a;
-        }
-        .login-form h2 {
-            margin-bottom: 30px;
-            font-weight: bold;
-            text-align: center;
-        }
-    </style>
+<title>Student Login</title>
 </head>
 <body>
 
-<div class="login-form">
-    <h2>Student Login</h2>
-
-    <form method="post">
-        <div class="mb-3">
-            <label class="form-label">Registration Number</label>
-            <input type="text" class="form-control" name="regno" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Password</label>
-            <input type="password" class="form-control" name="password" required>
-        </div>
-
-        <button type="submit" name="login" class="btn btn-primary w-100">Login</button>
-    </form>
-</div>
-
-<!-- Bootstrap JS Bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<form method="post">
+    <label>Student Registration Number:</label>
+    <input type="text" name="regno" required><br><br>
+    
+    <label>Password:</label>
+    <input type="password" name="password" required><br><br>
+    
+    <button type="submit" name="login">Login</button>
+</form>
 
 </body>
 </html>
+
+    
