@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2025 at 12:41 PM
+-- Generation Time: Apr 28, 2025 at 03:57 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -112,8 +112,7 @@ CREATE TABLE `department` (
 
 INSERT INTO `department` (`id`, `department`, `creationDate`) VALUES
 (1, 'BCA', '2025-04-21 11:20:25'),
-(4, 'IT', '2025-04-21 11:21:13'),
-(5, 'BIM', '2025-04-21 11:21:18');
+(4, 'IT', '2025-04-21 11:21:13');
 
 -- --------------------------------------------------------
 
@@ -222,7 +221,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`StudentRegno`, `studentPhoto`, `password`, `studentName`, `pincode`, `session`, `department`, `semester`, `cgpa`, `creationdate`, `updationDate`) VALUES
-('15643785', NULL, '123@name', 'Rabina Nepal', '245642', NULL, NULL, NULL, 3.20, '2025-04-21 11:31:50', NULL);
+('43532', NULL, '$2y$10$TpuHpxKvTF8MuN5TSMUidOaCP2eUQ6BZHarbUi.K7tuLCPfH7GqMC', 'Rabina Nepal', '354765', '2025', 'IT', '2', 3.20, '2025-04-28 13:52:12', NULL);
 
 -- --------------------------------------------------------
 
