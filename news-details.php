@@ -10,7 +10,7 @@ $query=mysqli_query($con,"SELECT * FROM students WHERE StudentRegno='$regno' and
 $num=mysqli_fetch_array($query);
 if($num>0)
 {
-$extra="change-password.php";//
+$extra="change-password.php";
 $_SESSION['login']=$_POST['regno'];
 $_SESSION['id']=$num['studentRegno'];
 $_SESSION['sname']=$num['studentName'];
