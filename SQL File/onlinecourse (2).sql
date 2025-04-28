@@ -222,7 +222,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`StudentRegno`, `studentPhoto`, `password`, `studentName`, `pincode`, `session`, `department`, `semester`, `cgpa`, `creationdate`, `updationDate`) VALUES
-('15643785', NULL, '123@123', 'Rabina Nepal', '245642', NULL, NULL, NULL, 3.20, '2025-04-21 11:31:50', NULL);
+('15643785', NULL, '123@name', 'Rabina Nepal', '245642', NULL, NULL, NULL, 3.20, '2025-04-21 11:31:50', NULL);
 
 -- --------------------------------------------------------
 
