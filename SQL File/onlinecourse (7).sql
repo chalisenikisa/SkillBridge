@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2025 at 04:44 PM
+-- Generation Time: Apr 29, 2025 at 05:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `username`, `password`, `creationDate`, `updationDate`) VALUES
-(1, '123name', '123@name', '2025-04-25 09:32:18', NULL);
+(1, '123name', '$2y$10$JZmp1g99sMym50g6RQSK5eayxJBMqylAVX6m6DwB/5s8fsLDzj5Qy', '2025-04-25 03:47:18', NULL);
 
 -- --------------------------------------------------------
 
@@ -63,10 +63,10 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`id`, `courseCode`, `courseName`, `courseUnit`, `noofSeats`, `creationDate`, `updationDate`) VALUES
-(3, 'CACS251', 'Operating System', '5', 10, '2025-04-21 10:57:20', NULL),
-(4, 'CACS251', 'Operating System', '5', 10, '2025-04-21 10:57:27', NULL),
-(5, 'CACS251', 'Operating System', NULL, NULL, '2025-04-25 09:29:01', NULL),
-(6, 'CACS251', 'Operating System', NULL, NULL, '2025-04-25 09:29:09', NULL);
+(3, 'CACS251', 'Operating System', '5', 10, '2025-04-21 05:12:20', NULL),
+(4, 'CACS251', 'Operating System', '5', 10, '2025-04-21 05:12:27', NULL),
+(5, 'CACS251', 'Operating System', NULL, NULL, '2025-04-25 03:44:01', NULL),
+(6, 'CACS251', 'Operating System', NULL, NULL, '2025-04-25 03:44:09', NULL);
 
 -- --------------------------------------------------------
 
@@ -91,8 +91,8 @@ CREATE TABLE `courseenrolls` (
 --
 
 INSERT INTO `courseenrolls` (`id`, `studentRegno`, `pincode`, `session`, `department`, `level`, `semester`, `course`, `enrollDate`) VALUES
-(3, '43532', '245642', 1, 1, 2, 3, 1, '2025-04-21 11:18:43'),
-(4, '43532', '245642', 1, 1, 2, 3, 1, '2025-04-21 11:18:50');
+(3, '43532', '245642', 1, 1, 2, 3, 1, '2025-04-21 05:33:43'),
+(4, '43532', '245642', 1, 1, 2, 3, 1, '2025-04-21 05:33:50');
 
 -- --------------------------------------------------------
 
@@ -111,8 +111,8 @@ CREATE TABLE `department` (
 --
 
 INSERT INTO `department` (`id`, `department`, `creationDate`) VALUES
-(1, 'BCA', '2025-04-21 11:20:25'),
-(4, 'IT', '2025-04-21 11:21:13');
+(1, 'BCA', '2025-04-21 05:35:25'),
+(4, 'IT', '2025-04-21 05:36:13');
 
 -- --------------------------------------------------------
 
@@ -131,8 +131,8 @@ CREATE TABLE `level` (
 --
 
 INSERT INTO `level` (`id`, `level`, `creationDate`) VALUES
-(4, '2', '2025-04-21 11:21:54'),
-(5, '4', '2025-04-21 11:21:57');
+(4, '2', '2025-04-21 05:36:54'),
+(5, '4', '2025-04-21 05:36:57');
 
 -- --------------------------------------------------------
 
@@ -152,8 +152,8 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`id`, `newstitle`, `newsDescription`, `postingDate`) VALUES
-(4, 'News Test', 'New Course Started C#.This is sample text for testing.', '2025-04-21 11:23:49'),
-(5, 'News Test', 'This is for  news testing.', '2025-04-21 11:23:53');
+(4, 'News Test', 'New Course Started C#.This is sample text for testing.', '2025-04-21 05:38:49'),
+(5, 'News Test', 'This is for  news testing.', '2025-04-21 05:38:53');
 
 -- --------------------------------------------------------
 
@@ -173,8 +173,8 @@ CREATE TABLE `semester` (
 --
 
 INSERT INTO `semester` (`id`, `semester`, `creationDate`, `updationDate`) VALUES
-(5, '1', '2025-04-21 11:26:44', NULL),
-(6, '3', '2025-04-21 11:26:49', NULL);
+(5, '1', '2025-04-21 05:41:44', NULL),
+(6, '3', '2025-04-21 05:41:49', NULL);
 
 -- --------------------------------------------------------
 
@@ -193,8 +193,8 @@ CREATE TABLE `session` (
 --
 
 INSERT INTO `session` (`id`, `session`, `creationDate`) VALUES
-(3, '2025', '2025-04-21 11:27:25'),
-(4, '2025', '2025-04-21 11:27:28');
+(3, '2025', '2025-04-21 05:42:25'),
+(4, '2025', '2025-04-21 05:42:28');
 
 -- --------------------------------------------------------
 
@@ -221,7 +221,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`StudentRegno`, `studentPhoto`, `password`, `studentName`, `pincode`, `session`, `department`, `semester`, `cgpa`, `creationdate`, `updationDate`) VALUES
-('43532', NULL, '$2y$10$SzmXDN/CjQU2VJpY8CMUj.TE2DxWlufofJfV8Kg8lYJ6j3cHLrcJ', 'Rabina Nepal', '354765', '2025', 'IT', '2', 3.20, '2025-04-28 13:52:12', NULL);
+('43532', NULL, '$2y$10$SzmXDN/CjQU2VJpY8CMUj.TE2DxWlufofJfV8Kg8lYJ6j3cHLrcJ', 'Rabina Nepal', '354765', '2025', 'IT', '2', 3.20, '2025-04-28 08:07:12', NULL);
 
 -- --------------------------------------------------------
 
@@ -243,8 +243,8 @@ CREATE TABLE `userlog` (
 --
 
 INSERT INTO `userlog` (`id`, `studentRegno`, `userip`, `loginTime`, `logout`, `status`) VALUES
-(4, '43532', NULL, '2025-04-21 11:35:23', NULL, 2),
-(5, '43532', NULL, '2025-04-21 11:35:28', NULL, 2);
+(4, '43532', NULL, '2025-04-21 05:50:23', NULL, 2),
+(5, '43532', NULL, '2025-04-21 05:50:28', NULL, 2);
 
 --
 -- Indexes for dumped tables
@@ -336,7 +336,7 @@ ALTER TABLE `courseenrolls`
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `level`
