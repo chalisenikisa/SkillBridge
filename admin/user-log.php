@@ -1,115 +1,98 @@
 <?php
 session_start();
 include('includes/config.php');
-if(strlen($_SESSION['alogin'])==0)
-    {   
-header('location:index.php');
+
+if (strlen($_SESSION['alogin']) == 0) {
+    header('location:index.php');
+    exit();
 }
-else{
-
-
-
 ?>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Enroll History</title>
+    <title>Admin | Enroll History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
     <link href="../assets/css/font-awesome.css" rel="stylesheet" />
     <link href="../assets/css/style.css" rel="stylesheet" />
 </head>
 
 <body>
-<?php include('includes/header.php');?>
-    <!-- LOGO HEADER END-->
-<?php if($_SESSION['alogin']!="")
-{
- include('includes/menubar.php');
-}
- ?>
-    <!-- MENU SECTION END-->
+    <?php include('includes/header.php'); ?>
+
+    <?php if ($_SESSION['alogin'] != "") include('includes/menubar.php'); ?>
+
     <div class="content-wrapper">
         <div class="container">
-              <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="page-head-line">Enroll History  </h1>
-                    </div>
-                </div>
-                <div class="row" >
-            
+            <div class="row">
                 <div class="col-md-12">
-                    <!--    Bordered Table  -->
+                    <h1 class="page-head-line">Enroll History</h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Bordered Table -->
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                           Enroll History
-                        </div>
-                        <!-- /.panel-heading -->
+                        <div class="panel-heading">User Login History</div>
                         <div class="panel-body">
                             <div class="table-responsive table-bordered">
-                                <table class="table">
+                                <table class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                                
-                                                    <th>Student Reg no </th>
-                                            <th>IP  </th>
-                                            <th>Login Time </th>
-                                            
-                                                <th>Logout Time</th>
-                                             <th>Status</th>
-                                    
+                                            <th>Student Reg. No</th>
+                                            <th>IP Address</th>
+                                            <th>Login Time</th>
+                                            <th>Logout Time</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-<?php
-$sql=mysqli_query($con,"select * from userlog");
-$cnt=1;
-while($row=mysqli_fetch_array($sql))
-{
-?>
-
-
-                                        <tr>
-                                            <td><?php echo $cnt;?></td>
-                                              <td><?php echo htmlentities($row['studentRegno']);?></td>
-                                            <td><?php echo htmlentities($row['userip']);?></td>
-                                            <td><?php echo htmlentities($row['loginTime']);?></td>
-                                            <td><?php echo htmlentities($row['logout']);?></td>
-                                            <td><?php echo htmlentities($row['status']);?></td>
-                                        </tr>
-<?php 
-$cnt++;
-} ?>
-
-                                        
+                                        <?php
+                                        $sql = mysqli_query($con, "SELECT * FROM userlog ORDER BY id DESC");
+                                        $cnt = 1;
+                                        while ($row = mysqli_fetch_assoc($sql)) {
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $cnt++; ?></td>
+                                                <td><?php echo htmlentities($row['studentRegno']); ?></td>
+                                                <td><?php echo htmlentities($row['userip']); ?></td>
+                                                <td><?php echo htmlentities($row['loginTime']); ?></td>
+                                                <td><?php echo $row['logout'] ? htmlentities($row['logout']) : '<span class="text-muted">N/A</span>'; ?></td>
+                                                <td>
+                                                    <?php
+                                                    if ($row['status'] == 1) {
+                                                        echo '<span class="text-success">Success</span>';
+                                                    } else {
+                                                        echo '<span class="text-danger">Failed</span>';
+                                                    }
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        if (mysqli_num_rows($sql) == 0) {
+                                            echo '<tr><td colspan="6" class="text-center text-muted">No login records found.</td></tr>';
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                     <!--  End  Bordered Table  -->
+                    <!-- End Bordered Table -->
                 </div>
             </div>
-
-
-
-
-
         </div>
     </div>
-    <!-- CONTENT-WRAPPER SECTION END-->
-  <?php include('includes/footer.php');?>
-    <!-- FOOTER SECTION END-->
-    <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
-    <!-- CORE JQUERY SCRIPTS -->
+
+    <?php include('includes/footer.php'); ?>
+
+    <!-- Scripts -->
     <script src="../assets/js/jquery-1.11.1.js"></script>
-    <!-- BOOTSTRAP SCRIPTS  -->
     <script src="../assets/js/bootstrap.js"></script>
 </body>
 </html>
-<?php } ?>

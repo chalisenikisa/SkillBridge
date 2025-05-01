@@ -1,12 +1,18 @@
 <?php
-define('DB_SERVER','localhost');
-define('DB_USER','root');
-define('DB_PASS' ,'');
-define('DB_NAME','onlinecourse');
-$con = mysqli_connect(DB_SERVER,DB_USER,DB_PASS,DB_NAME);
+// Database configuration
+define('DB_SERVER', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'onlinecourse');
+
+// Create connection
+$con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+
 // Check connection
-if (mysqli_connect_errno())
-{
- echo "Failed to connect to MySQL: " . mysqli_connect_error();
+if (!$con) {
+    die("Connection failed: " . mysqli_connect_error());
 }
+
+// Set character set to UTF-8
+mysqli_set_charset($con, "utf8");
 ?>
