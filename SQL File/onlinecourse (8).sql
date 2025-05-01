@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 29, 2025 at 05:23 PM
+-- Generation Time: May 01, 2025 at 07:08 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `username`, `password`, `creationDate`, `updationDate`) VALUES
-(1, '123name', '$2y$10$JZmp1g99sMym50g6RQSK5eayxJBMqylAVX6m6DwB/5s8fsLDzj5Qy', '2025-04-25 03:47:18', NULL);
+(1, '123name', '$2y$10$5GKrv4y11WyuqtTE2kfF0OVERCuxPJCGxajVRw8DQt06lYDyHY42W', '2025-04-25 03:47:18', NULL);
 
 -- --------------------------------------------------------
 
@@ -221,7 +221,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`StudentRegno`, `studentPhoto`, `password`, `studentName`, `pincode`, `session`, `department`, `semester`, `cgpa`, `creationdate`, `updationDate`) VALUES
-('43532', NULL, '$2y$10$SzmXDN/CjQU2VJpY8CMUj.TE2DxWlufofJfV8Kg8lYJ6j3cHLrcJ', 'Rabina Nepal', '354765', '2025', 'IT', '2', 3.20, '2025-04-28 08:07:12', NULL);
+('43532', NULL, '$2y$10$gpaK3lfq.4ZTnQUrv9bIVe2aDdgUio1uiWk8vjfm1IPXIHNgy.FYa', 'Rabina Nepal', '354765', '2025', 'IT', '2', 3.20, '2025-04-28 08:07:12', NULL);
 
 -- --------------------------------------------------------
 
