@@ -1,10 +1,17 @@
 <?php
 session_start();
-$_SESSION['alogin']=="";
+
+// Unset all session variables
 session_unset();
-//session_destroy();
-$_SESSION['errmsg']="You have successfully logout";
+
+// Destroy the session
+session_destroy();
+
+// Start a new session to set a logout message
+session_start();
+$_SESSION['errmsg'] = "You have successfully logged out.";
+
+// Redirect to login page
+header("Location: index.php");
+exit();
 ?>
-<script language="javascript">
-document.location="index.php";
-</script>

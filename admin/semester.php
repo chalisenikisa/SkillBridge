@@ -9,14 +9,24 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == 0) {
 }
 
 // Handle form submission
-if (isset($_POST['submit'])) {
-    $semester = $_POST['semester'];
-    $ret = mysqli_query($con, "INSERT INTO semester (semester) VALUES ('$semester')");
-    if ($ret) {
-        $_SESSION['msg'] = "Semester Created Successfully !!";
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+    $semester = trim($_POST['semester']);
+
+    if (!empty($semester)) {
+        $stmt = $con->prepare("INSERT INTO semester (semester) VALUES (?)");
+        $stmt->bind_param("s", $semester);
+
+        if ($stmt->execute()) {
+            $_SESSION['msg'] = "Semester Created Successfully !!";
+        } else {
+            $_SESSION['msg'] = "Something went wrong. Please try again.";
+        }
+
+        $stmt->close();
     } else {
-        $_SESSION['msg'] = "Something went wrong. Please try again.";
+        $_SESSION['msg'] = "Semester field cannot be empty.";
     }
+
     header("Location: semester.php");
     exit();
 }
@@ -24,33 +34,44 @@ if (isset($_POST['submit'])) {
 // Handle delete request
 if (isset($_GET['del']) && isset($_GET['id'])) {
     $sid = intval($_GET['id']);
-    mysqli_query($con, "DELETE FROM semester WHERE id = '$sid'");
-    $_SESSION['delmsg'] = "Semester Deleted Successfully !!";
+
+    $stmt = $con->prepare("DELETE FROM semester WHERE id = ?");
+    $stmt->bind_param("i", $sid);
+
+    if ($stmt->execute()) {
+        $_SESSION['delmsg'] = "Semester Deleted Successfully !!";
+    } else {
+        $_SESSION['delmsg'] = "Failed to delete semester.";
+    }
+
+    $stmt->close();
+
     header("Location: semester.php");
     exit();
 }
 ?>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
     <title>Admin | Semester</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
     <link href="../assets/css/font-awesome.css" rel="stylesheet" />
     <link href="../assets/css/style.css" rel="stylesheet" />
 </head>
-
 <body>
+
 <?php include('includes/header.php'); ?>
 <?php include('includes/menubar.php'); ?>
 
 <div class="content-wrapper">
     <div class="container">
+
         <div class="row">
             <div class="col-md-12">
-                <h1 class="page-head-line">Semester</h1>
+                <h1 class="page-head-line">Semester Management</h1>
             </div>
         </div>
 
@@ -59,34 +80,40 @@ if (isset($_GET['del']) && isset($_GET['id'])) {
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Add Semester</div>
+                    <div class="panel-heading">Add New Semester</div>
                     <div class="panel-body">
                         <?php if (!empty($_SESSION['msg'])): ?>
-                            <div class="alert alert-info"><?php echo htmlentities($_SESSION['msg']); $_SESSION['msg'] = ""; ?></div>
+                            <div class="alert alert-info">
+                                <?php echo htmlentities($_SESSION['msg']); unset($_SESSION['msg']); ?>
+                            </div>
                         <?php endif; ?>
+
                         <form method="post">
                             <div class="form-group">
-                                <label for="semester">Semester</label>
+                                <label for="semester">Semester Name</label>
                                 <input type="text" class="form-control" id="semester" name="semester" required />
                             </div>
-                            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" name="submit" class="btn btn-primary">Add Semester</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Display Semester Table -->
+        <!-- Semester Table -->
         <div class="row">
             <div class="col-md-12">
                 <?php if (!empty($_SESSION['delmsg'])): ?>
-                    <div class="alert alert-danger"><?php echo htmlentities($_SESSION['delmsg']); $_SESSION['delmsg'] = ""; ?></div>
+                    <div class="alert alert-danger">
+                        <?php echo htmlentities($_SESSION['delmsg']); unset($_SESSION['delmsg']); ?>
+                    </div>
                 <?php endif; ?>
+
                 <div class="panel panel-default">
                     <div class="panel-heading">Manage Semesters</div>
                     <div class="panel-body">
                         <div class="table-responsive table-bordered">
-                            <table class="table">
+                            <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -97,9 +124,10 @@ if (isset($_GET['del']) && isset($_GET['id'])) {
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sql = mysqli_query($con, "SELECT * FROM semester");
+                                    $result = $con->query("SELECT * FROM semester ORDER BY id DESC");
                                     $cnt = 1;
-                                    while ($row = mysqli_fetch_array($sql)) {
+
+                                    while ($row = $result->fetch_assoc()):
                                     ?>
                                     <tr>
                                         <td><?php echo $cnt++; ?></td>
@@ -107,12 +135,17 @@ if (isset($_GET['del']) && isset($_GET['id'])) {
                                         <td><?php echo htmlentities($row['creationDate']); ?></td>
                                         <td>
                                             <a href="semester.php?id=<?php echo $row['id']; ?>&del=delete"
-                                               onclick="return confirm('Are you sure you want to delete?');">
+                                               onclick="return confirm('Are you sure you want to delete this semester?');">
                                                 <button class="btn btn-danger btn-sm">Delete</button>
                                             </a>
                                         </td>
                                     </tr>
-                                    <?php } ?>
+                                    <?php endwhile; ?>
+                                    <?php if ($result->num_rows === 0): ?>
+                                        <tr>
+                                            <td colspan="4" class="text-center">No semesters found.</td>
+                                        </tr>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
