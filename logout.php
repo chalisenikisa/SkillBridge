@@ -1,14 +1,29 @@
 <?php
 session_start();
 include("includes/config.php");
-$_SESSION['login']=="";
-date_default_timezone_set('Asia/Kathmandu');
-$ldate=date( 'd-m-Y h:i:s A', time () );
-$uid=$_SESSION['login'];
-mysqli_query($con,"UPDATE userlog  SET logout = '$ldate' WHERE studentRegno = '$uid' ORDER BY id DESC LIMIT 1");
+
+// Only proceed if the user is logged in
+if (!empty($_SESSION['login'])) {
+    date_default_timezone_set('Asia/Kathmandu');
+    $ldate = date('d-m-Y h:i:s A');
+
+    $uid = $_SESSION['login'];
+
+    // Safely update the latest userlog entry for the user
+    $stmt = $con->prepare("UPDATE userlog SET logout = ? WHERE studentRegno = ? ORDER BY id DESC LIMIT 1");
+    $stmt->bind_param("ss", $ldate, $uid);
+    $stmt->execute();
+}
+
+// Clear all session data
 session_unset();
-$_SESSION['errmsg']="You have successfully logout";
+session_destroy();
+
+// Start new session to store logout message
+session_start();
+$_SESSION['errmsg'] = "You have successfully logged out";
+
+// Redirect to login page
+header("Location: index.php");
+exit();
 ?>
-<script language="javascript">
-document.location="index.php";
-</script>
