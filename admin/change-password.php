@@ -78,7 +78,7 @@ if(isset($_POST['submit'])){
                 </div>
             </div>
         </div>
-    </section>
+</section>
 
     <div class="content-wrapper">
         <div class="container">
