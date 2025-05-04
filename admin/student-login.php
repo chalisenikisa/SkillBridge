@@ -1,49 +1,70 @@
 <?php
 session_start();
-include('includes/config.php'); // your database connection file
+include('includes/config.php');
+error_reporting(0);
 
-if (isset($_POST['login'])) {  // when user submits login form
+if (isset($_POST['login'])) {
+    $regno = $_POST['regno'];
+    $enteredPassword = $_POST['password'];
 
-    $regno = $_POST['regno'];  // Student registration number entered
-    $enteredPassword = $_POST['password'];  // Password entered
-
-    // Fetch student from database based on reg no
     $query = mysqli_query($con, "SELECT * FROM students WHERE StudentRegno='$regno'");
     $row = mysqli_fetch_array($query);
 
     if ($row) {
-        $storedHash = $row['password'];  // Hashed password stored in DB
-
-        // NOW, here is your code
+        $storedHash = $row['password'];
         if (password_verify($enteredPassword, $storedHash)) {
-            // Password correct
             $_SESSION['slogin'] = $regno;
             $_SESSION['student_id'] = $row['id'];
-
-            header("Location: index.php"); // redirect to dashboard
+            header("Location: index.php");
             exit();
         } else {
-            // Password incorrect
             echo "<script>alert('Invalid Password!');</script>";
         }
     } else {
-        // Student registration number not found
         echo "<script>alert('Student Registration Number not found!');</script>";
     }
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Login</title>
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+        .login-box {
+            max-width: 400px;
+            margin: 80px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        .login-box h3 {
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h3 class="text-center">Student Login</h3>
+        <form method="POST" action="">
+            <div class="form-group">
+                <label for="regno">Registration Number</label>
+                <input type="text" name="regno" id="regno" required class="form-control" placeholder="Enter Registration Number">
+            </div>
 
-<form method="POST" action="">
-    <div class="form-group">
-        <label for="regno">Registration Number</label>
-        <input type="text" name="regno" id="regno" required class="form-control" placeholder="Enter Registration Number">
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required class="form-control" placeholder="Enter Password">
+            </div>
+
+            <button type="submit" name="login" class="btn btn-primary btn-block">Login</button>
+        </form>
     </div>
-
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required class="form-control" placeholder="Enter Password">
-    </div>
-
-    <button type="submit" name="login" class="btn btn-primary">Login</button>
-</form>
+</body>
+</html>
