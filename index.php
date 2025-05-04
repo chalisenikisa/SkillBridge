@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 
-    <?php include('includes/footer.php , sidebar.php'); ?>
+    <?php include('includes/footer.php '); ?>
     <script src="assets/js/jquery-1.11.1.js"></script>
     <script src="assets/js/bootstrap.js"></script>
 </body>
