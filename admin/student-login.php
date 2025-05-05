@@ -4,16 +4,17 @@ include('includes/config.php');
 error_reporting(0);
 
 if (isset($_POST['login'])) {
-    $regno = $_POST['regno'];
+    $regno = mysqli_real_escape_string($con, $_POST['regno']);
     $enteredPassword = $_POST['password'];
 
     $query = mysqli_query($con, "SELECT * FROM students WHERE StudentRegno='$regno'");
-    $row = mysqli_fetch_array($query);
 
-    if ($row) {
+    if ($query && mysqli_num_rows($query) > 0) {
+        $row = mysqli_fetch_assoc($query);
         $storedHash = $row['password'];
+
         if (password_verify($enteredPassword, $storedHash)) {
-            $_SESSION['slogin'] = $regno;
+            $_SESSION['login'] = $regno;
             $_SESSION['student_id'] = $row['id'];
             header("Location: index.php");
             exit();
