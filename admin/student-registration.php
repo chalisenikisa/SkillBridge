@@ -1,32 +1,36 @@
-<?php 
+<?php
 session_start();
 include('includes/config.php');
 
-if (strlen($_SESSION['alogin']) == 0) {   
+if (strlen($_SESSION['alogin']) == 0) {
     header('location:index.php');
     exit();
 }
 
 if (isset($_POST['submit'])) {
-    $studentname = $_POST['studentname'];
-    $studentregno = $_POST['studentregno'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);  // secure hash
+    $studentname = trim($_POST['studentname']);
+    $studentregno = trim($_POST['studentregno']);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);  // Secure hash
     $pincode = rand(100000, 999999); // 6-digit random pincode
 
-    $ret = mysqli_query($con, "INSERT INTO students(studentName, StudentRegno, password, pincode) VALUES('$studentname', '$studentregno', '$password', '$pincode')");
+    // Use prepared statement to prevent SQL injection
+    $stmt = $con->prepare("INSERT INTO students(studentName, StudentRegno, password, pincode) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("sssi", $studentname, $studentregno, $password, $pincode);
+    $ret = $stmt->execute();
+    $stmt->close();
 
     if ($ret) {
-        echo '<script>alert("Student Registered Successfully. Pincode is ' . $pincode . '")</script>';
-        echo '<script>window.location.href="manage-students.php"</script>';
+        echo "<script>alert('Student Registered Successfully. Pincode is $pincode'); window.location.href='manage-students.php';</script>";
+        exit();
     } else {
-        echo '<script>alert("Something went wrong. Please try again.")</script>';
-        echo '<script>window.location.href="manage-students.php"</script>';
+        echo "<script>alert('Something went wrong. Please try again.'); window.location.href='manage-students.php';</script>";
+        exit();
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -83,15 +87,18 @@ if (isset($_POST['submit'])) {
 <script>
 function userAvailability() {
     $("#loaderIcon").show();
-    jQuery.ajax({
+    $.ajax({
         url: "check_availability.php",
-        data: 'regno=' + $("#studentregno").val(),
         type: "POST",
+        data: { regno: $("#studentregno").val() },
         success: function(data) {
             $("#user-availability-status1").html(data);
             $("#loaderIcon").hide();
         },
-        error: function() {}
+        error: function () {
+            $("#user-availability-status1").html('<span style="color:red;">Error checking availability</span>');
+            $("#loaderIcon").hide();
+        }
     });
 }
 </script>
