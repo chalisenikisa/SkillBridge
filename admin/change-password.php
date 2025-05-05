@@ -63,14 +63,20 @@ if (isset($_POST['submit'])) {
         <!-- Sidebar -->
         <div class="col-md-3">
             <nav>
-                <ul class="nav nav-pills nav-stacked">
-                    <li><a href="dashboard.php"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="manage-students.php"><i class="fas fa-users"></i> Manage Students</a></li>
-                    <li><a href="add-course.php"><i class="fas fa-book"></i> Add Course</a></li>
-                    <li><a href="manage-courses.php"><i class="fas fa-book-open"></i> Manage Courses</a></li>
-                    <li class="active"><a href="change-password.php"><i class="fas fa-lock"></i> Change Password</a></li>
-                    <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                </ul>
+            
+    <ul class="nav nav-pills nav-stacked">
+        <li><a href="index.php?page=index">INDEX</a></li>
+        <li><a href="index.php?page=session">SESSION</a></li>
+        <li><a href="index.php?page=semester">SEMESTER</a></li>
+        <li><a href="index.php?page=department">DEPARTMENT</a></li>
+        <li><a href="index.php?page=course">COURSE</a></li>
+        <li><a href="index.php?page=registration">REGISTRATION</a></li>
+        <li><a href="index.php?page=manage students">MANAGE STUDENTS</a></li>
+        <li><a href="index.php?page=enroll history">ENROLL HISTORY</a></li>
+        <li><a href="index.php?page=student log">Student LOGS</a></li>
+        <li><a href="index.php?page=news">NEWS</a></li>
+        <li><a href="index.php?page=logout">LOGOUT</a></li>
+    </ul>
             </nav>
         </div>
 
