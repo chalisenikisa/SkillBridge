@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
             <nav>
             
             <ul class="nav nav-pills nav-stacked">
-    <li><a href="index.php"><i class="fas fa-tachometer-alt"></i> INDEX</a></li>
+    
     <li><a href="session.php"><i class="fas fa-home"></i> SESSION</a></li>
     <li><a href="semester.php"><i class="fas fa-calendar-alt"></i> SEMESTER</a></li>
     <li><a href="department.php"><i class="fas fa-building"></i> DEPARTMENT</a></li>
