@@ -1,32 +1,40 @@
 <?php
 session_start();
 include('includes/config.php');
-error_reporting(0);
+
+// Don't suppress errors entirely in development
+// error_reporting(0); // Avoid this in production
 
 if (isset($_POST['login'])) {
-    $regno = mysqli_real_escape_string($con, $_POST['regno']);
+    $regno = trim($_POST['regno']);
     $enteredPassword = $_POST['password'];
 
-    $query = mysqli_query($con, "SELECT * FROM students WHERE StudentRegno='$regno'");
+    // Use prepared statements to prevent SQL injection
+    $stmt = $con->prepare("SELECT * FROM students WHERE StudentRegno = ?");
+    $stmt->bind_param("s", $regno);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if ($query && mysqli_num_rows($query) > 0) {
-        $row = mysqli_fetch_assoc($query);
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
         $storedHash = $row['password'];
 
         if (password_verify($enteredPassword, $storedHash)) {
-            $_SESSION['login'] = $regno;
+            session_regenerate_id(true); // Prevent session fixation
+            $_SESSION['slogin'] = $regno;
             $_SESSION['student_id'] = $row['id'];
             header("Location: index.php");
             exit();
         } else {
-            echo "<script>alert('Invalid Password!');</script>";
+            echo "<script>alert('Invalid password!');</script>";
         }
     } else {
-        echo "<script>alert('Student Registration Number not found!');</script>";
+        echo "<script>alert('Student registration number not found!');</script>";
     }
+
+    $stmt->close();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,12 +66,10 @@ if (isset($_POST['login'])) {
                 <label for="regno">Registration Number</label>
                 <input type="text" name="regno" id="regno" required class="form-control" placeholder="Enter Registration Number">
             </div>
-
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" required class="form-control" placeholder="Enter Password">
             </div>
-
             <button type="submit" name="login" class="btn btn-primary btn-block">Login</button>
         </form>
     </div>
