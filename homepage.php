@@ -83,7 +83,13 @@ session_start();
 <div class="content">
     <h2>Welcome to the Online Course Registration Portal</h2>
     <p>Please log in as Admin or Student to begin.</p>
+    
+    <!-- College logo -->
     <img src="assets/img/college.png" alt="College Logo">
+
+    <!-- Student logo -->
+    <br><br>
+    <img src="assets/img/student.png" alt="Student Logo" style="max-width: 200px;">
 </div>
 
 <!-- Footer -->
