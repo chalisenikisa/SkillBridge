@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
-                            <li><a href="index.php" class="active">Student Login</a></li>
+                            <li><a href="admin/">Student Login</a></li>
                             <li><a href="admin/">Admin Login</a></li>
                         </ul>
                     </div>
