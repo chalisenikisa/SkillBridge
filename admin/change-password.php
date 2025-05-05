@@ -1,37 +1,33 @@
-
 <?php
-// Start the session to track the logged-in user
 session_start();
-
-// Include the configuration file for database connection
 include("includes/config.php");
 
-// If the form is submitted, handle the password change logic
-if(isset($_POST['submit'])){
-    $currentPassword = $_POST['currentpassword']; // Current password entered by user
-    $newPassword = $_POST['newpassword']; // New password entered by user
-    $confirmPassword = $_POST['confirmpassword']; // Confirm new password entered by user
+// Redirect if admin is not logged in
+if (!isset($_SESSION['alogin'])) {
+    header('Location: index.php');
+    exit();
+}
 
-    // Fetch the current password hash from the database for the logged-in user
-    $query = mysqli_query($con, "SELECT * FROM admin WHERE username='".$_SESSION['alogin']."'");
+// Handle password change
+if (isset($_POST['submit'])) {
+    $currentPassword = $_POST['currentpassword'];
+    $newPassword = $_POST['newpassword'];
+    $confirmPassword = $_POST['confirmpassword'];
+
+    $query = mysqli_query($con, "SELECT * FROM admin WHERE username='" . $_SESSION['alogin'] . "'");
     $num = mysqli_fetch_array($query);
-    
-    if($num) {
-        $storedHash = $num['password']; // The current hashed password in the database
-        
-        // Check if the current password entered by the user matches the stored hashed password
-        if(password_verify($currentPassword, $storedHash)) {
-            // Check if the new password and confirm password match
-            if($newPassword == $confirmPassword) {
-                // Hash the new password
-                $newHashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-                
-                // Update the password in the database
-                $updateQuery = mysqli_query($con, "UPDATE admin SET password='$newHashedPassword' WHERE username='".$_SESSION['alogin']."'");
 
-                if($updateQuery) {
+    if ($num) {
+        $storedHash = $num['password'];
+
+        if (password_verify($currentPassword, $storedHash)) {
+            if ($newPassword == $confirmPassword) {
+                $newHashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                $updateQuery = mysqli_query($con, "UPDATE admin SET password='$newHashedPassword' WHERE username='" . $_SESSION['alogin'] . "'");
+
+                if ($updateQuery) {
                     $_SESSION['msg'] = "Password updated successfully!";
-                    header("Location: login.php"); // Redirect to login page after successful password change
+                    header("Location: logout.php"); // Log out after successful password change
                     exit();
                 } else {
                     $_SESSION['errmsg'] = "Error updating password!";
@@ -43,79 +39,77 @@ if(isset($_POST['submit'])){
             $_SESSION['errmsg'] = "Current password is incorrect!";
         }
     } else {
-        $_SESSION['errmsg'] = "No user found!";
+        $_SESSION['errmsg'] = "No admin user found!";
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
+    <title>Admin - Change Password</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Change Password</title>
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
     <link href="../assets/css/style.css" rel="stylesheet" />
 </head>
 <body>
-    <?php include('includes/header.php');?> <!-- Include the header -->
+<?php include('includes/header.php'); ?>
 
-    <section class="menu-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="navbar-collapse collapse ">
-                        <ul id="menu-top" class="nav navbar-nav navbar-right">
-                             <li><a href="../index.php">Home </a></li>
-                             <li><a href="index.php">Admin Login </a></li>
-                             <li><a href="../index.php">Student Login</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+<div class="container">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <nav>
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="dashboard.php"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="manage-students.php"><i class="fas fa-users"></i> Manage Students</a></li>
+                    <li><a href="add-course.php"><i class="fas fa-book"></i> Add Course</a></li>
+                    <li><a href="manage-courses.php"><i class="fas fa-book-open"></i> Manage Courses</a></li>
+                    <li class="active"><a href="change-password.php"><i class="fas fa-lock"></i> Change Password</a></li>
+                    <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
         </div>
-</section>
 
-    <div class="content-wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h4 class="page-head-line">Change Your Password</h4>
-                </div>
-            </div>
+        <!-- Main content -->
+        <div class="col-md-9">
+            <h4 class="page-head-line">Change Your Password</h4>
 
-            <!-- Displaying success or error messages -->
-            <span style="color:red;"><?php echo htmlentities($_SESSION['errmsg']); ?></span>
-            <span style="color:green;"><?php echo htmlentities($_SESSION['msg']); ?></span>
-            
-            <!-- Password change form -->
-            <form name="changePassword" method="post">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Enter Current Password: </label>
-                        <input type="password" name="currentpassword" class="form-control" required />
-                        
-                        <label>Enter New Password: </label>
-                        <input type="password" name="newpassword" class="form-control" required />
-                        
-                        <label>Confirm New Password: </label>
-                        <input type="password" name="confirmpassword" class="form-control" required />
-                        
-                        <hr />
-                        <button type="submit" name="submit" class="btn btn-info">Update Password</button>
-                    </div>
+            <?php if (!empty($_SESSION['errmsg'])): ?>
+                <div class="alert alert-danger"><?php echo htmlentities($_SESSION['errmsg']); unset($_SESSION['errmsg']); ?></div>
+            <?php endif; ?>
+
+            <?php if (!empty($_SESSION['msg'])): ?>
+                <div class="alert alert-success"><?php echo htmlentities($_SESSION['msg']); unset($_SESSION['msg']); ?></div>
+            <?php endif; ?>
+
+            <form method="post" name="changePassword">
+                <div class="form-group">
+                    <label>Enter Current Password:</label>
+                    <input type="password" name="currentpassword" class="form-control" required />
                 </div>
+
+                <div class="form-group">
+                    <label>Enter New Password:</label>
+                    <input type="password" name="newpassword" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Confirm New Password:</label>
+                    <input type="password" name="confirmpassword" class="form-control" required />
+                </div>
+
+                <button type="submit" name="submit" class="btn btn-info">Update Password</button>
             </form>
         </div>
     </div>
+</div>
 
-    <?php include('includes/footer.php');?> <!-- Include the footer -->
-
-    <script src="../assets/js/jquery-1.11.1.js"></script>
-    <script src="../assets/js/bootstrap.js"></script>
+<?php include('includes/footer.php'); ?>
+<script src="../assets/js/jquery-1.11.1.js"></script>
+<script src="../assets/js/bootstrap.js"></script>
 </body>
 </html>

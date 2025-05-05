@@ -1,28 +1,28 @@
 <?php
 session_start();
 include('includes/config.php');
+error_reporting(0);
 
-// Redirect if admin not logged in
-if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == 0) {
+if (strlen($_SESSION['login']) == 0) {
     header('location:index.php');
-    exit();
+    exit;
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>Enroll History</title>
-    <link href="../assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
-    <link href="../assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
 </head>
-
 <body>
+
 <?php include('includes/header.php'); ?>
-<?php if ($_SESSION['alogin'] != "") include('includes/menubar.php'); ?>
+<?php include('includes/menubar.php'); ?>
 
 <div class="content-wrapper">
     <div class="container">
@@ -34,79 +34,83 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == 0) {
 
         <div class="row">
             <div class="col-md-12">
-                <!-- Enroll Table -->
+                <!-- Enroll History Table -->
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Enroll History
-                    </div>
+                    <div class="panel-heading">Enroll History</div>
                     <div class="panel-body">
                         <div class="table-responsive table-bordered">
-                            <table class="table table-striped">
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Student Name</th>
-                                        <th>Student Reg No</th>
                                         <th>Course Name</th>
+                                        <th>Session</th>
                                         <th>Department</th>
+                                        <th>Level</th>
                                         <th>Semester</th>
                                         <th>Enrollment Date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php
-                                $sql = mysqli_query($con, "
-                                    SELECT 
-                                        ce.course AS cid,
-                                        c.courseName AS courname,
-                                        s.session AS session,
-                                        d.department AS dept,
-                                        ce.enrollDate AS edate,
-                                        sem.semester AS sem,
-                                        st.studentName AS sname,
-                                        st.StudentRegno AS sregno
-                                    FROM 
-                                        courseenrolls ce
-                                    JOIN course c ON c.id = ce.course
-                                    JOIN session s ON s.id = ce.session
-                                    JOIN department d ON d.id = ce.department
-                                    JOIN semester sem ON sem.id = ce.semester
-                                    JOIN students st ON st.StudentRegno = ce.studentRegno
-                                ");
-                                $cnt = 1;
-                                while ($row = mysqli_fetch_array($sql)) {
-                                ?>
-                                    <tr>
-                                        <td><?php echo $cnt; ?></td>
-                                        <td><?php echo htmlentities($row['sname']); ?></td>
-                                        <td><?php echo htmlentities($row['sregno']); ?></td>
-                                        <td><?php echo htmlentities($row['courname']); ?></td>
-                                        <td><?php echo htmlentities($row['dept']); ?></td>
-                                        <td><?php echo htmlentities($row['sem']); ?></td>
-                                        <td><?php echo htmlentities($row['edate']); ?></td>
-                                        <td>
-                                            <a href="print.php?id=<?php echo urlencode($row['cid']); ?>" target="_blank" class="btn btn-primary">
-                                                <i class="fa fa-print"></i> Print
-                                            </a>
-                                        </td>
-                                    </tr>
-                                <?php 
-                                    $cnt++;
-                                } ?>
+<?php
+$regNo = $_SESSION['login'];
+$query = "
+    SELECT 
+        courseenrolls.course AS cid, 
+        course.courseName AS courname, 
+        session.session AS session, 
+        department.department AS dept, 
+        level.level AS level, 
+        courseenrolls.enrollDate AS edate, 
+        semester.semester AS sem 
+    FROM courseenrolls 
+    JOIN course ON course.id = courseenrolls.course 
+    JOIN session ON session.id = courseenrolls.session 
+    JOIN department ON department.id = courseenrolls.department 
+    JOIN level ON level.id = courseenrolls.level 
+    JOIN semester ON semester.id = courseenrolls.semester  
+    WHERE courseenrolls.studentRegno = '$regNo'
+";
+
+$result = mysqli_query($con, $query);
+$cnt = 1;
+while ($row = mysqli_fetch_array($result)) {
+?>
+<tr>
+    <td><?php echo $cnt; ?></td>
+    <td><?php echo htmlentities($row['courname']); ?></td>
+    <td><?php echo htmlentities($row['session']); ?></td>
+    <td><?php echo htmlentities($row['dept']); ?></td>
+    <td><?php echo htmlentities($row['level']); ?></td>
+    <td><?php echo htmlentities($row['sem']); ?></td>
+    <td><?php echo htmlentities($row['edate']); ?></td>
+    <td>
+        <a href="print.php?id=<?php echo $row['cid']; ?>" target="_blank">
+            <button class="btn btn-primary"><i class="fa fa-print"></i> Print</button>
+        </a>
+    </td>
+</tr>
+<?php
+    $cnt++;
+}
+?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                <!-- End Enroll Table -->
+                <!-- End Enroll History Table -->
             </div>
         </div>
     </div>
 </div>
 
 <?php include('includes/footer.php'); ?>
-<script src="../assets/js/jquery-1.11.1.js"></script>
-<script src="../assets/js/bootstrap.js"></script>
+
+<!-- JAVASCRIPT FILES -->
+<script src="assets/js/jquery-1.11.1.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+
 </body>
 </html>
