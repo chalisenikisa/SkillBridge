@@ -4,7 +4,6 @@ ini_set('display_errors', 1);
 session_start();
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,28 +12,50 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
 
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f5f5;
         }
         .header {
-            background-color: #691C0F;
+            background-color: #6d1d1d;
             color: white;
-            padding: 20px 0;
+            padding: 40px 0;
             text-align: center;
         }
-        .nav-link {
+        .navbar {
+            background-color: #343a40;
+            border-radius: 0;
+        }
+        .navbar-brand, .nav-link {
             color: white !important;
         }
         .nav-link:hover {
-            text-decoration: underline;
+            color: #ffc107 !important;
         }
         .content {
-            padding: 40px;
+            padding: 60px 20px;
+            background-color: white;
+            margin: 40px auto;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .content img {
+            max-width: 250px;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 15px 0;
+            background: #343a40;
+            color: white;
+            margin-top: 40px;
         }
     </style>
 </head>
@@ -42,36 +63,38 @@ session_start();
 
 <!-- Header -->
 <div class="header">
-    <div class="container">
-        <h2>Online Course Registration</h2>
-    </div>
+    <h1>Online Course Registration</h1>
+    <p>Register and manage your courses easily</p>
 </div>
 
-<!-- Navigation Menu -->
-<nav class="navbar navbar-inverse" style="margin-bottom: 0;">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg">
     <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">OCR System</a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a class="nav-link" href="index.php">HOME</a></li>
-            <li><a class="nav-link" href="admin/index.php">ADMIN LOGIN</a></li>
-            <li><a class="nav-link" href="student/index.php">STUDENT LOGIN</a></li>
+        <a class="navbar-brand" href="#">OCR System</a>
+        <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="homepage.php">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="admin/index.php">Admin Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="student/index.php">Student Login</a></li>
         </ul>
     </div>
 </nav>
 
 <!-- Main Content -->
-<div class="content text-center">
-    <div class="container">
-        <h3>Welcome to the Online Course Registration Portal</h3>
-        <p>Please choose from the options above to log in as an Admin or Student.</p>
-        <img src="assets/img/college.png" alt="College" class="img-responsive center-block" style="max-width: 300px;">
-    </div>
+<div class="content">
+    <h2>Welcome to the Online Course Registration Portal</h2>
+    <p>Please log in as Admin or Student to begin.</p>
+    <img src="assets/img/college.png" alt="College Logo">
 </div>
 
 <!-- Footer -->
-<?php include("includes/footer.php"); ?>
+<?php 
+$footerPath = "includes/footer.php";
+if (file_exists($footerPath)) {
+    include($footerPath);
+} else {
+    echo '<div class="footer">© ' . date('Y') . ' Online Course Registration System</div>';
+}
+?>
 
 <!-- Scripts -->
 <script src="assets/js/jquery-1.11.1.js"></script>
