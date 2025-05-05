@@ -1,4 +1,5 @@
-﻿@import url(http://fonts.googleapis.com/css?family=Roboto); 
+﻿@import url(http://fonts.googleapis.com/css?family=Roboto);
+
 body {
     font-family: 'Roboto', sans-serif;
     line-height: 30px;
@@ -38,23 +39,25 @@ body {
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
 }
+
 .login-icon {
     height: 60px;
-width: 60px;
-padding: 13px;
-border-radius: 50%;
-font-size: 30px;
-margin-bottom: 20px;
-color: #fff;
-text-align: center;
-cursor:pointer;
-background-color:#a02f97;
--webkit-border-radius:50%;
-    -moz-border-radius:50%;
+    width: 60px;
+    padding: 13px;
+    border-radius: 50%;
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    background-color: #a02f97;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
 }
+
 /* =============================================================
    HEADER SECTION STYLES
- ============================================================ */
+============================================================ */
 header {
     background-color: #226a8b;
     color: #fff;
@@ -62,10 +65,9 @@ header {
     text-align: right;
 }
 
-
 /* =============================================================
    LOGO SECTION STYLES
- ============================================================ */
+============================================================ */
 .left-div {
     padding-left: 30px;
     margin-top: 40px;
@@ -95,45 +97,47 @@ header {
     margin-top: 10px;
 }
 
-    .user-settings-wrapper li {
-        display: inline-block;
-    }
+.user-settings-wrapper li {
+    display: inline-block;
+}
 
-    .user-settings-wrapper .dropdown-settings {
-        width: 200px;
-        padding: 10px;
-    }
+.user-settings-wrapper .dropdown-settings {
+    width: 200px;
+    padding: 10px;
+}
 
-    .user-settings-wrapper .nav > li > a:hover,.user-settings-wrapper .nav > li > a:focus {
-        text-decoration: none;
-        background-color: #2999a1!important;
-    }
+.user-settings-wrapper .nav > li > a:hover,
+.user-settings-wrapper .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #2999a1 !important;
+}
 
-    .user-settings-wrapper img {
-        height: 64px;
-        width: 64px;
-        border: 1px solid #000000;
-    }
+.user-settings-wrapper img {
+    height: 64px;
+    width: 64px;
+    border: 1px solid #000000;
+}
 
-    .user-settings-wrapper .dropdown-menu {
-        margin: 0px;
-        border-radius: 0px!important;
-        -moz-border-radius: 0px!important;
-        -webkit-border-radius: 0px!important;
-    }
+.user-settings-wrapper .dropdown-menu {
+    margin: 0px;
+    border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    -webkit-border-radius: 0px !important;
+}
 
-    .user-settings-wrapper .btn {
-        border-radius: 0px!important;
-        -moz-border-radius: 0px!important;
-        -webkit-border-radius: 0px!important;
-    }
+.user-settings-wrapper .btn {
+    border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    -webkit-border-radius: 0px !important;
+}
 
-    .user-settings-wrapper .media-heading {
-        padding-top: 10px;
-    }
+.user-settings-wrapper .media-heading {
+    padding-top: 10px;
+}
 
-/* MENU LINKS SECTION*/
-
+/* =============================================================
+   MENU LINKS SECTION
+============================================================ */
 .menu-section {
     background-color: #3D3D3D;
 }
@@ -142,7 +146,7 @@ header {
     color: #FFF;
     text-decoration: none;
     font-weight: 500;
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
     text-transform: uppercase;
 }
 
@@ -150,12 +154,19 @@ header {
     background-color: #33aa79;
 }
 
-.menu-section .nav > li > a:hover,.menu-section .nav > li > a:focus {
-    background-color: #be8124!important;
+.menu-section .nav > li > a:hover,
+.menu-section .nav > li > a:focus {
+    background-color: #be8124 !important;
 }
 
-.menu-section .dropdown-menu > li > a:hover,.menu-section .dropdown-menu > li > a:focus {
-    background-color: #c4394e!important;
+.menu-section .dropdown-menu > li > a:hover,
+.menu-section .dropdown-menu > li > a:focus {
+    background-color: #c4394e !important;
+}
+
+/* FontAwesome icon spacing inside nav pills */
+.nav-pills > li > a i {
+    margin-right: 8px;
 }
 
 .navbar-inverse {
@@ -172,6 +183,9 @@ header {
     margin-bottom: 0px;
 }
 
+/* =============================================================
+   FOOTER SECTION
+============================================================ */
 footer {
     padding: 10px;
     color: #fff;
@@ -179,17 +193,15 @@ footer {
     background-color: #739744;
 }
 
-    footer a, footer a:hover {
-        color: #fff;
-        text-decoration: none;
-    }
+footer a,
+footer a:hover {
+    color: #fff;
+    text-decoration: none;
+}
 
-/*==============================================
-    DASHBOARD  STYLES    
- =============================================*/
-
-/* DASHBOARD ICONS */
-
+/* =============================================================
+   DASHBOARD STYLES    
+============================================================ */
 .bk-clr-one {
     background-color: #279153;
 }
@@ -212,8 +224,8 @@ footer {
     border: 2px solid #fff;
     padding: 20px;
     border-radius: 50%;
-    -webkit-border-radius:50%;
-    -moz-border-radius:50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
     font-size: 30px;
     margin-bottom: 20px;
     color: #fff;
@@ -227,13 +239,13 @@ footer {
     margin-bottom: 50px;
 }
 
-    .dashboard-div-wrapper .progress {
-        height: 2px;
-    }
+.dashboard-div-wrapper .progress {
+    height: 2px;
+}
 
-/* NOTICE BOARD */
-
-
+/* =============================================================
+   NOTICE BOARD
+============================================================ */
 .notice-board .panel {
     border-radius: 0px;
     -webkit-border-radius: 0px;
@@ -250,28 +262,31 @@ footer {
     border-bottom: 1px solid #E5E5E5;
 }
 
-    .notice-board li span {
-        margin-right: 10px;
-        border: 1px solid #DBDBDB;
-        padding: 5px;
-    }
+.notice-board li span {
+    margin-right: 10px;
+    border: 1px solid #DBDBDB;
+    padding: 5px;
+}
 
-    .notice-board li a, li a:hover {
-        text-decoration: none;
-        color: #000;
-    }
+.notice-board li a,
+li a:hover {
+    text-decoration: none;
+    color: #000;
+}
 
-/* SOCIAL BUTTONS */
+/* =============================================================
+   SOCIAL BUTTONS
+============================================================ */
 .btn-social {
     color: white;
     opacity: 0.8;
 }
 
-    .btn-social:hover {
-        color: white;
-        opacity: 1;
-        text-decoration: none;
-    }
+.btn-social:hover {
+    color: white;
+    opacity: 1;
+    text-decoration: none;
+}
 
 .btn-facebook {
     background-color: #376810;

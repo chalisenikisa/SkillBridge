@@ -39,11 +39,21 @@ if (isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Student Login</title>
+
+    <!-- Bootstrap CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
+
+    <!-- Font Awesome CDN (v6.5.0) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Local Font Awesome (optional, might be older version) -->
     <link href="assets/css/font-awesome.css" rel="stylesheet" />
+
+    <!-- Custom styles -->
     <link href="assets/css/style.css" rel="stylesheet" />
 </head>
 <body>
