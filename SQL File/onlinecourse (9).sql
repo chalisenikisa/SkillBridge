@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2025 at 07:08 AM
+-- Generation Time: May 05, 2025 at 04:29 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `username`, `password`, `creationDate`, `updationDate`) VALUES
-(1, '123name', '$2y$10$5GKrv4y11WyuqtTE2kfF0OVERCuxPJCGxajVRw8DQt06lYDyHY42W', '2025-04-25 03:47:18', NULL);
+(1, '123name', '$2y$10$AgaR.QVoCVkrwWb3dd1NjOILMG3649faqqR.FidEeShnYXPn1KS/m', '2025-04-25 03:47:18', '2025-05-01 05:19:08');
 
 -- --------------------------------------------------------
 
@@ -64,9 +64,7 @@ CREATE TABLE `course` (
 
 INSERT INTO `course` (`id`, `courseCode`, `courseName`, `courseUnit`, `noofSeats`, `creationDate`, `updationDate`) VALUES
 (3, 'CACS251', 'Operating System', '5', 10, '2025-04-21 05:12:20', NULL),
-(4, 'CACS251', 'Operating System', '5', 10, '2025-04-21 05:12:27', NULL),
-(5, 'CACS251', 'Operating System', NULL, NULL, '2025-04-25 03:44:01', NULL),
-(6, 'CACS251', 'Operating System', NULL, NULL, '2025-04-25 03:44:09', NULL);
+(7, 'CACS201', 'Data Structure and Algorithm', '4', 5, '2025-05-05 12:46:31', NULL);
 
 -- --------------------------------------------------------
 
@@ -153,7 +151,8 @@ CREATE TABLE `news` (
 
 INSERT INTO `news` (`id`, `newstitle`, `newsDescription`, `postingDate`) VALUES
 (4, 'News Test', 'New Course Started C#.This is sample text for testing.', '2025-04-21 05:38:49'),
-(5, 'News Test', 'This is for  news testing.', '2025-04-21 05:38:53');
+(5, 'News Test', 'This is for  news testing.', '2025-04-21 05:38:53'),
+(6, 'Emergency seat booking', 'There is 2 extra seat available for student for data structure and algorithm course please register immidately to capture your seat.', '2025-05-05 12:50:40');
 
 -- --------------------------------------------------------
 
@@ -221,7 +220,8 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`StudentRegno`, `studentPhoto`, `password`, `studentName`, `pincode`, `session`, `department`, `semester`, `cgpa`, `creationdate`, `updationDate`) VALUES
-('43532', NULL, '$2y$10$gpaK3lfq.4ZTnQUrv9bIVe2aDdgUio1uiWk8vjfm1IPXIHNgy.FYa', 'Rabina Nepal', '354765', '2025', 'IT', '2', 3.20, '2025-04-28 08:07:12', NULL);
+('43532', 'students.png', '$2y$10$gpaK3lfq.4ZTnQUrv9bIVe2aDdgUio1uiWk8vjfm1IPXIHNgy.FYa', 'Rabina Nepal', '354765', '2025', 'IT', '2', 3.20, '2025-04-28 08:07:12', NULL),
+('442654', NULL, '$2y$10$YnuMMzrLucNQb92U2NColea6sIDak.wnGS663mv/g1Z9TU2cWeycK', 'Sabina Thakuri', '453629', NULL, NULL, NULL, NULL, '2025-05-05 12:47:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -244,7 +244,20 @@ CREATE TABLE `userlog` (
 
 INSERT INTO `userlog` (`id`, `studentRegno`, `userip`, `loginTime`, `logout`, `status`) VALUES
 (4, '43532', NULL, '2025-04-21 05:50:23', NULL, 2),
-(5, '43532', NULL, '2025-04-21 05:50:28', NULL, 2);
+(5, '43532', NULL, '2025-04-21 05:50:28', NULL, 2),
+(6, '43532', 0x3a3a3100000000000000000000000000, '2025-05-01 05:12:12', NULL, 1),
+(7, '43532', 0x3a3a3100000000000000000000000000, '2025-05-01 05:16:37', NULL, 1),
+(8, '43532', 0x3a3a3100000000000000000000000000, '2025-05-01 05:26:36', NULL, 1),
+(9, '43532', 0x3a3a3100000000000000000000000000, '2025-05-01 14:45:39', NULL, 1),
+(10, '43532', 0x3a3a3100000000000000000000000000, '2025-05-02 08:40:39', NULL, 1),
+(11, '43532', 0x3a3a3100000000000000000000000000, '2025-05-04 12:04:03', NULL, 1),
+(12, '43532', 0x3a3a3100000000000000000000000000, '2025-05-04 12:37:22', NULL, 1),
+(13, '43532', 0x3a3a3100000000000000000000000000, '2025-05-04 14:10:11', NULL, 1),
+(14, '43532', 0x3a3a3100000000000000000000000000, '2025-05-04 14:11:47', NULL, 1),
+(15, '43532', 0x3a3a3100000000000000000000000000, '2025-05-04 14:40:16', NULL, 1),
+(16, '43532', 0x3a3a3100000000000000000000000000, '2025-05-04 15:08:05', NULL, 1),
+(17, '43532', 0x3a3a3100000000000000000000000000, '2025-05-04 15:08:13', NULL, 1),
+(18, '43532', 0x3a3a3100000000000000000000000000, '2025-05-05 12:09:08', NULL, 1);
 
 --
 -- Indexes for dumped tables
@@ -324,7 +337,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `courseenrolls`
@@ -348,7 +361,7 @@ ALTER TABLE `level`
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `semester`
@@ -360,13 +373,13 @@ ALTER TABLE `semester`
 -- AUTO_INCREMENT for table `session`
 --
 ALTER TABLE `session`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `userlog`
 --
 ALTER TABLE `userlog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
