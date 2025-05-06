@@ -1,79 +1,140 @@
 <?php
 session_start();
-include('includes/config.php');
+error_reporting(0);
+include("includes/config.php");
 
-// Redirect if not logged in
-if (!isset($_SESSION['login'])) {
-    header('location:index.php');
-    exit();
+if(isset($_POST['submit'])) {
+    $regno = $_POST['regno'];
+    $password = $_POST['password'];
+
+    // Use prepared statement to avoid SQL injection
+    $query = $con->prepare("SELECT * FROM students WHERE StudentRegno = ?");
+    $query->bind_param("s", $regno); // 's' means string
+    $query->execute();
+    $result = $query->get_result();
+    $num = $result->fetch_assoc();
+
+    if($num) {
+        // Verify password using password_verify
+        if(password_verify($password, $num['password'])) {
+            $_SESSION['login'] = $_POST['regno'];
+            $_SESSION['id'] = $num['studentRegno'];
+            $_SESSION['sname'] = $num['studentName'];
+
+            // Log the user in
+            $uip = $_SERVER['REMOTE_ADDR'];
+            $status = 1;
+            $log = $con->prepare("INSERT INTO userlog(studentRegno, userip, status) VALUES (?, ?, ?)");
+            $log->bind_param("ssi", $_SESSION['login'], $uip, $status);
+            $log->execute();
+
+            // Redirect to change-password.php
+            header("Location: change-password.php");
+            exit();
+        } else {
+            $_SESSION['errmsg'] = "Invalid Reg no or Password";
+            header("Location: index.php");
+            exit();
+        }
+    } else {
+        $_SESSION['errmsg'] = "Invalid Reg no or Password";
+        header("Location: index.php");
+        exit();
+    }
 }
-
-$studentName = $_SESSION['sname'];
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Student Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
-    <!-- Bootstrap CSS -->
+    <title>Student Login</title>
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet" />
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+    <?php include('includes/header.php');?>
 
-<?php include('includes/header.php'); ?>
+    <section class="menu-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="navbar-collapse collapse">
+                        <ul id="menu-top" class="nav navbar-nav navbar-right">
+                             <li><a href="admin/">Admin Login </a></li>
+                             <li><a href="index.php">Student Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="container" style="margin-top: 60px;">
-    <div class="row">
-        <div class="col-md-12">
-            <h2 class="text-center">Welcome, <?php echo htmlentities($studentName); ?>!</h2>
-            <hr>
+    <div class="content-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="page-head-line">Please Login To Enter</h4>
+                </div>
+            </div>
+            
+            <!-- Display error message if exists -->
+            <span style="color:red;">
+                <?php 
+                    echo htmlentities($_SESSION['errmsg']);
+                    $_SESSION['errmsg'] = ""; // Clear the error after showing it
+                ?>
+            </span>
+
+            <form name="admin" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Enter Reg no: </label>
+                        <input type="text" name="regno" class="form-control" required />
+                        
+                        <label>Enter Password: </label>
+                        <input type="password" name="password" class="form-control" required />
+                        
+                        <hr />
+                        
+                        <button type="submit" name="submit" class="btn btn-info">
+                            <span class="glyphicon glyphicon-user"></span> &nbsp;Log Me In 
+                        </button>&nbsp;
+                    </div>
+                </div>
+            </form>
+
+            <div class="col-md-6">
+                <div class="alert alert-info">
+                    <strong>Latest News / Updates</strong>
+                    <marquee direction='up' scrollamount="2" onmouseover="this.stop();" onmouseout="this.start();">
+                        <ul>
+                            <?php
+                                $sql = mysqli_query($con, "SELECT * FROM news");
+                                while($row = mysqli_fetch_array($sql)) {
+                                    echo '<li><a href="news-details.php?nid=' . htmlentities($row['id']) . '">'
+                                        . htmlentities($row['newstitle']) . ' - ' . htmlentities($row['postingDate']) . '</a></li>';
+                                }
+                            ?>
+                        </ul>
+                    </marquee>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="row text-center">
-        <div class="col-md-3 col-sm-6 mb-3">
-            <a href="enroll.php" class="btn btn-primary btn-block">
-                <i class="fa fa-pencil-alt"></i> Enroll for Course
-            </a>
-        </div>
+    <!-- FOOTER SECTION END-->
+    <?php include('includes/footer.php');?>
 
-        <div class="col-md-3 col-sm-6 mb-3">
-            <a href="enroll-history.php" class="btn btn-info btn-block">
-                <i class="fa fa-history"></i> Enroll History
-            </a>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-3">
-            <a href="my-profile.php" class="btn btn-success btn-block">
-                <i class="fa fa-user"></i> My Profile
-            </a>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-3">
-            <a href="change-password.php" class="btn btn-warning btn-block">
-                <i class="fa fa-key"></i> Change Password
-            </a>
-        </div>
-
-        <div class="col-md-12 mt-4">
-            <a href="logout.php" class="btn btn-danger btn-block">
-                <i class="fa fa-sign-out-alt"></i> Logout
-            </a>
-        </div>
-    </div>
-</div>
-
-<?php include('includes/footer.php'); ?>
-
-<!-- Scripts -->
-<script src="assets/js/jquery-1.11.1.js"></script>
-<script src="assets/js/bootstrap.js"></script>
+    <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME -->
+    <!-- CORE JQUERY SCRIPTS -->
+    <script src="assets/js/jquery-1.11.1.js"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="assets/js/bootstrap.js"></script>
 </body>
 </html>

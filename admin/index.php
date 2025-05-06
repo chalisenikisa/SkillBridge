@@ -49,8 +49,7 @@ if (isset($_POST['submit'])) {
         <div class="row">
             <div class="col-md-12">
                 <ul id="menu-top" class="nav navbar-nav navbar-right">
-                    <li><a href="../index.php">Home</a></li>
-                    <li><a href="index.php" class="active">Admin Login</a></li>
+                     <li><a href="index.php" class="active">Admin Login</a></li>
                     <li><a href="../index.php">Student Login</a></li>
                 </ul>
             </div>
