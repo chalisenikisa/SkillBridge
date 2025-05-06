@@ -16,101 +16,115 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
-    /* Global Styles */
-    body {
-        font-family: 'Segoe UI', sans-serif;
-        background-color: #f0f4f8;
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-    }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+        }
 
-    /* Branding Section */
-    .brand-header {
-        background-color: #003c3c;
-        color: white;
-        padding: 40px 0;
-        text-align: center;
-        border-bottom: 5px solid #d4af37;
-        width: 100%;
-    }
+        /* Branding Section */
+        .brand-header {
+            background-color: #003c3c;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-bottom: 5px solid #d4af37;
+        }
 
-    .brand-header img {
-        height: 70px;
-        margin-bottom: 10px;
-        max-width: 100%; /* Ensures logo is responsive */
-    }
+        .brand-header img {
+            height: 70px;
+            margin-bottom: 10px;
+        }
 
-    .brand-header h1 {
-        font-size: 3rem;
-        margin: 10px 0;
-        font-weight: bold;
-        color: #d4af37;
-        line-height: 1.2;
-    }
-
-    .brand-header p {
-        font-size: 1.1rem;
-        color: #e0e0e0;
-        line-height: 1.5;
-    }
-
-    /* Navbar Styles */
-    .navbar {
-        background-color: #004d4d;
-        padding: 0.5rem 1rem;
-    }
-
-    .navbar .navbar-toggler {
-        border-color: rgba(255, 255, 255, 0.3);
-    }
-
-    .nav-link {
-        color: white !important;
-        font-weight: 500;
-        padding: 10px 15px;
-        font-size: 1.1rem;
-    }
-
-    .nav-link i {
-        margin-right: 6px;
-    }
-
-    .nav-link:hover {
-        color: #d4af37 !important;
-    }
-
-    /* Mobile and Tablet Responsiveness */
-    @media (max-width: 768px) {
         .brand-header h1 {
-            font-size: 2.2rem;
+            font-size: 2.8rem;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #d4af37;
         }
 
         .brand-header p {
-            font-size: 1rem;
+            font-size: 1.1rem;
+            color: #e0e0e0;
         }
 
-        .navbar .nav-link {
-            font-size: 1rem;
-            padding: 8px 10px;
+        /* Navbar */
+        .navbar {
+            background-color: #004d4d;
         }
-    }
 
-    /* Larger Screens */
-    @media (min-width: 992px) {
-        .navbar .nav-link {
-            font-size: 1.2rem;
-            padding: 12px 20px;
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
         }
-    }
 
-    /* Ensuring full screen fit */
-    .container-fluid {
-        width: 100%;
-        padding-left: 0;
-        padding-right: 0;
-    }
-</style>
+        .nav-link i {
+            margin-right: 6px;
+        }
+
+        .nav-link:hover {
+            color: #d4af37 !important;
+        }
+
+        .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* Main Content */
+        .content {
+            max-width: 900px;
+            background: white;
+            margin: 60px auto;
+            padding: 50px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .content h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #003c3c;
+        }
+
+        .content p {
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        .content img {
+            max-width: 220px;
+            margin: 20px;
+            transition: transform 0.3s;
+        }
+
+        .content img:hover {
+            transform: scale(1.05);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            background: #003c3c;
+            color: white;
+            margin-top: 60px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .brand-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .content {
+                padding: 40px 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 
