@@ -29,16 +29,16 @@ if(isset($_POST['submit'])) {
             $log->execute();
 
             // Redirect to change-password.php
-            header("Location: change-password.php");
+            header("Location: student/change-password.php");
             exit();
         } else {
             $_SESSION['errmsg'] = "Invalid Reg no or Password";
-            header("Location: index.php");
+            header("Location: student/index.php");
             exit();
         }
     } else {
         $_SESSION['errmsg'] = "Invalid Reg no or Password";
-        header("Location: index.php");
+        header("Location: student/index.php");
         exit();
     }
 }
