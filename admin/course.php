@@ -4,7 +4,7 @@ include('includes/config.php');
 
 // Check if admin is logged in
 if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == 0) {
-    header('location:index.php');
+    header('location:student/index.php');
     exit();
 }
 
@@ -50,7 +50,7 @@ if (isset($_GET['del']) && isset($_GET['id'])) {
 <body>
     <?php include('includes/header.php'); ?>
 
-    <!-- Sidebar -->
+    
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">

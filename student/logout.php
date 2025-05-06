@@ -1,32 +1,20 @@
 <?php
 session_start();
-include("includes/config.php");
 
-// Check if student is logged in
-if (!empty($_SESSION['login'])) {
-    date_default_timezone_set('Asia/Kathmandu');
-    $ldate = date('Y-m-d H:i:s'); // Use MySQL-compatible datetime format
+// Unset all session variables
+$_SESSION = [];
 
-    $uid = $_SESSION['login'];
-
-    // Update the latest log entry for this student
-    $stmt = $con->prepare("
-        UPDATE userlog 
-        SET logout = ? 
-        WHERE studentRegno = ? 
-        ORDER BY id DESC 
-        LIMIT 1
-    ");
-    $stmt->bind_param("ss", $ldate, $uid);
-    $stmt->execute();
-    $stmt->close();
+// Destroy the session completely
+if (ini_get("session.use_cookies")) {
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]
+    );
 }
-
-// Destroy the session securely
-session_unset();
 session_destroy();
 
-// Start new session to show logout message
+// Start a new session to set the logout message
 session_start();
 $_SESSION['errmsg'] = "You have successfully logged out.";
 

@@ -5,7 +5,7 @@ error_reporting(0);
 
 // Redirect if user is not logged in
 if (!isset($_SESSION['login']) || strlen($_SESSION['login']) == 0) {
-    header('location:index.php');
+    header('location:student/index.php');
     exit();
 }
 
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 <body>
 <?php include('includes/header.php'); ?>
 <?php if ($_SESSION['login'] != "") {
-    include('includes/menubar.php');
+    
 } ?>
 
 <div class="content-wrapper">
