@@ -1,158 +1,131 @@
 <?php
 session_start();
-if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == 0) {
+include('includes/config.php');
+
+// Check if the admin is logged in
+if (strlen($_SESSION['alogin']) == 0) {
     header('location:index.php');
     exit();
+}
+
+if (isset($_POST['submit'])) {
+    // Get form data and sanitize inputs
+    $studentname = mysqli_real_escape_string($con, $_POST['studentname']);
+    $studentregno = mysqli_real_escape_string($con, $_POST['studentregno']);
+    $password = md5($_POST['password']);  // Hash the password securely
+    $pincode = rand(100000, 999999);  // Generate a 6-digit pincode
+
+    // Insert student data into the database
+    $query = "INSERT INTO students (studentName, StudentRegno, password, pincode) 
+              VALUES ('$studentname', '$studentregno', '$password', '$pincode')";
+
+    $ret = mysqli_query($con, $query);
+
+    if ($ret) {
+        // Registration success
+        $_SESSION['msg'] = "Student Registered Successfully. Pincode is: " . $pincode;
+        header("Location: manage-students.php");
+        exit();
+    } else {
+        // Registration failure
+        $_SESSION['msg'] = "Something went wrong. Please try again.";
+    }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Admin Panel - Student Registration</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
-    <!-- Bootstrap CSS -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Admin | Student Registration</title>
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
     <link href="../assets/css/font-awesome.css" rel="stylesheet" />
-
-    <style>
-        * { box-sizing: border-box; }
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-        }
-        .wrapper { display: flex; }
-        .sidebar {
-            width: 220px;
-            background-color: #f8f9fa;
-            border-right: 1px solid #ddd;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            overflow-y: auto;
-            padding-top: 20px;
-        }
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            color: #333;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        .sidebar a:hover { background-color: #e9ecef; }
-        .sidebar i { margin-right: 10px; }
-        .main-content {
-            margin-left: 220px;
-            padding: 30px;
-            width: calc(100% - 220px);
-        }
-        .page-head-line {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 25px;
-            color: #333;
-        }
-        .panel {
-            background: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
-        .panel-heading {
-            padding: 10px 15px;
-            background: #007bff;
-            color: #fff;
-            font-weight: bold;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-        }
-        .panel-body { padding: 15px; }
-        table th, table td { vertical-align: middle !important; }
-    </style>
+    <link href="../assets/css/style.css" rel="stylesheet" />
 </head>
+
 <body>
+    <?php include('includes/header.php'); ?>
 
-<div class="wrapper">
-    <?php include('includes/sidebar.php'); ?>
+    <?php
+    if ($_SESSION['alogin'] != "") {
+        include('includes/menubar.php');
+    }
+    ?>
 
-    <div class="main-content">
-        <h1 class="page-head-line">STUDENT REGISTRATION</h1>
-
-        <!-- Student Registration Form -->
-        <div class="panel">
-            <div class="panel-heading">Register New Student</div>
-            <div class="panel-body">
-                <form method="post">
-                    <div class="form-group">
-                        <label for="studentname">Full Name</label>
-                        <input type="text" class="form-control" id="studentname" name="studentname" placeholder="Enter Full Name" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email ID</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="course">Course</label>
-                        <input type="text" class="form-control" id="course" name="course" placeholder="Enter Course" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="regdate">Registration Date</label>
-                        <input type="date" class="form-control" id="regdate" name="regdate" required />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Register Student</button>
-                </form>
+    <div class="content-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-head-line">Student Registration</h1>
+                </div>
             </div>
-        </div>
 
-        <!-- Registered Students Table -->
-        <div class="panel">
-            <div class="panel-heading">Registered Students</div>
-            <div class="panel-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Course</th>
-                            <th>Registration Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Sample static rows. Replace with PHP database logic later. -->
-                        <tr>
-                            <td>1</td>
-                            <td>John Doe</td>
-                            <td>john@example.com</td>
-                            <td>BCA</td>
-                            <td>2025-04-20</td>
-                            <td><button class="btn btn-danger btn-sm">Delete</button></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Jane Smith</td>
-                            <td>jane@example.com</td>
-                            <td>MCA</td>
-                            <td>2025-04-22</td>
-                            <td><button class="btn btn-danger btn-sm">Delete</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Student Registration
+                        </div>
+
+                        <font color="green" align="center">
+                            <?php echo htmlentities($_SESSION['msg']); ?>
+                            <?php $_SESSION['msg'] = ""; ?>
+                        </font>
+
+                        <div class="panel-body">
+                            <form name="dept" method="post">
+                                <div class="form-group">
+                                    <label for="studentname">Student Name</label>
+                                    <input type="text" class="form-control" id="studentname" name="studentname" placeholder="Student Name" required />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="studentregno">Student Reg No</label>
+                                    <input type="text" class="form-control" id="studentregno" name="studentregno" onBlur="userAvailability()" placeholder="Student Reg no" required />
+                                    <span id="user-availability-status1" style="font-size:12px;"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required />
+                                </div>
+
+                                <button type="submit" name="submit" id="submit" class="btn btn-default">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- JS Scripts -->
-<script src="../assets/js/jquery-1.11.1.js"></script>
-<script src="../assets/js/bootstrap.js"></script>
+    <?php include('includes/footer.php'); ?>
+
+    <script src="../assets/js/jquery-1.11.1.js"></script>
+    <script src="../assets/js/bootstrap.js"></script>
+
+    <script>
+    // AJAX function to check user availability
+    function userAvailability() {
+        $("#loaderIcon").show();
+        jQuery.ajax({
+            url: "check_availability.php",
+            data: 'regno=' + $("#studentregno").val(),
+            type: "POST",
+            success: function(data) {
+                $("#user-availability-status1").html(data);
+                $("#loaderIcon").hide();
+            },
+            error: function() {
+                // handle error
+            }
+        });
+    }
+    </script>
+
 </body>
 </html>
