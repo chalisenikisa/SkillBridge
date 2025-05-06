@@ -16,10 +16,18 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
-        body {
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
             font-family: 'Segoe UI', sans-serif;
             background-color: #f0f4f8;
-            margin: 0;
+        }
+
+        .wrapper {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Branding Section */
@@ -76,13 +84,13 @@ session_start();
 
         /* Main Content */
         .content {
-            max-width: 900px;
-            background: white;
-            margin: 60px auto;
-            padding: 50px 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            padding: 40px 20px;
         }
 
         .content h2 {
@@ -94,6 +102,7 @@ session_start();
         .content p {
             color: #555;
             margin-bottom: 40px;
+            max-width: 600px;
         }
 
         .content img {
@@ -111,7 +120,6 @@ session_start();
             padding: 20px 0;
             background: #003c3c;
             color: white;
-            margin-top: 60px;
             font-size: 0.95rem;
         }
 
@@ -121,67 +129,65 @@ session_start();
             }
 
             .content {
-                padding: 40px 20px;
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
-
-<!-- Brand Header -->
-<div class="brand-header">
-    <img src="assets/img/skillbridge_logo.png" alt="Skillbridge Logo">
-    <h1>Skillbridge</h1>
-    <p>Ignite Your Curiosity, Explore Education</p>
-</div>
-
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-        <a class="navbar-brand" href="#"><i class="fas fa-graduation-cap"></i> OCR System</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="homepage.php"><i class="fas fa-home"></i> Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin/index.php"><i class="fas fa-user-shield"></i> Admin Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="student/index.php"><i class="fas fa-user-graduate"></i> Student Login</a>
-                </li>
-            </ul>
-        </div>
+<div class="wrapper">
+    <!-- Brand Header -->
+    <div class="brand-header">
+        <img src="assets/img/skillbridge_logo.png" alt="Skillbridge Logo">
+        <h1>Skillbridge</h1>
+        <p>Ignite Your Curiosity, Explore Education</p>
     </div>
-</nav>
 
-<!-- Main Content -->
-<div class="content">
-    <h2>Welcome to the Online Course Registration Portal</h2>
-    <p>Manage your educational journey with ease. Choose your role below:</p>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-graduation-cap"></i> OCR System</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <!-- Logos -->
-    <img src="assets/img/college.png" alt="College Logo">
-    <img src="assets/img/student.png" alt="Student Logo">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="homepage.php"><i class="fas fa-home"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin/index.php"><i class="fas fa-user-shield"></i> Admin Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="student/index.php"><i class="fas fa-user-graduate"></i> Student Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="content">
+        <h2>Welcome to the Online Course Registration Portal</h2>
+        <p>Manage your educational journey with ease. Choose your role below:</p>
+        <img src="assets/img/college.png" alt="College Logo">
+        <img src="assets/img/student.png" alt="Student Logo">
+    </div>
+
+    <!-- Footer -->
+    <?php 
+    $footerPath = "includes/footer.php";
+    if (file_exists($footerPath)) {
+        include($footerPath);
+    } else {
+        echo '<div class="footer">© ' . date('Y') . ' Skillbridge - Online Course Registration System</div>';
+    }
+    ?>
 </div>
-
-<!-- Footer -->
-<?php 
-$footerPath = "includes/footer.php";
-if (file_exists($footerPath)) {
-    include($footerPath);
-} else {
-    echo '<div class="footer">© ' . date('Y') . ' Skillbridge - Online Course Registration System</div>';
-}
-?>
 
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
