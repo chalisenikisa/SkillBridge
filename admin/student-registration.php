@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 
     <?php
     if ($_SESSION['alogin'] != "") {
-        include('includes/menubar.php');
+        include('includes/sidebar.php');
     }
     ?>
 
