@@ -1,140 +1,77 @@
 <?php
 session_start();
-error_reporting(0);
-include("includes/config.php");
+include('includes/config.php');
 
-if (isset($_POST['submit'])) {
-    $regno = $_POST['regno'];
-    $password = $_POST['password'];
-
-    // Use prepared statements to prevent SQL injection
-    $stmt = $con->prepare("SELECT * FROM students WHERE StudentRegno = ?");
-    $stmt->bind_param("s", $regno);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-
-    if ($row && password_verify($password, $row['password'])) {
-        // Authentication success
-        $_SESSION['login'] = $regno;
-        $_SESSION['id'] = $row['StudentRegno'];
-        $_SESSION['sname'] = $row['studentName'];
-
-        $uip = $_SERVER['REMOTE_ADDR'];
-        $status = 1;
-        $log_stmt = $con->prepare("INSERT INTO userlog(studentRegno, userip, status) VALUES(?, ?, ?)");
-        $log_stmt->bind_param("ssi", $regno, $uip, $status);
-        $log_stmt->execute();
-
-        header("Location: change-password.php");
-        exit();
-    } else {
-        $_SESSION['errmsg'] = "Invalid Reg no or Password";
-        header("Location: index.php");
-        exit();
-    }
+// Redirect if not logged in
+if (!isset($_SESSION['login'])) {
+    header('location:index.php');
+    exit();
 }
+
+$studentName = $_SESSION['sname'];
 ?>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Student Login</title>
+    <meta charset="UTF-8">
+    <title>Student Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
-
-    <!-- Font Awesome CDN (v6.5.0) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- Local Font Awesome (optional, might be older version) -->
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-
-    <!-- Custom styles -->
     <link href="assets/css/style.css" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
     <?php include('includes/header.php'); ?>
 
-    <section class="menu-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="navbar-collapse collapse">
-                        <ul id="menu-top" class="nav navbar-nav navbar-right">
-                            <li><a href="admin/">Student Login</a></li>
-                            <li><a href="admin/">Admin Login</a></li>
-                        </ul>
-                    </div>
-                </div>
+    <div class="container" style="margin-top: 60px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center">Welcome, <?php echo htmlentities($studentName); ?>!</h2>
+                <hr>
             </div>
         </div>
-    </section>
 
-    <div class="content-wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h4 class="page-head-line">Please Login To Enter</h4>
-                </div>
+        <div class="row text-center">
+            <div class="col-md-3 col-sm-6 mb-3">
+                <a href="enroll.php" class="btn btn-primary btn-block">
+                    <i class="fa fa-pencil-alt"></i> Enroll for Course
+                </a>
             </div>
 
-            <!-- Error message -->
-            <?php if (!empty($_SESSION['errmsg'])): ?>
-                <div class="alert alert-danger">
-                    <?php 
-                        echo htmlentities($_SESSION['errmsg']); 
-                        $_SESSION['errmsg'] = ""; 
-                    ?>
-                </div>
-            <?php endif; ?>
-
-            <!-- Login form -->
-            <form name="studentlogin" method="post" autocomplete="off">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Enter Reg no:</label>
-                        <input type="text" name="regno" class="form-control" required />
-
-                        <label>Enter Password:</label>
-                        <input type="password" name="password" class="form-control" required />
-
-                        <hr />
-                        <button type="submit" name="submit" class="btn btn-info">
-                            <span class="glyphicon glyphicon-user"></span> &nbsp;Log Me In
-                        </button>
-                    </div>
-                </div>
-            </form>
-
-            <!-- News / Updates -->
-            <div class="row" style="margin-top: 20px;">
-                <div class="col-md-6">
-                    <div class="alert alert-info">
-                        <strong>Latest News / Updates</strong>
-                        <marquee direction="up" scrollamount="2" onmouseover="this.stop();" onmouseout="this.start();">
-                            <ul style="list-style: none; padding-left: 0;">
-                                <?php
-                                $sql = mysqli_query($con, "SELECT * FROM news ORDER BY postingDate DESC");
-                                while ($news = mysqli_fetch_array($sql)) {
-                                    echo '<li><a href="news-details.php?nid=' . htmlentities($news['id']) . '">'
-                                        . htmlentities($news['newstitle']) . ' - '
-                                        . htmlentities($news['postingDate']) . '</a></li>';
-                                }
-                                ?>
-                            </ul>
-                        </marquee>
-                    </div>
-                </div>
+            <div class="col-md-3 col-sm-6 mb-3">
+                <a href="enroll-history.php" class="btn btn-info btn-block">
+                    <i class="fa fa-history"></i> Enroll History
+                </a>
             </div>
 
+            <div class="col-md-3 col-sm-6 mb-3">
+                <a href="my-profile.php" class="btn btn-success btn-block">
+                    <i class="fa fa-user"></i> My Profile
+                </a>
+            </div>
+
+            <div class="col-md-3 col-sm-6 mb-3">
+                <a href="change-password.php" class="btn btn-warning btn-block">
+                    <i class="fa fa-key"></i> Change Password
+                </a>
+            </div>
+
+            <div class="col-md-12 mt-4">
+                <a href="logout.php" class="btn btn-danger btn-block">
+                    <i class="fa fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
         </div>
     </div>
 
-    <?php include('includes/footer.php '); ?>
+    <?php include('includes/footer.php'); ?>
+
+    <!-- Scripts -->
     <script src="assets/js/jquery-1.11.1.js"></script>
     <script src="assets/js/bootstrap.js"></script>
 </body>
