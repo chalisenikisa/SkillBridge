@@ -27,11 +27,11 @@ if (isset($_POST['submit'])) {
         $log_stmt->bind_param("ssi", $regno, $uip, $status);
         $log_stmt->execute();
 
-        header("Location: student-dashboard.php");
+        header("Location: index.php");
         exit();
     } else {
         $_SESSION['errmsg'] = "Invalid Registration Number or Password";
-        header("Location: student-login.php");
+        header("Location: index.php");
         exit();
     }
 }
@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
 <section class="menu-section">
     <div class="container">
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="student/">Student Login</a></li>
+            <li><a href="student">Student Login</a></li>
             <li><a href="admin/">Admin Login</a></li>
         </ul>
     </div>
