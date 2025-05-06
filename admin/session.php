@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 include('includes/config.php');
 
@@ -59,7 +62,7 @@ if (isset($_GET['del']) && isset($_GET['id'])) {
 
 <body>
 <?php include('includes/header.php'); ?>
-<?php if ($_SESSION['alogin'] != "") include('includes/sidebar.php'); ?>
+<?php if (file_exists('includes/sidebar.php') && $_SESSION['alogin'] != "") include('includes/sidebar.php'); ?>
 
 <div class="main-content">
     <div class="container">
