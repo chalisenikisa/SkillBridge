@@ -19,77 +19,112 @@ session_start();
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
-            background-color: #f5f5f5;
+            background-color: #f0f4f8;
+            margin: 0;
         }
 
+        /* Branding Section */
         .brand-header {
             background-color: #003c3c;
             color: white;
-            padding: 30px 0;
+            padding: 40px 0;
             text-align: center;
+            border-bottom: 5px solid #d4af37;
         }
 
         .brand-header img {
-            max-height: 60px;
+            height: 70px;
             margin-bottom: 10px;
         }
 
         .brand-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 2.8rem;
+            margin: 10px 0;
             font-weight: bold;
             color: #d4af37;
         }
 
         .brand-header p {
             font-size: 1.1rem;
-            color: #ccc;
+            color: #e0e0e0;
         }
 
+        /* Navigation Bar */
         .navbar {
-            background-color: #005050;
-            border-radius: 0;
+            background-color: #004d4d;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
-        .navbar-brand, .nav-link {
+        .nav-link {
             color: white !important;
             font-weight: 500;
+            transition: color 0.3s;
         }
 
         .nav-link i {
-            margin-right: 6px;
+            margin-right: 8px;
         }
 
         .nav-link:hover {
             color: #d4af37 !important;
         }
 
+        .navbar-toggler {
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .navbar-toggler-icon {
+            color: white;
+        }
+
+        /* Main Content */
         .content {
-            padding: 60px 20px;
-            background-color: white;
-            margin: 40px auto;
-            max-width: 800px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 900px;
+            background: white;
+            margin: 60px auto;
+            padding: 50px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
             text-align: center;
         }
 
+        .content h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #003c3c;
+        }
+
+        .content p {
+            color: #555;
+            margin-bottom: 40px;
+        }
+
         .content img {
-            max-width: 250px;
-            margin-top: 20px;
+            max-width: 220px;
+            margin: 20px;
+            transition: transform 0.3s;
+        }
+
+        .content img:hover {
+            transform: scale(1.05);
         }
 
         .footer {
             text-align: center;
-            padding: 15px 0;
+            padding: 20px 0;
             background: #003c3c;
             color: white;
-            margin-top: 40px;
+            margin-top: 60px;
+            font-size: 0.95rem;
         }
 
-        /* Responsive navbar toggle icon */
-        .navbar-toggler-icon {
-            color: white;
+        @media (max-width: 768px) {
+            .brand-header h1 {
+                font-size: 2.2rem;
+            }
+            .content {
+                padding: 40px 20px;
+            }
         }
     </style>
 </head>
@@ -105,26 +140,22 @@ session_start();
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="#">OCR System</a>
+        <a class="navbar-brand text-white font-weight-bold" href="#">
+            <i class="fa fa-graduation-cap"></i> OCR System
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-            <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
+            <span><i class="fa fa-bars text-white"></i></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="homepage.php">
-                        <i class="fa fa-home"></i>Home
-                    </a>
+                    <a class="nav-link" href="homepage.php"><i class="fa fa-home"></i> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin/index.php">
-                        <i class="fa fa-user-shield"></i>Admin Login
-                    </a>
+                    <a class="nav-link" href="admin/index.php"><i class="fa fa-user-shield"></i> Admin Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="student/index.php">
-                        <i class="fa fa-user-graduate"></i>Student Login
-                    </a>
+                    <a class="nav-link" href="student/index.php"><i class="fa fa-user-graduate"></i> Student Login</a>
                 </li>
             </ul>
         </div>
@@ -134,14 +165,11 @@ session_start();
 <!-- Main Content -->
 <div class="content">
     <h2>Welcome to the Online Course Registration Portal</h2>
-    <p>Please log in as Admin or Student to begin.</p>
+    <p>Manage your educational journey with ease. Choose your role below:</p>
 
-    <!-- College logo -->
+    <!-- Logos -->
     <img src="assets/img/college.png" alt="College Logo">
-
-    <!-- Student logo -->
-    <br><br>
-    <img src="assets/img/student.png" alt="Student Logo" style="max-width: 200px;">
+    <img src="assets/img/student.png" alt="Student Logo">
 </div>
 
 <!-- Footer -->
