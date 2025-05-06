@@ -11,7 +11,7 @@ session_start();
     <title>Skillbridge - Online Course Registration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap & Font Awesome -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <link href="assets/css/font-awesome.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
@@ -53,6 +53,11 @@ session_start();
 
         .navbar-brand, .nav-link {
             color: white !important;
+            font-weight: 500;
+        }
+
+        .nav-link i {
+            margin-right: 6px;
         }
 
         .nav-link:hover {
@@ -81,6 +86,11 @@ session_start();
             color: white;
             margin-top: 40px;
         }
+
+        /* Responsive navbar toggle icon */
+        .navbar-toggler-icon {
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -97,13 +107,25 @@ session_start();
     <div class="container">
         <a class="navbar-brand" href="#">OCR System</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-            <span class="navbar-toggler-icon" style="color:white;"></span>
+            <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link" href="homepage.php">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="admin/index.php">Admin Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="student/index.php">Student Login</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="homepage.php">
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin/index.php">
+                        <i class="fa fa-user-shield"></i>Admin Login
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="student/index.php">
+                        <i class="fa fa-user-graduate"></i>Student Login
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
