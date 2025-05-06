@@ -5,7 +5,7 @@ error_reporting(0);
 
 // Redirect if not logged in or pincode not set
 if (strlen($_SESSION['login']) == 0 || strlen($_SESSION['pcode']) == 0) {
-    header('location:student/student/index.php');
+    header('location:index.php');
     exit;
 }
 
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 <body>
 
 <?php include('includes/header.php'); ?>
-<?php include('includes/menubar.php'); ?>
+
 
 <div class="content-wrapper">
     <div class="container">
