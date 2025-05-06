@@ -23,7 +23,7 @@ if (strlen($_SESSION['login']) == 0) {
 
 <body>
 <?php include('includes/header.php'); ?>
-<?php include('includes/menubar.php'); ?>
+
 
 <div class="content-wrapper">
     <div class="container">

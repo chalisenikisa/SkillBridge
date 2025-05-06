@@ -29,7 +29,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 <body>
     <?php include('includes/header.php'); ?>
 
-    <?php if ($_SESSION['alogin'] != "") include('includes/sidebar.php'); ?>
+    <?php if ($_SESSION['alogin'] != "")?>
 
     <div class="main-content">
         <div class="container-fluid">

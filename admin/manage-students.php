@@ -36,7 +36,7 @@ if(strlen($_SESSION['alogin']) == 0) {
 </head>
 <body>
 <?php include('includes/header.php'); ?>
-<?php if($_SESSION['alogin'] != "") { include('includes/menubar.php'); } ?>
+<?php if($_SESSION['alogin'] != "") 
 
 <div class="content-wrapper">
     <div class="container">

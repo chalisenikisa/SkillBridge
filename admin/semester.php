@@ -60,7 +60,6 @@ if (isset($_GET['del']) && isset($_GET['id'])) {
 <body>
 
 <?php include('includes/header.php'); ?>
-<?php include('includes/sidebar.php'); ?>
 
 <div class="main-content">
     <div class="container">

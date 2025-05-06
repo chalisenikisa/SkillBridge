@@ -104,7 +104,7 @@ if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == 0) {
 <body>
 
 <div class="wrapper">
-    <?php include('includes/sidebar.php'); ?>
+    
 
     <div class="main-content">
         <h1 class="page-head-line">DEPARTMENT</h1>

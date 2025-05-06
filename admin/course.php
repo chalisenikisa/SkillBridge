@@ -54,7 +54,7 @@ if (isset($_GET['del']) && isset($_GET['id'])) {
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">
-                <?php include('includes/sidebar.php'); ?> <!-- Sidebar inclusion -->
+                
             </div>
 
             <div class="col-md-9">

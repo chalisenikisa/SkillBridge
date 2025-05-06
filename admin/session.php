@@ -62,7 +62,7 @@ if (isset($_GET['del']) && isset($_GET['id'])) {
 
 <body>
 <?php include('includes/header.php'); ?>
-<?php if (file_exists('includes/sidebar.php') && $_SESSION['alogin'] != "") include('includes/sidebar.php'); ?>
+
 
 <div class="main-content">
     <div class="container">
