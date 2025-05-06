@@ -1,0 +1,225 @@
+/* General Body Styling */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Header Styling */
+.brand-header {
+    background-color: #003c3c;
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+    border-bottom: 5px solid #d4af37;
+    width: 100%;
+}
+
+.brand-header img {
+    height: 70px;
+    margin-bottom: 10px;
+    max-width: 100%;
+}
+
+.brand-header h1 {
+    font-size: 3rem;
+    margin: 10px 0;
+    font-weight: bold;
+    color: #d4af37;
+    line-height: 1.2;
+}
+
+.brand-header p {
+    font-size: 1.1rem;
+    color: #e0e0e0;
+    line-height: 1.5;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #004d4d;
+    padding: 0.5rem 1rem;
+}
+
+.navbar .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.nav-link {
+    color: white !important;
+    font-weight: 500;
+    padding: 10px 15px;
+    font-size: 1.1rem;
+}
+
+.nav-link i {
+    margin-right: 6px;
+}
+
+.nav-link:hover {
+    color: #d4af37 !important;
+}
+
+/* Login Section Styling */
+.content-wrapper {
+    padding: 40px 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-head-line {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #003c3c;
+    text-align: center;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+form label {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #003c3c;
+}
+
+form input[type="text"],
+form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+form button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    background-color: #003c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: #d4af37;
+}
+
+form .error-message {
+    color: red;
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* Latest News Section Styling */
+.alert-info {
+    background-color: #d9edf7;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+}
+
+.alert-info strong {
+    font-size: 1.2rem;
+}
+
+.alert-info ul {
+    margin-top: 10px;
+}
+
+.alert-info li {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.alert-info marquee {
+    font-size: 1rem;
+    color: #003c3c;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #003c3c;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .brand-header h1 {
+        font-size: 2.2rem;
+    }
+
+    .brand-header p {
+        font-size: 1rem;
+    }
+
+    .navbar .nav-link {
+        font-size: 1rem;
+        padding: 8px 10px;
+    }
+
+    .content-wrapper {
+        padding: 20px;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+
+    form {
+        padding: 20px;
+    }
+
+    form button[type="submit"] {
+        font-size: 1rem;
+    }
+
+    .alert-info {
+        padding: 10px;
+    }
+}
+
+/* Larger Screens */
+@media (min-width: 992px) {
+    .navbar .nav-link {
+        font-size: 1.2rem;
+        padding: 12px 20px;
+    }
+
+    .brand-header h1 {
+        font-size: 3.5rem;
+    }
+
+    .brand-header p {
+        font-size: 1.2rem;
+    }
+
+    .content-wrapper {
+        padding: 60px 0;
+    }
+
+    form {
+        padding: 40px;
+    }
+
+    form button[type="submit"] {
+        font-size: 1.3rem;
+    }
+}
