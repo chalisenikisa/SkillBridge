@@ -1,77 +1,126 @@
 <?php
 session_start();
-include('includes/config.php');
+error_reporting(0);
+include("includes/config.php");
 
-// Don't suppress errors entirely in development
-// error_reporting(0); // Avoid this in production
+// Handle login
+if (isset($_POST['submit'])) {
+    $regno = $_POST['regno'];
+    $password = $_POST['password'];
 
-if (isset($_POST['login'])) {
-    $regno = trim($_POST['regno']);
-    $enteredPassword = $_POST['password'];
-
-    // Use prepared statements to prevent SQL injection
     $stmt = $con->prepare("SELECT * FROM students WHERE StudentRegno = ?");
     $stmt->bind_param("s", $regno);
     $stmt->execute();
     $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
 
-    if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $storedHash = $row['password'];
+    if ($row && password_verify($password, $row['password'])) {
+        $_SESSION['login'] = $regno;
+        $_SESSION['id'] = $row['StudentRegno'];
+        $_SESSION['sname'] = $row['studentName'];
 
-        if (password_verify($enteredPassword, $storedHash)) {
-            session_regenerate_id(true); // Prevent session fixation
-            $_SESSION['slogin'] = $regno;
-            $_SESSION['student_id'] = $row['id'];
-            header("Location: index.php");
-            exit();
-        } else {
-            echo "<script>alert('Invalid password!');</script>";
-        }
+        // Log the login event
+        $uip = $_SERVER['REMOTE_ADDR'];
+        $status = 1;
+        $log_stmt = $con->prepare("INSERT INTO userlog(studentRegno, userip, status) VALUES (?, ?, ?)");
+        $log_stmt->bind_param("ssi", $regno, $uip, $status);
+        $log_stmt->execute();
+
+        header("Location: student-dashboard.php");
+        exit();
     } else {
-        echo "<script>alert('Student registration number not found!');</script>";
+        $_SESSION['errmsg'] = "Invalid Registration Number or Password";
+        header("Location: student-login.php");
+        exit();
     }
-
-    $stmt->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>Student Login</title>
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <style>
-        body {
-            background: #f8f9fa;
-        }
-        .login-box {
-            max-width: 400px;
-            margin: 80px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-        }
-        .login-box h3 {
-            margin-bottom: 25px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <div class="login-box">
-        <h3 class="text-center">Student Login</h3>
-        <form method="POST" action="">
-            <div class="form-group">
-                <label for="regno">Registration Number</label>
-                <input type="text" name="regno" id="regno" required class="form-control" placeholder="Enter Registration Number">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" required class="form-control" placeholder="Enter Password">
-            </div>
-            <button type="submit" name="login" class="btn btn-primary btn-block">Login</button>
-        </form>
+<?php include('includes/header.php'); ?>
+
+<section class="menu-section">
+    <div class="container">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="student-login.php">Student Login</a></li>
+            <li><a href="admin/">Admin Login</a></li>
+        </ul>
     </div>
+</section>
+
+<div class="content-wrapper">
+    <div class="container" style="margin-top: 40px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="page-head-line">Please Login to Continue</h4>
+            </div>
+        </div>
+
+        <?php if (!empty($_SESSION['errmsg'])): ?>
+            <div class="alert alert-danger">
+                <?php 
+                    echo htmlentities($_SESSION['errmsg']); 
+                    $_SESSION['errmsg'] = ""; 
+                ?>
+            </div>
+        <?php endif; ?>
+
+        <form method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Registration Number</label>
+                    <input type="text" name="regno" class="form-control" required />
+
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control" required />
+
+                    <br />
+                    <button type="submit" name="submit" class="btn btn-primary">
+                        <i class="fa fa-sign-in-alt"></i> Login
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Optional News Section -->
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-md-6">
+                <div class="alert alert-info">
+                    <strong>Latest News</strong>
+                    <marquee direction="up" scrollamount="2" onmouseover="this.stop();" onmouseout="this.start();">
+                        <ul style="list-style: none; padding-left: 0;">
+                            <?php
+                            $sql = mysqli_query($con, "SELECT * FROM news ORDER BY postingDate DESC");
+                            while ($news = mysqli_fetch_array($sql)) {
+                                echo '<li><a href="news-details.php?nid=' . htmlentities($news['id']) . '">'
+                                    . htmlentities($news['newstitle']) . ' - '
+                                    . htmlentities($news['postingDate']) . '</a></li>';
+                            }
+                            ?>
+                        </ul>
+                    </marquee>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php include('includes/footer.php'); ?>
+
+<!-- JS -->
+<script src="assets/js/jquery-1.11.1.js"></script>
+<script src="assets/js/bootstrap.js"></script>
 </body>
 </html>
