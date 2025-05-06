@@ -17,7 +17,7 @@
     <a href="manage-students.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
         <i class="fa fa-users" style="margin-right: 10px;"></i> Manage Students
     </a>
-    <a href="enroll-history.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
+    <a href="enroll.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
         <i class="fa fa-history" style="margin-right: 10px;"></i> Enroll History
     </a>
     <a href="student-logs.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
