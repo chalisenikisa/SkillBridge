@@ -29,16 +29,16 @@ if(isset($_POST['submit'])) {
             $log->execute();
 
             // Redirect to change-password.php
-            header("Location: student/change-password.php");
+            header("Location: change-password.php");
             exit();
         } else {
             $_SESSION['errmsg'] = "Invalid Reg no or Password";
-            header("Location: student/index.php");
+            header("Location: index.php");
             exit();
         }
     } else {
         $_SESSION['errmsg'] = "Invalid Reg no or Password";
-        header("Location: student/index.php");
+        header("Location: index.php");
         exit();
     }
 }
@@ -73,7 +73,7 @@ if(isset($_POST['submit'])) {
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
-                              <li><a href="students/index.php">Student Login</a></li>
+                              <li><a href="index.php">Student Login</a></li>
                         </ul>
                     </div>
                 </div>
