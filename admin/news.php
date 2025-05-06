@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 include('includes/config.php');
 error_reporting(0);
@@ -28,7 +28,6 @@ if (strlen($_SESSION['alogin']) == 0) {
         echo '<script>alert("News deleted successfully."); window.location.href="news.php";</script>';
     }
 ?>
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -42,7 +41,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 <body>
 <?php include('includes/header.php'); ?>
-<?php if ($_SESSION['alogin'] != "") 
+<?php if ($_SESSION['alogin'] != "") { ?>
 
 <div class="content-wrapper">
     <div class="container">
@@ -134,4 +133,4 @@ while ($row = mysqli_fetch_array($sql)) {
 </body>
 </html>
 
-<?php } ?>
+<?php } } ?>
