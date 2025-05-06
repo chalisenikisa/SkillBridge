@@ -8,6 +8,7 @@ if (isset($_POST['submit'])) {
     $regno = $_POST['regno'];
     $password = $_POST['password'];
 
+    // Prepare SQL query to fetch user data based on regno
     $stmt = $con->prepare("SELECT * FROM students WHERE StudentRegno = ?");
     $stmt->bind_param("s", $regno);
     $stmt->execute();
@@ -68,6 +69,7 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
 
+        <!-- Display error message if login fails -->
         <?php if (!empty($_SESSION['errmsg'])): ?>
             <div class="alert alert-danger">
                 <?php 
@@ -77,6 +79,7 @@ if (isset($_POST['submit'])) {
             </div>
         <?php endif; ?>
 
+        <!-- Login Form -->
         <form method="post">
             <div class="row">
                 <div class="col-md-6">
