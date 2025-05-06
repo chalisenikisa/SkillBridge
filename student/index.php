@@ -60,70 +60,98 @@ if(isset($_POST['submit'])) {
 <body>
     <?php include('includes/header.php');?>
 
-    <section class="menu-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="navbar-collapse collapse">
-                        <ul id="menu-top" class="nav navbar-nav navbar-right">
-                              <li><a href="student/index.php">Student Login</a></li>
-                        </ul>
-                    </div>
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <div class="sidebar" style="width: 220px; background-color: #f8f9fa; position: fixed; top: 0; bottom: 0; left: 0; overflow-y: auto; border-right: 1px solid #ddd; padding-top: 20px;">
+                    <a href="enroll.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
+                        <i class="fa fa-pencil-square-o" style="margin-right: 10px;"></i> Enroll for Course
+                    </a>
+                    <a href="enroll-history.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
+                        <i class="fa fa-history" style="margin-right: 10px;"></i> Enroll History
+                    </a>
+                    <a href="my-profile.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
+                        <i class="fa fa-user" style="margin-right: 10px;"></i> My Profile
+                    </a>
+                    <a href="change-password.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
+                        <i class="fa fa-lock" style="margin-right: 10px;"></i> Change Password
+                    </a>
+                    <a href="logout.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
+                        <i class="fa fa-sign-out" style="margin-right: 10px;"></i> Logout
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <div class="content-wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h4 class="page-head-line">Please Login To Enter</h4>
-                </div>
-            </div>
-            
-            <!-- Display error message if exists -->
-            <span style="color:red;">
-                <?php 
-                    echo htmlentities($_SESSION['errmsg']);
-                    $_SESSION['errmsg'] = ""; // Clear the error after showing it
-                ?>
-            </span>
-
-            <form name="admin" method="post">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Enter Reg no: </label>
-                        <input type="text" name="regno" class="form-control" required />
-                        
-                        <label>Enter Password: </label>
-                        <input type="password" name="password" class="form-control" required />
-                        
-                        <hr />
-                        
-                        <button type="submit" name="submit" class="btn btn-info">
-                            <span class="glyphicon glyphicon-user"></span> &nbsp;Log Me In 
-                        </button>&nbsp;
+            <!-- Main content -->
+            <div class="col-md-9" style="margin-left: 240px;">
+                <section class="menu-section">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="navbar-collapse collapse">
+                                    <ul id="menu-top" class="nav navbar-nav navbar-right">
+                                        <li><a href="student/index.php">Student Login</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </section>
 
-            <div class="col-md-6">
-                <div class="alert alert-info">
-                    <strong>Latest News / Updates</strong>
-                    <marquee direction='up' scrollamount="2" onmouseover="this.stop();" onmouseout="this.start();">
-                        <ul>
-                            <?php
-                                $sql = mysqli_query($con, "SELECT * FROM news");
-                                while($row = mysqli_fetch_array($sql)) {
-                                    echo '<li><a href="news-details.php?nid=' . htmlentities($row['id']) . '">'
-                                        . htmlentities($row['newstitle']) . ' - ' . htmlentities($row['postingDate']) . '</a></li>';
-                                }
+                <div class="content-wrapper">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="page-head-line">Please Login To Enter</h4>
+                            </div>
+                        </div>
+
+                        <!-- Display error message if exists -->
+                        <span style="color:red;">
+                            <?php 
+                                echo htmlentities($_SESSION['errmsg']);
+                                $_SESSION['errmsg'] = ""; // Clear the error after showing it
                             ?>
-                        </ul>
-                    </marquee>
+                        </span>
+
+                        <form name="admin" method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Enter Reg no: </label>
+                                    <input type="text" name="regno" class="form-control" required />
+                                    
+                                    <label>Enter Password: </label>
+                                    <input type="password" name="password" class="form-control" required />
+                                    
+                                    <hr />
+                                    
+                                    <button type="submit" name="submit" class="btn btn-info">
+                                        <span class="glyphicon glyphicon-user"></span> &nbsp;Log Me In 
+                                    </button>&nbsp;
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="col-md-6">
+                            <div class="alert alert-info">
+                                <strong>Latest News / Updates</strong>
+                                <marquee direction='up' scrollamount="2" onmouseover="this.stop();" onmouseout="this.start();">
+                                    <ul>
+                                        <?php
+                                            $sql = mysqli_query($con, "SELECT * FROM news");
+                                            while($row = mysqli_fetch_array($sql)) {
+                                                echo '<li><a href="news-details.php?nid=' . htmlentities($row['id']) . '">'
+                                                    . htmlentities($row['newstitle']) . ' - ' . htmlentities($row['postingDate']) . '</a></li>';
+                                            }
+                                        ?>
+                                    </ul>
+                                </marquee>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </div> <!-- End of Main content -->
         </div>
     </div>
 
