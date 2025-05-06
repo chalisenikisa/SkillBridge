@@ -12,9 +12,8 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap & Font Awesome -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/css/font-awesome.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
         body {
@@ -49,20 +48,18 @@ session_start();
             color: #e0e0e0;
         }
 
-        /* Navigation Bar */
+        /* Navbar */
         .navbar {
             background-color: #004d4d;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .nav-link {
             color: white !important;
             font-weight: 500;
-            transition: color 0.3s;
         }
 
         .nav-link i {
-            margin-right: 8px;
+            margin-right: 6px;
         }
 
         .nav-link:hover {
@@ -70,11 +67,11 @@ session_start();
         }
 
         .navbar-toggler {
-            border-color: rgba(255,255,255,0.2);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .navbar-toggler-icon {
-            color: white;
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
 
         /* Main Content */
@@ -122,6 +119,7 @@ session_start();
             .brand-header h1 {
                 font-size: 2.2rem;
             }
+
             .content {
                 padding: 40px 20px;
             }
@@ -138,24 +136,23 @@ session_start();
 </div>
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <a class="navbar-brand text-white font-weight-bold" href="#">
-            <i class="fa fa-graduation-cap"></i> OCR System
-        </a>
+        <a class="navbar-brand" href="#"><i class="fas fa-graduation-cap"></i> OCR System</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-            <span><i class="fa fa-bars text-white"></i></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="homepage.php"><i class="fa fa-home"></i> Home</a>
+                    <a class="nav-link" href="homepage.php"><i class="fas fa-home"></i> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin/index.php"><i class="fa fa-user-shield"></i> Admin Login</a>
+                    <a class="nav-link" href="admin/index.php"><i class="fas fa-user-shield"></i> Admin Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="student/index.php"><i class="fa fa-user-graduate"></i> Student Login</a>
+                    <a class="nav-link" href="student/index.php"><i class="fas fa-user-graduate"></i> Student Login</a>
                 </li>
             </ul>
         </div>
@@ -183,7 +180,8 @@ if (file_exists($footerPath)) {
 ?>
 
 <!-- Scripts -->
-<script src="assets/js/jquery-1.11.1.js"></script>
-<script src="assets/js/bootstrap.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
