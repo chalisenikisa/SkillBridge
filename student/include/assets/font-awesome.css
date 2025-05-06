@@ -1,0 +1,62 @@
+/* Font Awesome 4.7.0 */
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('fontawesome-webfont.eot?v=4.7.0');
+    src: url('fontawesome-webfont.eot#iefix?v=4.7.0') format('embedded-opentype'),
+         url('fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
+         url('fontawesome-webfont.woff?v=4.7.0') format('woff'),
+         url('fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
+         url('fontawesome-webfont.svg?v=4.7.0#fontawesome') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="fa-"], [class*=" fa-"] {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    text-transform: none;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    top: 0.15em;
+}
+
+.fa {
+    display: inline-block;
+    font-family: 'FontAwesome';
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: inherit;
+    text-transform: none;
+    color: inherit;
+}
+
+.fa-user::before {
+    content: "\f007"; /* Unicode for user icon */
+}
+
+.fa-home::before {
+    content: "\f015"; /* Unicode for home icon */
+}
+
+.fa-pencil::before {
+    content: "\f040"; /* Unicode for pencil icon */
+}
+
+/* Example of the icon styles */
+.fa {
+    color: #333;
+    font-size: 24px;
+}
+
+.fa:hover {
+    color: #007bff; /* Hover color */
+}
+
+/* More icon-specific styles would follow here for each icon */

@@ -53,9 +53,16 @@ if(isset($_POST['submit'])) {
     <meta name="author" content="" />
     
     <title>Student Login</title>
+    
+    <!-- Bootstrap CSS from CDN -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    
+    <!-- Font Awesome CSS from CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
-    <!-- Linking the CSS file -->
+    <!-- Optional: Add your own custom CSS file -->
     <link href="path/to/style.css" rel="stylesheet" />
+
 </head>
 <body>
     <?php include('includes/header.php');?>
@@ -66,7 +73,7 @@ if(isset($_POST['submit'])) {
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
-                            <li><a href="students/index.php">Student Login</a></li>
+                              <li><a href="students/index.php">Student Login</a></li>
                         </ul>
                     </div>
                 </div>
@@ -81,7 +88,7 @@ if(isset($_POST['submit'])) {
                     <h4 class="page-head-line">Please Login To Enter</h4>
                 </div>
             </div>
-
+            
             <!-- Display error message if exists -->
             <span style="color:red;">
                 <?php 
@@ -134,6 +141,6 @@ if(isset($_POST['submit'])) {
     <!-- CORE JQUERY SCRIPTS -->
     <script src="assets/js/jquery-1.11.1.js"></script>
     <!-- BOOTSTRAP SCRIPTS -->
-    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
 </body>
 </html>
