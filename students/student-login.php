@@ -19,11 +19,11 @@ if (isset($_POST['submit'])) {
         $status = 1;
         mysqli_query($con, "INSERT INTO userlog(studentRegno, userip, status) VALUES('$regno', '$uip', '$status')");
 
-        header("Location: change-password.php");
+        header("Location: students/change-password.php");
         exit();
     } else {
         $_SESSION['errmsg'] = "Invalid Reg no or Password";
-        header("Location: index.php");
+        header("Location:students/index.php");
         exit();
     }
 }

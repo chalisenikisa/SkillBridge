@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['login'])) {
-    header("Location: index.php");
+    header("Location:students/ index.php");
     exit();
 }
 include("includes/config.php");
@@ -23,7 +23,7 @@ include("includes/config.php");
     <div class="row">
         <!-- Sidebar -->
         <div class="col-md-3">
-            <?php include('includes/student-sidebar.php'); ?>
+           
         </div>
 
         <!-- Main Content -->
