@@ -17,15 +17,22 @@ if (strlen($_SESSION['alogin']) == 0) {
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
     <link href="../assets/css/font-awesome.css" rel="stylesheet" />
     <link href="../assets/css/style.css" rel="stylesheet" />
+
+    <style>
+        .main-content {
+            margin-left: 220px; /* Same width as sidebar */
+            padding: 20px;
+        }
+    </style>
 </head>
 
 <body>
     <?php include('includes/header.php'); ?>
 
-    <?php if ($_SESSION['alogin'] != "") include('includes/menubar.php'); ?>
+    <?php if ($_SESSION['alogin'] != "") include('includes/sidebar.php'); ?>
 
-    <div class="content-wrapper">
-        <div class="container">
+    <div class="main-content">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="page-head-line">Enroll History</h1>

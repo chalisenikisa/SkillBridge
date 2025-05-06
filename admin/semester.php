@@ -2,7 +2,7 @@
 session_start();
 include('includes/config.php');
 
-// Check if admin is logged in
+// Redirect if admin not logged in
 if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == 0) {
     header('location:index.php');
     exit();
@@ -16,12 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         $stmt = $con->prepare("INSERT INTO semester (semester) VALUES (?)");
         $stmt->bind_param("s", $semester);
 
-        if ($stmt->execute()) {
-            $_SESSION['msg'] = "Semester Created Successfully !!";
-        } else {
-            $_SESSION['msg'] = "Something went wrong. Please try again.";
-        }
-
+        $_SESSION['msg'] = $stmt->execute() ? "Semester Created Successfully!" : "Something went wrong. Please try again.";
         $stmt->close();
     } else {
         $_SESSION['msg'] = "Semester field cannot be empty.";
@@ -34,16 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 // Handle delete request
 if (isset($_GET['del']) && isset($_GET['id'])) {
     $sid = intval($_GET['id']);
-
     $stmt = $con->prepare("DELETE FROM semester WHERE id = ?");
     $stmt->bind_param("i", $sid);
 
-    if ($stmt->execute()) {
-        $_SESSION['delmsg'] = "Semester Deleted Successfully !!";
-    } else {
-        $_SESSION['delmsg'] = "Failed to delete semester.";
-    }
-
+    $_SESSION['delmsg'] = $stmt->execute() ? "Semester Deleted Successfully!" : "Failed to delete semester.";
     $stmt->close();
 
     header("Location: semester.php");
@@ -60,13 +49,20 @@ if (isset($_GET['del']) && isset($_GET['id'])) {
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
     <link href="../assets/css/font-awesome.css" rel="stylesheet" />
     <link href="../assets/css/style.css" rel="stylesheet" />
+
+    <style>
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 
 <?php include('includes/header.php'); ?>
-<?php include('includes/menubar.php'); ?>
+<?php include('includes/sidebar.php'); ?>
 
-<div class="content-wrapper">
+<div class="main-content">
     <div class="container">
 
         <div class="row">
@@ -75,6 +71,19 @@ if (isset($_GET['del']) && isset($_GET['id'])) {
             </div>
         </div>
 
+        <!-- Display message -->
+        <?php if (!empty($_SESSION['msg'])): ?>
+            <div class="alert alert-info">
+                <?php echo htmlentities($_SESSION['msg']); unset($_SESSION['msg']); ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (!empty($_SESSION['delmsg'])): ?>
+            <div class="alert alert-danger">
+                <?php echo htmlentities($_SESSION['delmsg']); unset($_SESSION['delmsg']); ?>
+            </div>
+        <?php endif; ?>
+
         <!-- Add Semester Form -->
         <div class="row">
             <div class="col-md-3"></div>
@@ -82,12 +91,6 @@ if (isset($_GET['del']) && isset($_GET['id'])) {
                 <div class="panel panel-default">
                     <div class="panel-heading">Add New Semester</div>
                     <div class="panel-body">
-                        <?php if (!empty($_SESSION['msg'])): ?>
-                            <div class="alert alert-info">
-                                <?php echo htmlentities($_SESSION['msg']); unset($_SESSION['msg']); ?>
-                            </div>
-                        <?php endif; ?>
-
                         <form method="post">
                             <div class="form-group">
                                 <label for="semester">Semester Name</label>
@@ -103,12 +106,6 @@ if (isset($_GET['del']) && isset($_GET['id'])) {
         <!-- Semester Table -->
         <div class="row">
             <div class="col-md-12">
-                <?php if (!empty($_SESSION['delmsg'])): ?>
-                    <div class="alert alert-danger">
-                        <?php echo htmlentities($_SESSION['delmsg']); unset($_SESSION['delmsg']); ?>
-                    </div>
-                <?php endif; ?>
-
                 <div class="panel panel-default">
                     <div class="panel-heading">Manage Semesters</div>
                     <div class="panel-body">
@@ -126,7 +123,6 @@ if (isset($_GET['del']) && isset($_GET['id'])) {
                                     <?php
                                     $result = $con->query("SELECT * FROM semester ORDER BY id DESC");
                                     $cnt = 1;
-
                                     while ($row = $result->fetch_assoc()):
                                     ?>
                                     <tr>
