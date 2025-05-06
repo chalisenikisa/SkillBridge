@@ -44,7 +44,7 @@ if (isset($_GET['del']) && isset($_GET['id'])) {
 
 <body>
 <?php include('includes/header.php'); ?>
-<?php if ($_SESSION['alogin'] != "") include('includes/menubar.php'); ?>
+<?php if ($_SESSION['alogin'] != "") include('includes/sidebar.php'); ?>
 
 <div class="content-wrapper">
     <div class="container">
