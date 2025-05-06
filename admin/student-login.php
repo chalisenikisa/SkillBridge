@@ -3,34 +3,26 @@ session_start();
 error_reporting(0);
 include("includes/config.php");
 
-// Handle login
 if (isset($_POST['submit'])) {
     $regno = $_POST['regno'];
-    $password = $_POST['password'];
+    $password = md5($_POST['password']);
 
-    // Prepare SQL query to fetch user data based on regno
-    $stmt = $con->prepare("SELECT * FROM students WHERE StudentRegno = ?");
-    $stmt->bind_param("s", $regno);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
+    $query = mysqli_query($con, "SELECT * FROM students WHERE StudentRegno='$regno' AND password='$password'");
+    $num = mysqli_fetch_array($query);
 
-    if ($row && password_verify($password, $row['password'])) {
+    if ($num > 0) {
         $_SESSION['login'] = $regno;
-        $_SESSION['id'] = $row['StudentRegno'];
-        $_SESSION['sname'] = $row['studentName'];
+        $_SESSION['id'] = $num['studentRegno'];
+        $_SESSION['sname'] = $num['studentName'];
 
-        // Log the login event
         $uip = $_SERVER['REMOTE_ADDR'];
         $status = 1;
-        $log_stmt = $con->prepare("INSERT INTO userlog(studentRegno, userip, status) VALUES (?, ?, ?)");
-        $log_stmt->bind_param("ssi", $regno, $uip, $status);
-        $log_stmt->execute();
+        mysqli_query($con, "INSERT INTO userlog(studentRegno, userip, status) VALUES('$regno', '$uip', '$status')");
 
-        header("Location: index.php");
+        header("Location: change-password.php");
         exit();
     } else {
-        $_SESSION['errmsg'] = "Invalid Registration Number or Password";
+        $_SESSION['errmsg'] = "Invalid Reg no or Password";
         header("Location: index.php");
         exit();
     }
@@ -38,80 +30,81 @@ if (isset($_POST['submit'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Student Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+
 <?php include('includes/header.php'); ?>
 
 <section class="menu-section">
     <div class="container">
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="student">Student Login</a></li>
-            <li><a href="admin/">Admin Login</a></li>
-        </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="navbar-collapse collapse">
+                    <ul id="menu-top" class="nav navbar-nav navbar-right">
+                    <li><a href="students/">Student Login</a></li>
+                        </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
 <div class="content-wrapper">
-    <div class="container" style="margin-top: 40px;">
+    <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h4 class="page-head-line">Please Login to Continue</h4>
+                <h4 class="page-head-line">Please Login To Enter</h4>
             </div>
         </div>
 
-        <!-- Display error message if login fails -->
-        <?php if (!empty($_SESSION['errmsg'])): ?>
-            <div class="alert alert-danger">
-                <?php 
-                    echo htmlentities($_SESSION['errmsg']); 
-                    $_SESSION['errmsg'] = ""; 
-                ?>
-            </div>
-        <?php endif; ?>
+        <span style="color:red;">
+            <?php
+            if (isset($_SESSION['errmsg'])) {
+                echo htmlentities($_SESSION['errmsg']);
+                $_SESSION['errmsg'] = ""; // Clear message
+            }
+            ?>
+        </span>
 
-        <!-- Login Form -->
-        <form method="post">
-            <div class="row">
-                <div class="col-md-6">
-                    <label>Registration Number</label>
+        <div class="row">
+            <div class="col-md-6">
+                <form name="admin" method="post">
+                    <label>Enter Reg No:</label>
                     <input type="text" name="regno" class="form-control" required />
 
-                    <label>Password</label>
+                    <label>Enter Password:</label>
                     <input type="password" name="password" class="form-control" required />
 
-                    <br />
-                    <button type="submit" name="submit" class="btn btn-primary">
-                        <i class="fa fa-sign-in-alt"></i> Login
+                    <hr />
+                    <button type="submit" name="submit" class="btn btn-info">
+                        <span class="glyphicon glyphicon-user"></span> &nbsp;Log Me In
                     </button>
-                </div>
+                </form>
             </div>
-        </form>
 
-        <!-- Optional News Section -->
-        <div class="row" style="margin-top: 30px;">
             <div class="col-md-6">
                 <div class="alert alert-info">
-                    <strong>Latest News</strong>
+                    <strong>Latest News / Updates</strong>
                     <marquee direction="up" scrollamount="2" onmouseover="this.stop();" onmouseout="this.start();">
-                        <ul style="list-style: none; padding-left: 0;">
+                        <ul>
                             <?php
                             $sql = mysqli_query($con, "SELECT * FROM news ORDER BY postingDate DESC");
-                            while ($news = mysqli_fetch_array($sql)) {
-                                echo '<li><a href="news-details.php?nid=' . htmlentities($news['id']) . '">'
-                                    . htmlentities($news['newstitle']) . ' - '
-                                    . htmlentities($news['postingDate']) . '</a></li>';
-                            }
+                            while ($row = mysqli_fetch_array($sql)) {
                             ?>
+                                <li>
+                                    <a href="news-details.php?nid=<?php echo htmlentities($row['id']); ?>">
+                                        <?php echo htmlentities($row['newstitle']); ?> - <?php echo htmlentities($row['postingDate']); ?>
+                                    </a>
+                                </li>
+                            <?php } ?>
                         </ul>
                     </marquee>
                 </div>
@@ -122,7 +115,7 @@ if (isset($_POST['submit'])) {
 
 <?php include('includes/footer.php'); ?>
 
-<!-- JS -->
+<!-- Scripts -->
 <script src="assets/js/jquery-1.11.1.js"></script>
 <script src="assets/js/bootstrap.js"></script>
 </body>
