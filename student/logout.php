@@ -31,6 +31,6 @@ session_start();
 $_SESSION['errmsg'] = "You have successfully logged out.";
 
 // Redirect to login page
-header("Location: index.php");
+header("Location: student/index.php");
 exit();
 ?>
