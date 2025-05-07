@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
         exit();
     } else {
         $_SESSION['errmsg'] = "Invalid Reg no or Password";
-        header("Location: index.php");
+        header("Location: student");
         exit();
     }
 }

@@ -5,7 +5,7 @@ error_reporting(0);
 
 // Redirect to login if not authenticated
 if (empty($_SESSION['login'])) {
-    header('Location:index.php');
+    header('Location:student');
     exit();
 }
 ?>

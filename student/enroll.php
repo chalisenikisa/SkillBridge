@@ -5,7 +5,7 @@ error_reporting(0);
 
 // Redirect if not logged in or pincode not set
 if (strlen($_SESSION['login']) == 0 || strlen($_SESSION['pcode']) == 0) {
-    header('location:index.php');
+    header('location:student');
     exit;
 }
 

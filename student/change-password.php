@@ -4,7 +4,7 @@ include("includes/config.php");
 
 // Redirect if admin is not logged in
 if (!isset($_SESSION['alogin'])) {
-    header('Location: index.php');
+    header('Location: student');
     exit();
 }
 

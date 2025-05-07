@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['login'])) {
-    header("Location:students/ index.php");
+    header("Location:student");
     exit();
 }
 include("includes/config.php");
