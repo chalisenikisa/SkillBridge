@@ -5,7 +5,7 @@ error_reporting(0);
 
 // Redirect if not logged in or pincode not set
 if (strlen($_SESSION['login']) == 0 || strlen($_SESSION['pcode']) == 0) {
-    header('location:student');
+    header('location:index.php');
     exit;
 }
 
@@ -46,7 +46,6 @@ if (isset($_POST['submit'])) {
 
 <?php include('includes/header.php'); ?>
 
-
 <div class="content-wrapper">
     <div class="container">
         <div class="row">
@@ -56,8 +55,12 @@ if (isset($_POST['submit'])) {
         </div>
 
         <div class="row">
-            <div class="col-md-3"></div>
+            <!-- Sidebar (Add your menu items in includes/sidebar.php) -->
+            <div class="col-md-3">
+                <?php include('includes/sidebar.php'); ?>
+            </div>
 
+            <!-- Main content -->
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">Course Enroll</div>
@@ -170,6 +173,9 @@ while ($row = mysqli_fetch_array($sql)) {
                     </div>
                 </div>
             </div>
+
+            <!-- Right spacing -->
+            <div class="col-md-3"></div>
         </div>
     </div>
 </div>

@@ -5,7 +5,7 @@ error_reporting(0);
 
 // Redirect to login if not authenticated
 if (empty($_SESSION['login'])) {
-    header('Location: student');
+    header('Location:index.php');
     exit();
 }
 
@@ -18,13 +18,11 @@ if (isset($_POST['submit'])) {
     $cgpa        = trim($_POST['cgpa']);
     $regno       = $_SESSION['login'];
 
-    // Handle photo upload if a new file was provided
     if (!empty($_FILES['photo']['name'])) {
         $photoName = basename($_FILES['photo']['name']);
         $targetDir = 'studentphoto/';
         $targetFile = $targetDir . $photoName;
         if (move_uploaded_file($_FILES['photo']['tmp_name'], $targetFile)) {
-            // Update with photo
             $stmt = $con->prepare(
                 "UPDATE students 
                  SET studentName = ?, studentPhoto = ?, cgpa = ? 
@@ -35,7 +33,6 @@ if (isset($_POST['submit'])) {
             $err = "Failed to upload photo.";
         }
     } else {
-        // Update without changing photo
         $stmt = $con->prepare(
             "UPDATE students 
              SET studentName = ?, cgpa = ? 
@@ -66,27 +63,28 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
   <?php include('includes/header.php'); ?>
- 
+
   <div class="content-wrapper">
-    <div class="container">
-      <div class="row mb-3">
-        <div class="col-md-12">
-          <h2 class="page-head-line">My Profile</h2>
-        </div>
-      </div>
-
-      <?php
-      // Fetch current student data
-      $stmt = $con->prepare("SELECT studentName, StudentRegno, pincode, cgpa, studentPhoto FROM students WHERE StudentRegno = ?");
-      $stmt->bind_param("s", $_SESSION['login']);
-      $stmt->execute();
-      $stmt->bind_result($currName, $currRegno, $currPin, $currCgpa, $currPhoto);
-      $stmt->fetch();
-      $stmt->close();
-      ?>
-
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+          <?php include('includes/sidebar.php'); ?>
+        </div>
+
+        <!-- Main content -->
+        <div class="col-md-9">
+          <h2 class="page-head-line">My Profile</h2>
+
+          <?php
+          $stmt = $con->prepare("SELECT studentName, StudentRegno, pincode, cgpa, studentPhoto FROM students WHERE StudentRegno = ?");
+          $stmt->bind_param("s", $_SESSION['login']);
+          $stmt->execute();
+          $stmt->bind_result($currName, $currRegno, $currPin, $currCgpa, $currPhoto);
+          $stmt->fetch();
+          $stmt->close();
+          ?>
+
           <?php if ($msg): ?>
             <div class="alert alert-success"><?php echo htmlentities($msg); ?></div>
           <?php elseif ($err): ?>
@@ -142,10 +140,10 @@ if (isset($_POST['submit'])) {
             </div>
           </div>
 
-        </div>
-      </div>
-    </div>
-  </div>
+        </div> <!-- End main content col -->
+      </div> <!-- End row -->
+    </div> <!-- End container -->
+  </div> <!-- End content-wrapper -->
 
   <?php include('includes/footer.php'); ?>
 

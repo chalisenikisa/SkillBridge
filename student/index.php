@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
         $log->bind_param("ssi", $_SESSION['login'], $uip, $status);
         $log->execute();
 
-        header("Location: dashboard.php");
+        header("Location: student/student-dashboard.php");
         exit();
     } else {
         $_SESSION['errmsg'] = "Invalid Reg no or Password";

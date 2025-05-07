@@ -1,131 +1,149 @@
 <?php
 session_start();
-include("includes/config.php");
+include('includes/config.php');
+error_reporting(0);
 
-// Redirect if admin is not logged in
-if (!isset($_SESSION['alogin'])) {
-    header('Location: student');
+if (strlen($_SESSION['login']) == 0) {
+    header('location:index.php');
     exit();
-}
+} else {
+    date_default_timezone_set('Asia/Ksthmandu');
+    $currentTime = date('d-m-Y h:i:s A', time());
 
-// Handle password change
-if (isset($_POST['submit'])) {
-    $currentPassword = $_POST['currentpassword'];
-    $newPassword = $_POST['newpassword'];
-    $confirmPassword = $_POST['confirmpassword'];
+    if (isset($_POST['submit'])) {
+        $regno = $_SESSION['login'];
+        $currentpass = $_POST['cpass'];
+        $newpass = $_POST['newpass'];
+        $cnfpass = $_POST['cnfpass'];
 
-    $query = mysqli_query($con, "SELECT * FROM admin WHERE username='" . $_SESSION['alogin'] . "'");
-    $num = mysqli_fetch_array($query);
+        $sql = mysqli_query($con, "SELECT password FROM students WHERE studentRegno='$regno'");
+        $row = mysqli_fetch_array($sql);
 
-    if ($num) {
-        $storedHash = $num['password'];
+        if ($row && password_verify($currentpass, $row['password'])) {
+            if ($newpass === $cnfpass) {
+                $newHashedPass = password_hash($newpass, PASSWORD_DEFAULT);
+                $update = mysqli_query($con, "UPDATE students SET password='$newHashedPass', updationDate='$currentTime' WHERE studentRegno='$regno'");
 
-        if (password_verify($currentPassword, $storedHash)) {
-            if ($newPassword == $confirmPassword) {
-                $newHashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-                $updateQuery = mysqli_query($con, "UPDATE admin SET password='$newHashedPassword' WHERE username='" . $_SESSION['alogin'] . "'");
-
-                if ($updateQuery) {
-                    $_SESSION['msg'] = "Password updated successfully!";
-                    header("Location: logout.php"); // Log out after successful password change
-                    exit();
-                } else {
-                    $_SESSION['errmsg'] = "Error updating password!";
-                }
+                $_SESSION['msg'] = $update ? "Password changed successfully!" : "Error updating password!";
             } else {
-                $_SESSION['errmsg'] = "New password and confirm password do not match!";
+                $_SESSION['msg'] = "New and confirm passwords do not match!";
             }
         } else {
-            $_SESSION['errmsg'] = "Current password is incorrect!";
+            $_SESSION['msg'] = "Current password is incorrect!";
         }
-    } else {
-        $_SESSION['errmsg'] = "No admin user found!";
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Student - Change Password</title>
     <meta charset="utf-8" />
+    <title>Student | Change Password</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <style>
+        .sidebar {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-right: 1px solid #ddd;
+            height: 100%;
+        }
+        .sidebar a {
+            display: block;
+            padding: 8px 0;
+            color: #333;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+    </style>
 
-    <link href="../assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-    <link href="../assets/css/style.css" rel="stylesheet" />
+    <script type="text/javascript">
+    function valid() {
+        if (document.chngpwd.cpass.value == "") {
+            alert("Current Password field is empty!");
+            document.chngpwd.cpass.focus();
+            return false;
+        } else if (document.chngpwd.newpass.value == "") {
+            alert("New Password field is empty!");
+            document.chngpwd.newpass.focus();
+            return false;
+        } else if (document.chngpwd.cnfpass.value == "") {
+            alert("Confirm Password field is empty!");
+            document.chngpwd.cnfpass.focus();
+            return false;
+        } else if (document.chngpwd.newpass.value != document.chngpwd.cnfpass.value) {
+            alert("Password and Confirm Password do not match!");
+            document.chngpwd.cnfpass.focus();
+            return false;
+        }
+        return true;
+    }
+    </script>
 </head>
 <body>
 <?php include('includes/header.php'); ?>
+<?php if ($_SESSION['login'] != "") include('includes/sidebar.php'); ?>
 
-<div class="container">
-    <div class="row">
-        
-        <div class="col-md-3">
-        <nav>
-            
-            <ul class="nav nav-pills nav-stacked">
-    
-    
-            <div class="sidebar" style="width: 220px; background-color: #f8f9fa; position: fixed; top: 0; bottom: 0; left: 0; overflow-y: auto; border-right: 1px solid #ddd; padding-top: 20px;">
-    <a href="enroll.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
-        <i class="fa fa-pencil-square-o" style="margin-right: 10px;"></i> Enroll for Course
-    </a>
-    <a href="enroll-history.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
-        <i class="fa fa-history" style="margin-right: 10px;"></i> Enroll History
-    </a>
-    <a href="my-profile.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
-        <i class="fa fa-user" style="margin-right: 10px;"></i> My Profile
-    </a>
-    <a href="change-password.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
-        <i class="fa fa-lock" style="margin-right: 10px;"></i> Change Password
-    </a>
-    <a href="logout.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
-        <i class="fa fa-sign-out" style="margin-right: 10px;"></i> Logout
-    </a>
-</div>
-
-
-            </nav>
-            
-        </div>
-
-        <!-- Main content -->
-        <div class="col-md-9">
-            <h4 class="page-head-line">Change Your Password</h4>
-
-            <?php if (!empty($_SESSION['errmsg'])): ?>
-                <div class="alert alert-danger"><?php echo htmlentities($_SESSION['errmsg']); unset($_SESSION['errmsg']); ?></div>
-            <?php endif; ?>
-
-            <?php if (!empty($_SESSION['msg'])): ?>
-                <div class="alert alert-success"><?php echo htmlentities($_SESSION['msg']); unset($_SESSION['msg']); ?></div>
-            <?php endif; ?>
-
-            <form method="post" name="changePassword">
-                <div class="form-group">
-                    <label>Enter Current Password:</label>
-                    <input type="password" name="currentpassword" class="form-control" required />
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <div class="sidebar">
+                    <h4>Student Menu</h4>
+                    <a href="dashboard.php"><i class="fa fa-dashboard"></i> Dashboard</a>
+                    <a href="profile.php"><i class="fa fa-user"></i> Profile</a>
+                    <a href="enroll-course.php"><i class="fa fa-book"></i> Enroll Courses</a>
+                    <a href="my-courses.php"><i class="fa fa-list"></i> My Courses</a>
+                    <a href="change-password.php"><i class="fa fa-lock"></i> Change Password</a>
+                    <a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label>Enter New Password:</label>
-                    <input type="password" name="newpassword" class="form-control" required />
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <h1 class="page-head-line">Change Password</h1>
+
+                <?php if (!empty($_SESSION['msg'])): ?>
+                    <div class="alert alert-info"><?php echo htmlentities($_SESSION['msg']); unset($_SESSION['msg']); ?></div>
+                <?php endif; ?>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Change Password</div>
+                    <div class="panel-body">
+                        <form name="chngpwd" method="post" onsubmit="return valid();">
+                            <div class="form-group">
+                                <label for="cpass">Current Password</label>
+                                <input type="password" class="form-control" name="cpass" id="cpass" placeholder="Current Password" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="newpass">New Password</label>
+                                <input type="password" class="form-control" name="newpass" id="newpass" placeholder="New Password" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cnfpass">Confirm Password</label>
+                                <input type="password" class="form-control" name="cnfpass" id="cnfpass" placeholder="Confirm Password" />
+                            </div>
+
+                            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                            <hr />
+                        </form>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label>Confirm New Password:</label>
-                    <input type="password" name="confirmpassword" class="form-control" required />
-                </div>
-
-                <button type="submit" name="submit" class="btn btn-info">Update Password</button>
-            </form>
-        </div>
-    </div>
-</div>
+            </div>
+        </div> <!-- /.row -->
+    </div> <!-- /.container-fluid -->
+</div> <!-- /.content-wrapper -->
 
 <?php include('includes/footer.php'); ?>
-<script src="../assets/js/jquery-1.11.1.js"></script>
-<script src="../assets/js/bootstrap.js"></script>
+<script src="assets/js/jquery-1.11.1.js"></script>
+<script src="assets/js/bootstrap.js"></script>
 </body>
 </html>

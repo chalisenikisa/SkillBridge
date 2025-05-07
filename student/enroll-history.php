@@ -5,7 +5,7 @@ error_reporting(0);
 
 // Redirect to login if not authenticated
 if (empty($_SESSION['login'])) {
-    header('Location:student');
+    header('Location:index.php');
     exit();
 }
 ?>
@@ -21,7 +21,6 @@ if (empty($_SESSION['login'])) {
 </head>
 <body>
   <?php include('includes/header.php'); ?>
-  
 
   <div class="content-wrapper">
     <div class="container">
@@ -31,73 +30,82 @@ if (empty($_SESSION['login'])) {
         </div>
       </div>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">Your Enrollments</div>
-        <div class="panel-body">
-          <div class="table-responsive table-bordered">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Course Name</th>
-                  <th>Session</th>
-                  <th>Department</th>
-                  <th>Level</th>
-                  <th>Semester</th>
-                  <th>Enrollment Date</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
-                // Prepared statement to fetch this student's enrollments
-                $stmt = $con->prepare(
-                  "SELECT 
-                     c.courseName, s.session, d.department, l.level, sem.semester, ce.enrollDate, ce.course 
-                   FROM courseenrolls ce
-                   JOIN course     c   ON c.id   = ce.course
-                   JOIN session    s   ON s.id   = ce.session
-                   JOIN department d   ON d.id   = ce.department
-                   JOIN level      l   ON l.id   = ce.level
-                   JOIN semester   sem ON sem.id = ce.semester
-                   WHERE ce.studentRegno = ?
-                   ORDER BY ce.enrollDate DESC"
-                );
-                $stmt->bind_param("s", $_SESSION['login']);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                $cnt = 1;
-                while ($row = $result->fetch_assoc()):
-                ?>
-                <tr>
-                  <td><?php echo $cnt; ?></td>
-                  <td><?php echo htmlentities($row['courseName']); ?></td>
-                  <td><?php echo htmlentities($row['session']); ?></td>
-                  <td><?php echo htmlentities($row['department']); ?></td>
-                  <td><?php echo htmlentities($row['level']); ?></td>
-                  <td><?php echo htmlentities($row['semester']); ?></td>
-                  <td><?php echo htmlentities($row['enrollDate']); ?></td>
-                  <td>
-                    <a href="print.php?id=<?php echo urlencode($row['course']); ?>" target="_blank">
-                      <button class="btn btn-primary btn-sm">
-                        <i class="fa fa-print"></i> Print
-                      </button>
-                    </a>
-                  </td>
-                </tr>
-                <?php 
-                  $cnt++;
-                endwhile;
-                $stmt->close();
-                ?>
-              </tbody>
-            </table>
-          </div>
+      <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+          <?php include('includes/sidebar.php'); ?>
         </div>
-      </div>
 
-    </div>
-  </div>
+        <!-- Main Content -->
+        <div class="col-md-9">
+          <div class="panel panel-default">
+            <div class="panel-heading">Your Enrollments</div>
+            <div class="panel-body">
+              <div class="table-responsive table-bordered">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Course Name</th>
+                      <th>Session</th>
+                      <th>Department</th>
+                      <th>Level</th>
+                      <th>Semester</th>
+                      <th>Enrollment Date</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    $stmt = $con->prepare(
+                      "SELECT 
+                         c.courseName, s.session, d.department, l.level, sem.semester, ce.enrollDate, ce.course 
+                       FROM courseenrolls ce
+                       JOIN course     c   ON c.id   = ce.course
+                       JOIN session    s   ON s.id   = ce.session
+                       JOIN department d   ON d.id   = ce.department
+                       JOIN level      l   ON l.id   = ce.level
+                       JOIN semester   sem ON sem.id = ce.semester
+                       WHERE ce.studentRegno = ?
+                       ORDER BY ce.enrollDate DESC"
+                    );
+                    $stmt->bind_param("s", $_SESSION['login']);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $cnt = 1;
+                    while ($row = $result->fetch_assoc()):
+                    ?>
+                    <tr>
+                      <td><?php echo $cnt; ?></td>
+                      <td><?php echo htmlentities($row['courseName']); ?></td>
+                      <td><?php echo htmlentities($row['session']); ?></td>
+                      <td><?php echo htmlentities($row['department']); ?></td>
+                      <td><?php echo htmlentities($row['level']); ?></td>
+                      <td><?php echo htmlentities($row['semester']); ?></td>
+                      <td><?php echo htmlentities($row['enrollDate']); ?></td>
+                      <td>
+                        <a href="print.php?id=<?php echo urlencode($row['course']); ?>" target="_blank">
+                          <button class="btn btn-primary btn-sm">
+                            <i class="fa fa-print"></i> Print
+                          </button>
+                        </a>
+                      </td>
+                    </tr>
+                    <?php 
+                      $cnt++;
+                    endwhile;
+                    $stmt->close();
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div> <!-- End Main Content -->
+
+      </div> <!-- End Row -->
+    </div> <!-- End Container -->
+  </div> <!-- End Content Wrapper -->
 
   <?php include('includes/footer.php'); ?>
 
