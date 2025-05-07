@@ -9,25 +9,23 @@ if (strlen($_SESSION['alogin']) == 0) {
 }
 
 if (isset($_POST['submit'])) {
-    // Get form data and sanitize inputs
+    // Sanitize form inputs
     $studentname = mysqli_real_escape_string($con, $_POST['studentname']);
     $studentregno = mysqli_real_escape_string($con, $_POST['studentregno']);
-    $password = md5($_POST['password']);  // Hash the password securely
+    $password = md5($_POST['password']); // Not secure for production, use password_hash() instead
     $pincode = rand(100000, 999999);  // Generate a 6-digit pincode
 
-    // Insert student data into the database
+    // Insert into the database
     $query = "INSERT INTO students (studentName, StudentRegno, password, pincode) 
               VALUES ('$studentname', '$studentregno', '$password', '$pincode')";
 
     $ret = mysqli_query($con, $query);
 
     if ($ret) {
-        // Registration success
         $_SESSION['msg'] = "Student Registered Successfully. Pincode is: " . $pincode;
         header("Location: manage-students.php");
         exit();
     } else {
-        // Registration failure
         $_SESSION['msg'] = "Something went wrong. Please try again.";
     }
 }
@@ -38,8 +36,6 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
     <title>Admin | Student Registration</title>
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
     <link href="../assets/css/font-awesome.css" rel="stylesheet" />
@@ -48,12 +44,6 @@ if (isset($_POST['submit'])) {
 
 <body>
     <?php include('includes/header.php'); ?>
-
-    <?php
-    if ($_SESSION['alogin'] != "") {
-       
-    }
-    ?>
 
     <div class="content-wrapper">
         <div class="container">
@@ -67,14 +57,16 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Student Registration
-                        </div>
+                        <div class="panel-heading">Student Registration</div>
 
-                        <font color="green" align="center">
-                            <?php echo htmlentities($_SESSION['msg']); ?>
-                            <?php $_SESSION['msg'] = ""; ?>
-                        </font>
+                        <div style="margin: 10px 0; color: green; text-align: center;">
+                            <?php
+                            if (isset($_SESSION['msg']) && $_SESSION['msg'] != "") {
+                                echo htmlentities($_SESSION['msg']);
+                                $_SESSION['msg'] = ""; // clear the message
+                            }
+                            ?>
+                        </div>
 
                         <div class="panel-body">
                             <form name="dept" method="post">
@@ -94,7 +86,7 @@ if (isset($_POST['submit'])) {
                                     <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required />
                                 </div>
 
-                                <button type="submit" name="submit" id="submit" class="btn btn-default">Submit</button>
+                                <button type="submit" name="submit" class="btn btn-default">Submit</button>
                             </form>
                         </div>
                     </div>
@@ -109,7 +101,6 @@ if (isset($_POST['submit'])) {
     <script src="../assets/js/bootstrap.js"></script>
 
     <script>
-    // AJAX function to check user availability
     function userAvailability() {
         $("#loaderIcon").show();
         jQuery.ajax({
@@ -121,11 +112,10 @@ if (isset($_POST['submit'])) {
                 $("#loaderIcon").hide();
             },
             error: function() {
-                // handle error
+                $("#user-availability-status1").html("Error checking availability.");
             }
         });
     }
     </script>
-
 </body>
 </html>
