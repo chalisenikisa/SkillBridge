@@ -20,7 +20,7 @@ session_destroy();
     <link href="assets/css/style.css" rel="stylesheet" />
     <script>
         setTimeout(function() {
-            window.location.href = "index.php";
+            window.location.href = "student/index.php";
         }, 3000); // Redirect after 3 seconds
     </script>
 </head>
