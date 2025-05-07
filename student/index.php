@@ -24,11 +24,11 @@ if (isset($_POST['submit'])) {
         $log->bind_param("ssi", $_SESSION['login'], $uip, $status);
         $log->execute();
 
-        header("Location: change-password.php");
+        header("Location: dashboard.php");
         exit();
     } else {
         $_SESSION['errmsg'] = "Invalid Reg no or Password";
-        header("Location: student");
+        header("Location: student/index.php");
         exit();
     }
 }
@@ -78,15 +78,7 @@ if (isset($_POST['submit'])) {
 
 <?php include('includes/header.php'); ?>
 
-<!-- Sidebar Start -->
-<div class="sidebar">
-    <a href="enroll.php"><i class="fa fa-pencil-square-o" style="margin-right: 10px;"></i>Enroll for Course</a>
-    <a href="enroll-history.php"><i class="fa fa-history" style="margin-right: 10px;"></i>Enroll History</a>
-    <a href="my-profile.php"><i class="fa fa-user" style="margin-right: 10px;"></i>My Profile</a>
-    <a href="change-password.php"><i class="fa fa-lock" style="margin-right: 10px;"></i>Change Password</a>
-    <a href="logout.php"><i class="fa fa-sign-out" style="margin-right: 10px;"></i>Logout</a>
-</div>
-<!-- Sidebar End -->
+
 
 <!-- Main Content Start -->
 <div class="container-fluid main-content">
