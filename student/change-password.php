@@ -4,10 +4,10 @@ include('includes/config.php');
 error_reporting(0);
 
 if (strlen($_SESSION['login']) == 0) {
-    header('location:student/index.php');
+    header('location:index.php');
     exit();
 } else {
-    date_default_timezone_set('Asia/Ksthmandu');
+    date_default_timezone_set('Asia/Kathmandu');
     $currentTime = date('d-m-Y h:i:s A', time());
 
     if (isset($_POST['submit'])) {
