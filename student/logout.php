@@ -15,9 +15,9 @@ session_destroy();
 <head>
     <meta charset="UTF-8">
     <title>Logging Out</title>
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="../assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="../assets/css/style.css" rel="stylesheet" />
     <script>
         setTimeout(function() {
             window.location.href = "index.php";
@@ -25,13 +25,14 @@ session_destroy();
     </script>
 </head>
 <body>
-    <?php include('includes/header.php'); ?>
+    <?php include('../includes/header.php'); ?>
+    
     <div class="content-wrapper">
         <div class="container-fluid">
             <div class="row">
                 <!-- Sidebar -->
                 <div class="col-md-3">
-                    <?php include('includes/sidebar.php'); ?>
+                    <?php include('../includes/sidebar.php'); ?>
                 </div>
 
                 <!-- Main content -->
@@ -43,6 +44,7 @@ session_destroy();
             </div>
         </div>
     </div>
-    <?php include('includes/footer.php'); ?>
+
+    <?php include('../includes/footer.php'); ?>
 </body>
 </html>
