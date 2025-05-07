@@ -5,7 +5,7 @@ error_reporting(0);
 
 // Redirect if user is not logged in
 if (!isset($_SESSION['login']) || strlen($_SESSION['login']) == 0) {
-    header('location:my-profile.php');
+    header('location:index.php');
     exit();
 }
 
