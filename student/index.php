@@ -33,12 +33,12 @@ if(isset($_POST['submit'])) {
             exit();
         } else {
             $_SESSION['errmsg'] = "Invalid Reg no or Password";
-            header("Location: student/index.php");
+            header("Location:student/index.php");
             exit();
         }
     } else {
         $_SESSION['errmsg'] = "Invalid Reg no or Password";
-        header("Location: student/index.php");
+        header("Location:student/index.php");
         exit();
     }
 }
