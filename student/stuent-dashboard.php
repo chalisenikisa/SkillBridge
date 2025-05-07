@@ -1,9 +1,10 @@
 <?php
 session_start();
-include("../includes/config.php");
+include("includes/config.php");
 
+// Check login
 if (!isset($_SESSION['login'])) {
-    header("Location:../index.php");
+    header("Location:index.php");
     exit();
 }
 ?>
@@ -37,8 +38,8 @@ if (!isset($_SESSION['login'])) {
 </head>
 <body>
 
-<?php include('../includes/header.php'); ?>
-<?php include('../includes/sidebar.php'); ?>
+<?php include('includes/header.php'); ?>
+<?php include('includes/sidebar.php'); ?>
 
 <div class="container-fluid main-content">
     <div class="row">
@@ -49,9 +50,11 @@ if (!isset($_SESSION['login'])) {
     </div>
 </div>
 
-<?php include('../includes/footer.php'); ?>
+<?php include('includes/footer.php'); ?>
 
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
