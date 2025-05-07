@@ -4,7 +4,7 @@ include("includes/config.php");
 
 // Check login
 if (!isset($_SESSION['login'])) {
-    header("Location: student/index.php");
+    header("Location:index.php");
     exit();
 }
 ?>
