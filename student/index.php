@@ -24,11 +24,11 @@ if (isset($_POST['submit'])) {
         $log->bind_param("ssi", $_SESSION['login'], $uip, $status);
         $log->execute();
 
-        header("Location: student/student-dashboard.php");
+        header("Location: git add <div class=""></div>student-dashboard.php");
         exit();
     } else {
         $_SESSION['errmsg'] = "Invalid Reg no or Password";
-        header("Location: student/index.php");
+        header("Location: index.php");
         exit();
     }
 }
