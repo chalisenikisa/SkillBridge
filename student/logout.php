@@ -1,50 +1,27 @@
 <?php
 session_start();
-$_SESSION = [];
-if (ini_get("session.use_cookies")) {
-    $params = session_get_cookie_params();
-    setcookie(session_name(), '', time() - 42000,
-        $params["path"], $params["domain"],
-        $params["secure"], $params["httponly"]
-    );
+include("includes/config.php");
+
+// Ensure user is logged in before attempting to log out
+if (!empty($_SESSION['login'])) {
+    // Set timezone
+    date_default_timezone_set('Asia/Kathmandu');
+    $ldate = date('d-m-Y h:i:s A', time());
+    $uid = $_SESSION['login'];
+
+    // Update logout time for latest user log entry
+    $update = mysqli_query($con, "UPDATE userlog SET logout = '$ldate' WHERE studentRegno = '$uid' ORDER BY id DESC LIMIT 1");
 }
+
+// Clear session data
+session_unset();
 session_destroy();
+
+// Optionally start a new session if you want to display a message
+session_start();
+$_SESSION['errmsg'] = "You have successfully logged out";
+
+// Redirect to login page
+header("Location: index.php");
+exit;
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Logging Out</title>
-    <link href="../assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
-    <link href="../assets/css/style.css" rel="stylesheet" />
-    <script>
-        setTimeout(function() {
-            window.location.href = "index.php";
-        }, 3000); // Redirect after 3 seconds
-    </script>
-</head>
-<body>
-    <?php include('../includes/header.php'); ?>
-    
-    <div class="content-wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <!-- Sidebar -->
-                <div class="col-md-3">
-                    <?php include('../includes/sidebar.php'); ?>
-                </div>
-
-                <!-- Main content -->
-                <div class="col-md-9">
-                    <div class="alert alert-info mt-4">
-                        You have successfully logged out. Redirecting to login page...
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <?php include('../includes/footer.php'); ?>
-</body>
-</html>
