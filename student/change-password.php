@@ -116,7 +116,7 @@ if (strlen($_SESSION['login']) == 0) {
 </head>
 <body>
     <?php include('includes/header.php'); ?>
-    <?php if ($_SESSION['login'] != "") include('includes/menubar.php'); ?>
+    <?php if ($_SESSION['login'] != "") include('includes/sidebar.php'); ?>
 
     <div class="wrapper">
         <!-- Sidebar -->
