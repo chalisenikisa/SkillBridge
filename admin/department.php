@@ -40,7 +40,7 @@ if(isset($_GET['del']) && isset($_GET['id'])) {
 
 <body>
 <?php include('includes/header.php'); ?>
-<?php if($_SESSION['alogin'] != "") { include('includes/sidebar.php'); } ?>
+<?php if($_SESSION['alogin'] != "")  ?>
 
 <div class="content-wrapper">
     <div class="container">
@@ -113,7 +113,7 @@ if(isset($_GET['del']) && isset($_GET['id'])) {
     </div>
 </div>
 
-<?php include('../includes/footer.php'); ?>
+<?php include('includes/footer.php'); ?>
 
 <script src="../assets/js/jquery-1.11.1.js"></script>
 <script src="../assets/js/bootstrap.js"></script>
