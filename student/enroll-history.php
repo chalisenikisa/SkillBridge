@@ -29,7 +29,7 @@ if (strlen($_SESSION['login']) == 0) {
         <div class="row">
             <!-- Sidebar -->
             <div class="col-md-3">
-                <?php include('includes/sidebar.php'); ?>
+                
             </div>
 
             <!-- Main Content -->
