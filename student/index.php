@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
         $log->bind_param("ssi", $_SESSION['login'], $uip, $status);
         $log->execute();
 
-        header("Location: git add <div class=></div>student-dashboard.php");
+        header("Location: change-password.php");
         exit();
     } else {
         $_SESSION['errmsg'] = "Invalid Reg no or Password";
@@ -57,10 +57,11 @@ if (isset($_POST['submit'])) {
             left: 0;
             overflow-y: auto;
             border-right: 1px solid #ddd;
-            padding-top: 60px;
+            padding-top: 20px;
         }
         .sidebar a {
-            display: block;
+            display: flex;
+            align-items: center;
             padding: 12px 20px;
             color: #333;
             text-decoration: none;
@@ -70,7 +71,6 @@ if (isset($_POST['submit'])) {
         }
         .main-content {
             margin-left: 240px;
-            padding: 20px;
         }
     </style>
 </head>
@@ -78,56 +78,64 @@ if (isset($_POST['submit'])) {
 
 <?php include('includes/header.php'); ?>
 
+<!-- Sidebar Start -->
+<div class="sidebar">
+    <a href="enroll.php"><i class="fa fa-pencil-square-o" style="margin-right: 10px;"></i>Enroll for Course</a>
+    <a href="enroll-history.php"><i class="fa fa-history" style="margin-right: 10px;"></i>Enroll History</a>
+    <a href="my-profile.php"><i class="fa fa-user" style="margin-right: 10px;"></i>My Profile</a>
+    <a href="change-password.php"><i class="fa fa-lock" style="margin-right: 10px;"></i>Change Password</a>
+    <a href="logout.php"><i class="fa fa-sign-out" style="margin-right: 10px;"></i>Logout</a>
+</div>
+<!-- Sidebar End -->
+
 <!-- Main Content Start -->
-<div class="main-content">
-    <div class="container-fluid">
+<div class="container-fluid main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Please Login To Enter</h3>
+            <span style="color:red;">
+                <?php 
+                    echo htmlentities($_SESSION['errmsg']);
+                    $_SESSION['errmsg'] = "";
+                ?>
+            </span>
+        </div>
+    </div>
+
+    <form method="post">
         <div class="row">
-            <div class="col-md-12">
-                <h3>Please Login To Enter</h3>
-                <span style="color:red;">
-                    <?php 
-                        echo htmlentities($_SESSION['errmsg']);
-                        $_SESSION['errmsg'] = "";
-                    ?>
-                </span>
+            <div class="col-md-6">
+                <label>Enter Reg no:</label>
+                <input type="text" name="regno" class="form-control" required />
+                
+                <label>Enter Password:</label>
+                <input type="password" name="password" class="form-control" required />
+                
+                <br />
+                <button type="submit" name="submit" class="btn btn-info">
+                    <i class="glyphicon glyphicon-user"></i> Log Me In
+                </button>
+            </div>
+
+            <div class="col-md-6">
+                <div class="alert alert-info">
+                    <strong>Latest News / Updates</strong>
+                    <marquee direction='up' scrollamount="2" onmouseover="this.stop();" onmouseout="this.start();">
+                        <ul>
+                            <?php
+                            $sql = mysqli_query($con, "SELECT * FROM news ORDER BY postingDate DESC");
+                            while ($row = mysqli_fetch_array($sql)) {
+                                echo '<li><a href="news-details.php?nid=' . htmlentities($row['id']) . '">'
+                                     . htmlentities($row['newstitle']) . ' - '
+                                     . htmlentities($row['postingDate']) . '</a></li>';
+                            }
+                            ?>
+                        </ul>
+                    </marquee>
+                </div>
             </div>
         </div>
-
-        <form method="post">
-            <div class="row">
-                <div class="col-md-6">
-                    <label>Enter Reg no:</label>
-                    <input type="text" name="regno" class="form-control" required />
-                    
-                    <label>Enter Password:</label>
-                    <input type="password" name="password" class="form-control" required />
-                    
-                    <br />
-                    <button type="submit" name="submit" class="btn btn-info">
-                        <i class="glyphicon glyphicon-user"></i> Log Me In
-                    </button>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="alert alert-info">
-                        <strong>Latest News / Updates</strong>
-                        <marquee direction='up' scrollamount="2" onmouseover="this.stop();" onmouseout="this.start();">
-                            <ul>
-                                <?php
-                                $sql = mysqli_query($con, "SELECT * FROM news ORDER BY postingDate DESC");
-                                while ($row = mysqli_fetch_array($sql)) {
-                                    echo '<li><a href="news-details.php?nid=' . htmlentities($row['id']) . '">'
-                                         . htmlentities($row['newstitle']) . ' - '
-                                         . htmlentities($row['postingDate']) . '</a></li>';
-                                }
-                                ?>
-                            </ul>
-                        </marquee>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+    </form>
 </div>
 <!-- Main Content End -->
 
