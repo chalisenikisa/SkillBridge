@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('includes/config.php');
+include('../includes/config.php');
 
 if (strlen($_SESSION['alogin']) == 0) {
     header('location:index.php');
@@ -20,8 +20,8 @@ if (strlen($_SESSION['alogin']) == 0) {
 </head>
 
 <body>
-<?php include('includes/header.php'); ?>
-<?php if ($_SESSION['alogin'] != "") { include('includes/menubar.php'); } ?>
+<?php include('../includes/header.php'); ?>
+<?php if ($_SESSION['alogin'] != "") { include('../includes/sidebar.php'); } ?>
 
 <div class="content-wrapper">
     <div class="container">
@@ -104,7 +104,7 @@ $cnt++;
     </div>
 </div>
 
-<?php include('includes/footer.php'); ?>
+<?php include('../includes/footer.php'); ?>
 <script src="../assets/js/jquery-1.11.1.js"></script>
 <script src="../assets/js/bootstrap.js"></script>
 
