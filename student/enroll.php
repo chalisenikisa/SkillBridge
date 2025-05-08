@@ -31,7 +31,6 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -41,141 +40,151 @@ if (isset($_POST['submit'])) {
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <link href="assets/css/font-awesome.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .page-head-line {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .sidebar {
+            background-color: #f8f9fa;
+            padding: 15px;
+            height: 100%;
+            border-right: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
 
 <?php include('includes/header.php'); ?>
 
-<div class="content-wrapper">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="page-head-line">Course Enroll</h1>
-            </div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 sidebar">
+            <?php include('includes/sidebar.php'); ?>
         </div>
 
-        <div class="row">
-            <!-- Sidebar (Add your menu items in includes/sidebar.php) -->
-            <div class="col-md-3">
-                <?php include('includes/sidebar.php'); ?>
-            </div>
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <h1 class="page-head-line">Course Enroll</h1>
 
-            <!-- Main content -->
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Course Enroll</div>
-                    <div class="panel-body">
+            <div class="panel panel-default">
+                <div class="panel-heading">Enroll in a Course</div>
+                <div class="panel-body">
 
-<?php
-$sql = mysqli_query($con, "SELECT * FROM students WHERE StudentRegno='" . $_SESSION['login'] . "'");
-while ($row = mysqli_fetch_array($sql)) {
-?>
+                    <?php
+                    $sql = mysqli_query($con, "SELECT * FROM students WHERE StudentRegno='" . $_SESSION['login'] . "'");
+                    while ($row = mysqli_fetch_array($sql)) {
+                    ?>
 
-<form method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label for="studentname">Student Name</label>
-        <input type="text" class="form-control" id="studentname" name="studentname"
-               value="<?php echo htmlentities($row['studentName']); ?>" readonly />
-    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="studentname">Student Name</label>
+                            <input type="text" class="form-control" id="studentname" name="studentname"
+                                   value="<?php echo htmlentities($row['studentName']); ?>" readonly />
+                        </div>
 
-    <div class="form-group">
-        <label for="studentregno">Student Reg No</label>
-        <input type="text" class="form-control" id="studentregno" name="studentregno"
-               value="<?php echo htmlentities($row['StudentRegno']); ?>" readonly />
-    </div>
+                        <div class="form-group">
+                            <label for="studentregno">Student Reg No</label>
+                            <input type="text" class="form-control" id="studentregno" name="studentregno"
+                                   value="<?php echo htmlentities($row['StudentRegno']); ?>" readonly />
+                        </div>
 
-    <div class="form-group">
-        <label for="Pincode">Pincode</label>
-        <input type="text" class="form-control" id="Pincode" name="Pincode"
-               value="<?php echo htmlentities($row['pincode']); ?>" readonly required />
-    </div>
+                        <div class="form-group">
+                            <label for="Pincode">Pincode</label>
+                            <input type="text" class="form-control" id="Pincode" name="Pincode"
+                                   value="<?php echo htmlentities($row['pincode']); ?>" readonly required />
+                        </div>
 
-    <div class="form-group">
-        <label for="studentPhoto">Student Photo</label><br/>
-        <?php if ($row['studentPhoto'] == "") { ?>
-            <img src="studentphoto/noimage.png" width="200" height="200">
-        <?php } else { ?>
-            <img src="studentphoto/<?php echo htmlentities($row['studentPhoto']); ?>" width="200" height="200">
-        <?php } ?>
-    </div>
+                        <div class="form-group">
+                            <label for="studentPhoto">Student Photo</label><br/>
+                            <?php if ($row['studentPhoto'] == "") { ?>
+                                <img src="studentphoto/noimage.png" width="200" height="200">
+                            <?php } else { ?>
+                                <img src="studentphoto/<?php echo htmlentities($row['studentPhoto']); ?>" width="200" height="200">
+                            <?php } ?>
+                        </div>
 
-<?php } // End while ?>
+                    <?php } // End while ?>
 
-    <div class="form-group">
-        <label for="Session">Session</label>
-        <select class="form-control" name="session" required>
-            <option value="">Select Session</option>
-            <?php
-            $sql = mysqli_query($con, "SELECT * FROM session");
-            while ($row = mysqli_fetch_array($sql)) {
-                echo '<option value="' . htmlentities($row['id']) . '">' . htmlentities($row['session']) . '</option>';
-            }
-            ?>
-        </select>
-    </div>
+                        <div class="form-group">
+                            <label for="Session">Session</label>
+                            <select class="form-control" name="session" required>
+                                <option value="">Select Session</option>
+                                <?php
+                                $sql = mysqli_query($con, "SELECT * FROM session");
+                                while ($row = mysqli_fetch_array($sql)) {
+                                    echo '<option value="' . htmlentities($row['id']) . '">' . htmlentities($row['session']) . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
 
-    <div class="form-group">
-        <label for="Department">Department</label>
-        <select class="form-control" name="department" required>
-            <option value="">Select Department</option>
-            <?php
-            $sql = mysqli_query($con, "SELECT * FROM department");
-            while ($row = mysqli_fetch_array($sql)) {
-                echo '<option value="' . htmlentities($row['id']) . '">' . htmlentities($row['department']) . '</option>';
-            }
-            ?>
-        </select>
-    </div>
+                        <div class="form-group">
+                            <label for="Department">Department</label>
+                            <select class="form-control" name="department" required>
+                                <option value="">Select Department</option>
+                                <?php
+                                $sql = mysqli_query($con, "SELECT * FROM department");
+                                while ($row = mysqli_fetch_array($sql)) {
+                                    echo '<option value="' . htmlentities($row['id']) . '">' . htmlentities($row['department']) . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
 
-    <div class="form-group">
-        <label for="Level">Level</label>
-        <select class="form-control" name="level" required>
-            <option value="">Select Level</option>
-            <?php
-            $sql = mysqli_query($con, "SELECT * FROM level");
-            while ($row = mysqli_fetch_array($sql)) {
-                echo '<option value="' . htmlentities($row['id']) . '">' . htmlentities($row['level']) . '</option>';
-            }
-            ?>
-        </select>
-    </div>
+                        <div class="form-group">
+                            <label for="Level">Level</label>
+                            <select class="form-control" name="level" required>
+                                <option value="">Select Level</option>
+                                <?php
+                                $sql = mysqli_query($con, "SELECT * FROM level");
+                                while ($row = mysqli_fetch_array($sql)) {
+                                    echo '<option value="' . htmlentities($row['id']) . '">' . htmlentities($row['level']) . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
 
-    <div class="form-group">
-        <label for="Semester">Semester</label>
-        <select class="form-control" name="sem" required>
-            <option value="">Select Semester</option>
-            <?php
-            $sql = mysqli_query($con, "SELECT * FROM semester");
-            while ($row = mysqli_fetch_array($sql)) {
-                echo '<option value="' . htmlentities($row['id']) . '">' . htmlentities($row['semester']) . '</option>';
-            }
-            ?>
-        </select>
-    </div>
+                        <div class="form-group">
+                            <label for="Semester">Semester</label>
+                            <select class="form-control" name="sem" required>
+                                <option value="">Select Semester</option>
+                                <?php
+                                $sql = mysqli_query($con, "SELECT * FROM semester");
+                                while ($row = mysqli_fetch_array($sql)) {
+                                    echo '<option value="' . htmlentities($row['id']) . '">' . htmlentities($row['semester']) . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
 
-    <div class="form-group">
-        <label for="Course">Course</label>
-        <select class="form-control" name="course" id="course" onBlur="courseAvailability()" required>
-            <option value="">Select Course</option>
-            <?php
-            $sql = mysqli_query($con, "SELECT * FROM course");
-            while ($row = mysqli_fetch_array($sql)) {
-                echo '<option value="' . htmlentities($row['id']) . '">' . htmlentities($row['courseName']) . '</option>';
-            }
-            ?>
-        </select>
-        <span id="course-availability-status1" style="font-size:12px;"></span>
-    </div>
+                        <div class="form-group">
+                            <label for="Course">Course</label>
+                            <select class="form-control" name="course" id="course" onBlur="courseAvailability()" required>
+                                <option value="">Select Course</option>
+                                <?php
+                                $sql = mysqli_query($con, "SELECT * FROM course");
+                                while ($row = mysqli_fetch_array($sql)) {
+                                    echo '<option value="' . htmlentities($row['id']) . '">' . htmlentities($row['courseName']) . '</option>';
+                                }
+                                ?>
+                            </select>
+                            <span id="course-availability-status1" style="font-size:12px;"></span>
+                        </div>
 
-    <button type="submit" name="submit" id="submit" class="btn btn-primary">Enroll</button>
-</form>
+                        <button type="submit" name="submit" id="submit" class="btn btn-primary">Enroll</button>
+                    </form>
 
-                    </div>
                 </div>
             </div>
-
-            <!-- Right spacing -->
-            <div class="col-md-3"></div>
         </div>
     </div>
 </div>
@@ -201,4 +210,4 @@ function courseAvailability() {
 }
 </script>
 </body>
-</html>  
+</html>
