@@ -7,7 +7,7 @@ if (strlen($_SESSION['login']) == 0) {
     header('location:index.php');
     exit();
 } else {
-    date_default_timezone_set('Asia/Kolkata');
+    date_default_timezone_set('Asia/Kathmandu');
     $currentTime = date('d-m-Y h:i:s A', time());
 
     if (isset($_POST['submit'])) {
@@ -122,12 +122,21 @@ if (strlen($_SESSION['login']) == 0) {
         <!-- Sidebar -->
         <div class="sidebar">
             <h4>Student Menu</h4>
-            <a href="dashboard.php"><i class="fa fa-dashboard"></i> Dashboard</a>
-            <a href="profile.php"><i class="fa fa-user"></i> Profile</a>
-            <a href="enroll-course.php"><i class="fa fa-book"></i> Enroll Courses</a>
-            <a href="my-courses.php"><i class="fa fa-list"></i> My Courses</a>
-            <a href="change-password.php"><i class="fa fa-lock"></i> Change Password</a>
-            <a href="logout.php"><i class="fa fa-sign-out"></i> Logout</a>
+            <a href="enroll.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
+        <i class="fa fa-pencil-square-o" style="margin-right: 10px;"></i> Enroll for Course
+    </a>
+    <a href="enroll-history.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
+        <i class="fa fa-history" style="margin-right: 10px;"></i> Enroll History
+    </a>
+    <a href="my-profile.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
+        <i class="fa fa-user" style="margin-right: 10px;"></i> My Profile
+    </a>
+    <a href="change-password.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
+        <i class="fa fa-lock" style="margin-right: 10px;"></i> Change Password
+    </a>
+    <a href="logout.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
+        <i class="fa fa-sign-out" style="margin-right: 10px;"></i> Logout
+    </a>
         </div>
 
         <!-- Main Content -->
