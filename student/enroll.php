@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <?php include('includes/header.php'); ?>
-    <?php if (!empty($_SESSION['login'])) include('includes/menubar.php'); ?>
+    <?php if (!empty($_SESSION['login'])) include('includes/sidebar.php'); ?>
 
     <div class="content-wrapper">
         <div class="container">
