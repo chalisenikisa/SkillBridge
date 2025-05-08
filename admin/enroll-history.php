@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('../includes/config.php');
+include('/includes/config.php');
 
 if (strlen($_SESSION['alogin']) == 0) {
     header('location:index.php');
@@ -20,8 +20,8 @@ if (strlen($_SESSION['alogin']) == 0) {
 </head>
 
 <body>
-<?php include('../includes/header.php'); ?>
-<?php if ($_SESSION['alogin'] != "") { include('../includes/sidebar.php'); } ?>
+<?php include('includes/header.php'); ?>
+<?php if ($_SESSION['alogin'] != "") { include('includes/sidebar.php'); } ?>
 
 <div class="content-wrapper">
     <div class="container">
