@@ -131,9 +131,8 @@ if (strlen($_SESSION['login']) == 0) {
     <a href="my-profile.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
         <i class="fa fa-user" style="margin-right: 10px;"></i> My Profile
     </a>
-    <a href="change-password.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
-        <i class="fa fa-lock" style="margin-right: 10px;"></i> Change Password
-    </a>
+    
+    
     <a href="logout.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
         <i class="fa fa-sign-out" style="margin-right: 10px;"></i> Logout
     </a>
