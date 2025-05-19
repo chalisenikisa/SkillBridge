@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8" />
     <title>Student Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
 
    <link href="../assets/css/bootstrap.css" rel="stylesheet" />
     <link href="../assets/css/font-awesome.css" rel="stylesheet" />
