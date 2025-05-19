@@ -40,9 +40,11 @@ if (isset($_POST['submit'])) {
     <title>Student Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+   <link href="../assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="../assets/css/style.css" rel="stylesheet" />
+
+
     
     <style>
         body {
@@ -133,8 +135,7 @@ if (isset($_POST['submit'])) {
 
 <?php include('includes/footer.php'); ?>
 
-<!-- JS -->
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="../assets/js/jquery-1.11.1.js"></script>
+<script src="../assets/js/bootstrap.js"></script>
 </body>
 </html>
