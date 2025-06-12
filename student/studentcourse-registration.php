@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Student Course Registration with PDF Receipt</title>
+  <title>Student Course Registration with Payment QR Code and PDF Receipt</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <style>
@@ -109,6 +109,23 @@
       border-radius: 8px;
       font-weight: 600;
     }
+    .error-message {
+      background: #fee2e2;
+      color: #b91c1c;
+      border-left-color: #dc2626;
+    }
+    #qr-code-container {
+      margin-top: -12px;
+      margin-bottom: 40px;
+      text-align: center;
+      user-select: none;
+    }
+    #qr-code-container p {
+      color: #6b7280;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      margin-bottom: 0;
+    }
     @media (max-width: 600px) {
       main {
         padding: 24px 16px;
@@ -160,11 +177,16 @@
       </select>
 
       <label for="paymentStatus">Payment Status</label>
-      <select id="paymentStatus" name="paymentStatus" required>
+      <select id="paymentStatus" name="paymentStatus" required aria-describedby="qrDesc">
         <option value="" disabled selected>Select payment status</option>
+        <option value="pending">Pending - Scan QR code to pay</option>
         <option value="paid">Paid</option>
-        <option value="pending">Pending</option>
       </select>
+
+      <div id="qr-code-container" aria-live="polite" aria-atomic="true" aria-describedby="qrDesc" style="display:none;">
+        <div id="qr-code"></div>
+        <p id="qrDesc">Scan the QR code above to proceed with payment.</p>
+      </div>
 
       <button type="submit" id="submitBtn" aria-live="polite" aria-atomic="true">
         Register and Generate PDF
@@ -175,33 +197,102 @@
     <div id="message" role="alert" class="message" style="display:none;"></div>
   </main>
 
+  <!-- jsPDF Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- QRCode library (QRCode.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
   <script>
     (function() {
       const { jsPDF } = window.jspdf;
-
       const form = document.getElementById('registrationForm');
       const messageDiv = document.getElementById('message');
       const submitBtn = document.getElementById('submitBtn');
+      const paymentStatus = document.getElementById('paymentStatus');
+      const qrCodeContainer = document.getElementById('qr-code-container');
+      const qrCodeDiv = document.getElementById('qr-code');
 
-      // Simple payment simulation and PDF generation
+      // Placeholder payment URL (could be your real payment gateway link)
+      function getPaymentQRCodeText(regNo, courseCode) {
+        // For demo, we encode some payment info as a URL string
+        return `https://payment.example.com/pay?reg=${encodeURIComponent(regNo)}&course=${encodeURIComponent(courseCode)}`;
+      }
+
+      // Render QR code for payment
+      function renderQRCode(text) {
+        qrCodeDiv.innerHTML = ''; // Clear old QR
+        QRCode.toCanvas(qrCodeDiv, text, { width: 180, margin: 1 }, function (error) {
+          if (error) {
+            console.error(error);
+            qrCodeContainer.style.display = 'none';
+            return;
+          }
+          qrCodeContainer.style.display = 'block';
+        });
+      }
+
+      // Hide QR code initially
+      qrCodeContainer.style.display = 'none';
+
+      // Change QR code visibility based on paymentStatus select value
+      paymentStatus.addEventListener('change', () => {
+        const status = paymentStatus.value;
+        if (status === 'pending') {
+          const regNo = form.regNo.value.trim();
+          const courseCode = form.courseSelect.value;
+
+          if (regNo && courseCode) {
+            const qrText = getPaymentQRCodeText(regNo, courseCode);
+            renderQRCode(qrText);
+          } else {
+            // Missing required data to generate QR - hide
+            qrCodeContainer.style.display = 'none';
+          }
+        } else {
+          qrCodeContainer.style.display = 'none';
+        }
+      });
+
+      // Also update QR code when regNo or courseSelect changes if paymentStatus is pending
+      form.regNo.addEventListener('input', () => {
+        if(paymentStatus.value === 'pending') {
+          const regNo = form.regNo.value.trim();
+          const courseCode = form.courseSelect.value;
+          if(regNo && courseCode) {
+            renderQRCode(getPaymentQRCodeText(regNo, courseCode));
+          } else {
+            qrCodeContainer.style.display = 'none';
+          }
+        }
+      });
+
+      form.courseSelect.addEventListener('change', () => {
+        if(paymentStatus.value === 'pending') {
+          const regNo = form.regNo.value.trim();
+          const courseCode = form.courseSelect.value;
+          if(regNo && courseCode) {
+            renderQRCode(getPaymentQRCodeText(regNo, courseCode));
+          } else {
+            qrCodeContainer.style.display = 'none';
+          }
+        }
+      });
+
+      // Submission handler with PDF generation and payment check
       form.addEventListener('submit', function(event) {
         event.preventDefault();
         messageDiv.style.display = 'none';
-
-        // Basic validation - already covered by HTML5
 
         const regNo = form.regNo.value.trim();
         const studentName = form.studentName.value.trim();
         const courseCode = form.courseSelect.value;
         const courseName = form.courseSelect.options[form.courseSelect.selectedIndex].text.split(' - ')[1];
-        const paymentStatus = form.paymentStatus.value;
+        const paymentStat = paymentStatus.value;
 
-        if(paymentStatus !== 'paid') {
-          messageDiv.textContent = 'Payment must be completed to register and generate PDF.';
-          messageDiv.style.background = '#fee2e2'; // red-ish bg
-          messageDiv.style.color = '#b91c1c';
-          messageDiv.style.borderLeftColor = '#dc2626';
+        // Payment must be completed
+        if(paymentStat !== 'paid') {
+          messageDiv.textContent = 'Payment must be completed to register and generate PDF. Please scan the QR code and complete payment.';
+          messageDiv.className = 'message error-message';
           messageDiv.style.display = 'block';
           return;
         }
@@ -217,7 +308,6 @@
 
         const pageWidth = doc.internal.pageSize.getWidth();
 
-        // Header
         doc.setFontSize(20);
         doc.setTextColor('#3b82f6');
         doc.text('Course Registration Receipt', pageWidth/2, 60, { align: 'center' });
@@ -230,7 +320,6 @@
         doc.setTextColor('#374151');
         doc.text(`Date: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, 40, 110);
 
-        // Student info
         doc.setFontSize(14);
         doc.setTextColor('#111827');
         doc.text('Student Details:', 40, 150);
@@ -240,7 +329,6 @@
         doc.text(`Registration Number: ${regNo}`, 60, 175);
         doc.text(`Name: ${studentName}`, 60, 195);
 
-        // Course info
         doc.setFontSize(14);
         doc.setTextColor('#111827');
         doc.text('Course Details:', 40, 230);
@@ -259,7 +347,6 @@
         doc.setTextColor('#6b7280');
         doc.text('Thank you for registering. Please keep this receipt for your records.', pageWidth/2, 770, { align: 'center' });
 
-        // Save PDF for download with friendly filename
         const filename = `${regNo}_course_registration_receipt.pdf`;
         doc.save(filename);
 
@@ -267,12 +354,11 @@
         submitBtn.innerHTML = 'Register and Generate PDF <span class="material-icons" aria-hidden="true">article</span>';
 
         messageDiv.textContent = 'Registration successful! PDF has been downloaded.';
-        messageDiv.style.background = '#d1fae5';
-        messageDiv.style.color = '#065f46';
-        messageDiv.style.borderLeftColor = '#22c55e';
+        messageDiv.className = 'message';
         messageDiv.style.display = 'block';
 
         form.reset();
+        qrCodeContainer.style.display = 'none';
       });
     })();
   </script>
