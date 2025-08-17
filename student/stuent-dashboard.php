@@ -115,19 +115,19 @@ if (!isset($_SESSION['login'])) {
         <div class="col-md-4">
             <div class="card text-center">
                 <i class="fa fa-pencil-square-o"></i>
-                <h4>Enroll in New Courses</h4>
+                <h4>Enroll for Courses</h4>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card text-center" style="background: linear-gradient(135deg, #28a745, #218838);">
                 <i class="fa fa-lightbulb-o"></i>
-                <h4>Recommended Courses</h4>
+                <h4>Recommendations Courses</h4>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card text-center" style="background: linear-gradient(135deg, #ffc107, #e0a800);">
                 <i class="fa fa-history"></i>
-                <h4>Your Enroll History</h4>
+                <h4>Enroll History</h4>
             </div>
         </div>
     </div>

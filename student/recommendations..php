@@ -1,4 +1,14 @@
 <?php
+
+session_start();
+include('includes/config.php');
+error_reporting(0);
+
+if (empty($_SESSION['login'])) {
+    header('Location:index.php');
+    exit();
+} 
+
 function getCourseRecommendations($con, $studentRegNo) {
     // Get student info
     $studentQuery = mysqli_query($con, "SELECT * FROM students WHERE StudentRegNo='$studentRegNo'");
