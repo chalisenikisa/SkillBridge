@@ -1,73 +1,71 @@
 <?php
-function getCourseRecommendations($con, $studentRegNo) {
-    // Get student info
-    $studentQuery = mysqli_query($con, "SELECT * FROM students WHERE StudentRegNo='$studentRegNo'");
-    $student = mysqli_fetch_assoc($studentQuery);
-    if (!$student) return ['content_based' => [], 'collaborative' => []];
+session_start();
+include('includes/config.php');
 
-    // Use the actual PK from your students table
-    $student_id = $student['StudentRegNo'];   
-    $department = $student['Department'];     // check exact column name (maybe DeptId?)
-    $semester = $student['Semester'];         // check exact column name
+if (strlen($_SESSION['login']) == 0) {
+    header('location:index.php');
+    exit();
+} else {
+    $studentRegNo = $_SESSION['login'];
 
-    // --- Content-Based Filtering ---
-    $content_based = mysqli_query($con, "
-        SELECT * FROM course 
-        WHERE Department='$department' AND Semester >= '$semester'
+    // Get student info (only student name for display; no dept/sem found in your table)
+    $studentQuery = mysqli_query($con, "SELECT studentName FROM students WHERE StudentRegno='$studentRegNo'");
+    $studentData = mysqli_fetch_assoc($studentQuery);
+    $studentName = $studentData['studentName'];
+
+    // Get courses student already enrolled in
+    $enrolledCourses = [];
+    $enrollQuery = mysqli_query($con, "
+        SELECT course FROM courseenrolls
+        WHERE studentRegno = '$studentRegNo'
     ");
-
-    // --- Collaborative Filtering ---
-    $enrolled = mysqli_query($con, "SELECT course_id FROM courseenrolls WHERE studentRegNo='$student_id'");
-    $enrolled_courses = [];
-    while($row = mysqli_fetch_assoc($enrolled)){
-        $enrolled_courses[] = $row['course_id'];
+    while ($row = mysqli_fetch_assoc($enrollQuery)) {
+        $enrolledCourses[] = $row['course'];
     }
+    $enrolledCourseIds = implode(",", $enrolledCourses);
+    if (empty($enrolledCourseIds)) $enrolledCourseIds = "0"; // No enrollments yet
 
-    $cf_courses = [];
-    if (count($enrolled_courses) > 0) {
-        $enrolled_list = implode(",", $enrolled_courses);
-
-        // Find similar students
-        $similar_students = mysqli_query($con, "
-            SELECT DISTINCT studentRegNo FROM courseenrolls 
-            WHERE course_id IN ($enrolled_list) AND studentRegNo != '$student_id'
-        ");
-
-        // Get their courses
-        while($s = mysqli_fetch_assoc($similar_students)){
-            $sid = $s['studentRegNo'];
-            $result = mysqli_query($con, "
-                SELECT course_id FROM courseenrolls 
-                WHERE studentRegNo='$sid' AND course_id NOT IN ($enrolled_list)
-            ");
-            while($c = mysqli_fetch_assoc($result)){
-                $cf_courses[] = $c['course_id'];
-            }
-        }
-    }
-
-    $cf_courses = array_unique($cf_courses);
-    if (count($cf_courses) > 0) {
-        $cf_list = implode(",", $cf_courses);
-        $collaborative = mysqli_query($con, "SELECT * FROM course WHERE id IN ($cf_list)");
-    } else {
-        $collaborative = false;
-    }
-
-    // helper to fetch arrays
-    function fetchAll($result) {
-        $rows = [];
-        if ($result) {
-            while($row = mysqli_fetch_assoc($result)){
-                $rows[] = $row;
-            }
-        }
-        return $rows;
-    }
-
-    return [
-        'content_based' => fetchAll($content_based),
-        'collaborative' => fetchAll($collaborative)
-    ];
+    // Recommend courses = all courses student has NOT yet enrolled in
+    $recommendQuery = mysqli_query($con, "
+        SELECT id, courseName, department, semester
+        FROM course
+        WHERE id NOT IN ($enrolledCourseIds)
+    ");
 }
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Recommendations</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Recommended Courses for <?php echo htmlentities($studentName); ?></h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Department</th>
+                <th>Semester</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php 
+        if (mysqli_num_rows($recommendQuery) > 0) {
+            while ($course = mysqli_fetch_assoc($recommendQuery)) {
+                echo "<tr>
+                    <td>".htmlentities($course['courseName'])."</td>
+                    <td>".htmlentities($course['department'])."</td>
+                    <td>".htmlentities($course['semester'])."</td>
+                </tr>";
+            }
+        } else {
+            echo "<tr><td colspan='3' class='text-center'>No recommendations available at this time.</td></tr>";
+        }
+        ?>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
