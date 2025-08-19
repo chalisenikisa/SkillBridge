@@ -177,6 +177,10 @@ if (strlen($_SESSION['login']) == 0) {
             <a href="change-password.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'change-password.php' ? 'active' : ''; ?>">
                 <i class="fas fa-key"></i> Change Password
             </a>
+            
+            <a href="recommendations.php" class="active">
+                <i class="fas fa-lightbulb"></i> Recommended Courses
+              </a>  
             <a href="logout.php">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
