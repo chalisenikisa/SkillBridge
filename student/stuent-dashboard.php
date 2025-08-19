@@ -23,34 +23,7 @@ if (!isset($_SESSION['login'])) {
             margin: 0;
         }
 
-        /* Sidebar */
-        .sidebar {
-            width: 240px;
-            background: linear-gradient(180deg, #007bff, #0056b3);
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            overflow-y: auto;
-            padding-top: 20px;
-            color: #fff;
-        }
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            color: #f1f1f1;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .sidebar a:hover {
-            background-color: rgba(255,255,255,0.1);
-            border-left: 4px solid #ffc107;
-            color: #fff;
-        }
-        .sidebar i {
-            margin-right: 10px;
-        }
+        
 
         /* Main Content */
         .main-content {
@@ -110,6 +83,13 @@ if (!isset($_SESSION['login'])) {
         <h3>Welcome, <?php echo htmlentities($_SESSION['sname']); ?> 👋</h3>
         <p>Here’s an overview of your activities.</p>
     </div>
+<div class="row">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <i class="fa fa-pencil-square-o"></i>
+                <h4>Enroll for Courses</h4>
+            </div>
+</div>
 
     
         </div>
@@ -118,6 +98,14 @@ if (!isset($_SESSION['login'])) {
                 <i class="fa fa-lightbulb-o"></i>
                 <h4>Recommendations Courses</h4>
             </div>
+
+        <div class="col-md-4">
+            <div class="card text-center" style="background: linear-gradient(135deg, #ffc107, #e0a800);">
+                <i class="fa fa-history"></i>
+                <h4>Enroll History</h4>
+            </div>
+
+    
         
         </div>
     </div>
