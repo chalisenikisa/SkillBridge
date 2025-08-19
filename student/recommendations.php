@@ -242,8 +242,7 @@ if (strlen($_SESSION['login']) == 0) {
                 $session_id = $department_id = $semester_id = $level_id = null;
 
                 if (!empty($user['session'])) {
-                    $res = mysqli_q
-                    uery($con, "SELECT id FROM session WHERE session='" . mysqli_real_escape_string($con, $user['session']) . "'");
+                    $res = mysqli_query($con, "SELECT id FROM session WHERE session='" . mysqli_real_escape_string($con, $user['session']) . "'");
                     $row = mysqli_fetch_assoc($res);
                     if ($row) $session_id = $row['id'];
                 }
