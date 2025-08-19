@@ -119,27 +119,25 @@ if (!isset($_SESSION['login'])) {
         <p>Here’s an overview of your activities.</p>
     </div>
 <div class="row">
-        <div class="col-md-4">
-            <div class="card text-center">
-                <i class="fa fa-pencil-square-o"></i>
-                <h4>Enroll for Courses</h4>
-            </div>
-</div>
-
-    
+    <div class="sidebar">
+            <a href="enroll.php">
+                <i class="fas fa-pencil-alt"></i> Enroll for Course
+            </a>
+            <a href="recommendations.php" class="active">
+                <i class="fas fa-lightbulb"></i> Recommended Courses
+            </a>
+            <a href="enroll-history.php">
+                <i class="fas fa-history"></i> Enroll History
+            </a>
+            <a href="my-profile.php">
+                <i class="fas fa-user"></i> My Profile
+            </a>
+            <a href="logout.php">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
         </div>
-        <div class="col-md-4">
-            <div class="card text-center" style="background: linear-gradient(135deg, #28a745, #218838);">
-                <i class="fa fa-lightbulb-o"></i>
-                <h4>Recommendations Courses</h4>
-            </div>
 
-        <div class="col-md-4">
-            <div class="card text-center" style="background: linear-gradient(135deg, #ffc107, #e0a800);">
-                <i class="fa fa-history"></i>
-                <h4>Enroll History</h4>
-            </div>
-
+        
     
         
         </div>
