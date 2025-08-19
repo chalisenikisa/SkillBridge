@@ -2,6 +2,11 @@
 session_start();
 include("includes/config.php");
 
+if (!isset($_SESSION['login']) || strlen($_SESSION['login']) == 0) {
+    header('location:index.php');
+    exit();
+}
+
 
 
 function showRecommendations($con, $studentRegNo)
