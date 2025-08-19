@@ -243,3 +243,121 @@ if (strlen($_SESSION['login']) == 0) {
 
                 if (!empty($user['session'])) {
                     $res = mysqli_q
+                    uery($con, "SELECT id FROM session WHERE session='" . mysqli_real_escape_string($con, $user['session']) . "'");
+                    $row = mysqli_fetch_assoc($res);
+                    if ($row) $session_id = $row['id'];
+                }
+
+                if (!empty($user['department'])) {
+                    $res = mysqli_query($con, "SELECT id FROM department WHERE department='" . mysqli_real_escape_string($con, $user['department']) . "'");
+                    $row = mysqli_fetch_assoc($res);
+                    if ($row) $department_id = $row['id'];
+                }
+
+                if (!empty($user['semester'])) {
+                    $res = mysqli_query($con, "SELECT id FROM semester WHERE semester='" . mysqli_real_escape_string($con, $user['semester']) . "'");
+                    $row = mysqli_fetch_assoc($res);
+                    if ($row) $semester_id = $row['id'] || 1;
+                }
+
+                // Level (set default or map similarly if needed)
+                $level_id = 1;
+
+                if (!$session_id || !$department_id || !$semester_id || !$level_id) {
+                    echo "<p style='color:red;'>Error: Could not map student details to IDs.</p>";
+                    exit;
+                }
+
+                // Insert enrollment
+                $insert_sql = "
+        INSERT INTO courseenrolls 
+        (studentRegno, session, department, level, semester, course, enrollDate, pincode) 
+        VALUES 
+        ('$studentRegNo', $session_id, $department_id, $level_id, $semester_id, $course_id, NOW(), '{$user['pincode']}')
+    ";
+                if (mysqli_query($con, $insert_sql)) {
+                    echo "<p style='color:green;'>Successfully enrolled in course!</p>";
+                } else {
+                    echo "<p style='color:red;'>Enrollment failed: " . mysqli_error($con) . "</p>";
+                }
+            }
+
+            function showRecommendations($con, $studentRegNo)
+            {
+                $studentQuery = mysqli_query($con, "SELECT * FROM students WHERE StudentRegno='$studentRegNo'");
+                $student = mysqli_fetch_assoc($studentQuery);
+
+                if (!$student) {
+                    echo "<p>No student found.</p>";
+                    return;
+                }
+
+                $semester = $student['semester'];
+                $department = $student['department'];
+
+                // Content-Based Recommendations
+                $content_sql = "SELECT * FROM course WHERE id NOT IN (SELECT course FROM courseenrolls WHERE studentRegno='$studentRegNo')";
+                $content_result = mysqli_query($con, $content_sql);
+
+                // Collaborative Filtering
+                $enrolled_result = mysqli_query($con, "SELECT course FROM courseenrolls WHERE studentRegno='$studentRegNo'");
+                $enrolled_courses = [];
+                while ($row = mysqli_fetch_assoc($enrolled_result)) {
+                    $enrolled_courses[] = $row['course'];
+                }
+
+                $cf_courses = [];
+                if (count($enrolled_courses) > 0) {
+                    $enrolled_list = implode(",", $enrolled_courses);
+
+                    $similar_students = mysqli_query($con, "SELECT DISTINCT studentRegno FROM courseenrolls WHERE course IN ($enrolled_list) AND studentRegno != '$studentRegNo'");
+                    while ($s = mysqli_fetch_assoc($similar_students)) {
+                        $sid = $s['studentRegno'];
+                        $result = mysqli_query($con, "SELECT course FROM courseenrolls WHERE studentRegno='$sid' AND course NOT IN ($enrolled_list)");
+                        while ($c = mysqli_fetch_assoc($result)) {
+                            $cf_courses[] = $c['course'];
+                        }
+                    }
+                }
+
+                $cf_courses = array_unique($cf_courses);
+                $collaborative = [];
+                if (count($cf_courses) > 0) {
+                    $cf_list = implode(",", $cf_courses);
+                    $cf_result = mysqli_query($con, "SELECT * FROM course WHERE id IN ($cf_list)");
+                    while ($row = mysqli_fetch_assoc($cf_result)) {
+                        $collaborative[] = $row;
+                    }
+                }
+
+                if (mysqli_num_rows($content_result) > 0) {
+                    echo "<div style='display:flex; flex-wrap:wrap; gap:15px;'>";
+                    while ($row = mysqli_fetch_assoc($content_result)) {
+                        echo "<div style='border:1px solid #ddd; border-radius:8px; padding:15px; width:250px; box-shadow:0 2px 5px rgba(0,0,0,0.1);'>";
+                        echo "<h5>" . htmlentities($row['courseName']) . "</h5>";
+                        echo "<p>Course Code: " . htmlentities($row['courseCode']) . "</p>";
+                        echo "<p>Units: " . htmlentities($row['courseUnit']) . "</p>";
+                        echo "<form method='POST'>";
+                        echo "<input type='hidden' name='course_id' value='" . $row['id'] . "'>";
+                        echo "<button type='submit' name='enroll_course' style='padding:8px 12px; background-color:#28a745; color:white; border:none; border-radius:5px; cursor:pointer;'>Enroll</button>";
+                        echo "</form>";
+                        echo "</div>";
+                    }
+                    echo "</div>";
+                } else {
+                    echo "<p>No new content-based recommendations.</p>";
+                }
+            }
+
+            showRecommendations($con, $_SESSION['login']);
+
+            ?>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
