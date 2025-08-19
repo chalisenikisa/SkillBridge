@@ -195,12 +195,13 @@ if (strlen($_SESSION['login']) == 0) {
             <a href="recommendations.php" class="active">
                 <i class="fas fa-lightbulb"></i> Recommended Courses
             </a>
-            <a href="logout.php">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
+            
             <a href="stuent-dashboard.php" class="list-group-item list-group-item-action">
         <i class="fa fa-home"></i> Dashboard
         </a>
+        <a href="logout.php">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
             
         </div>
 
