@@ -23,7 +23,42 @@ if (!isset($_SESSION['login'])) {
             margin: 0;
         }
 
-        
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: linear-gradient(180deg, #007bff, #0056b3);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            overflow-y: auto;
+            padding-top: 20px;
+            color: #fff;
+        }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #f1f1f1;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: rgba(255,255,255,0.1);
+            border-left: 4px solid #ffc107;
+            color: #fff;
+        }
+        .sidebar i {
+            margin-right: 10px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 240px;
+            padding: 30px;
+        }
+
+
 
         /* Main Content */
         .main-content {
