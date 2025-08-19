@@ -191,21 +191,11 @@ if (strlen($_SESSION['login']) == 0) {
     <div class="wrapper">
         <!-- Sidebar -->
         <div class="sidebar">
-            <a href="enroll.php">
-                <i class="fas fa-pencil-alt"></i> Enroll for Course
-            </a>
+            
             <a href="recommendations.php" class="active">
                 <i class="fas fa-lightbulb"></i> Recommended Courses
             </a>
-            <a href="enroll-history.php">
-                <i class="fas fa-history"></i> Enroll History
-            </a>
-            <a href="my-profile.php">
-                <i class="fas fa-user"></i> My Profile
-            </a>
-            <a href="logout.php">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
+            
         </div>
 
         <!-- Content -->
