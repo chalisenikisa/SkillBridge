@@ -3,9 +3,13 @@
     <a href="enroll.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
         <i class="fa fa-pencil-square-o" style="margin-right: 10px;"></i> Enroll for Course 
     </a>
-    <li>
-    <a href="recommendations.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
-        <i class="fa fa-lightbulb-o" style="margin-right: 10px;"></i> Recommended Courses
+    
+ <li>
+    <a href="recommendations.php">
+        <i class="fa fa-lightbulb-o"></i> <!-- FontAwesome icon -->
+        <span>Recommended Courses</span>
+    </a>
+</li>
     </a>
 </li>
     <a href="enroll-history.php" style="display: flex; align-items: center; padding: 12px 20px; color: #333; text-decoration: none;">
