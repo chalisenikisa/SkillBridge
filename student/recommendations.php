@@ -198,6 +198,9 @@ if (strlen($_SESSION['login']) == 0) {
             <a href="logout.php">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
+            <a href="dashboard.php" class="list-group-item list-group-item-action">
+        <i class="fa fa-home"></i> Dashboard
+        </a>
             
         </div>
 
